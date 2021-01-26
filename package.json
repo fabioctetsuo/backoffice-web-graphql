@@ -1,5 +1,5 @@
 {
-  "name": "health-hub-web",
+  "name": "health-hub-backoffice-web",
   "version": "0.1.0",
   "private": true,
   "scripts": {

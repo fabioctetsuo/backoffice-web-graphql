@@ -1,6 +1,10 @@
-# RD Next.JS Template
+# Health-hub backoffice
 
-Esse template tem como objetivo padronizar os projetos desenvolvidos em Next.JS na plataforma da RD Saúde, aplicando as mesmas regras de testes estáticos e de tecnologias core.
+Sistema de backoffice para gerenciamento dos Health hubs
+
+- Gestão de usuários
+- Gestão de serviços
+- Gestão de lojas
 
 ## Requisitos do projeto
 
@@ -16,8 +20,8 @@ yarn v1.22.5
 #### Clonando o projeto e instalando dependências
 
 ```sh
-git clone git@github.com:RAIADROGASIL/health-hub-web.git
-cd health-hub-web
+git clone git@github.com:RAIADROGASIL/health-hub-backoffice-web.git
+cd health-hub-backoffice-web
 yarn install
 ```
 
