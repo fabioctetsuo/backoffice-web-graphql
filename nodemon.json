@@ -1,0 +1,5 @@
+{
+  "ignore": ["node_modules", ".next"],
+  "watch": ["graphql/**/*", "server.js"],
+  "ext": "js json ts graphql gql"
+}
