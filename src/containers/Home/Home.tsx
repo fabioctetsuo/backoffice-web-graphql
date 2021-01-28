@@ -1,4 +1,5 @@
 import { CircularProgress, Typography } from '@material-ui/core';
+import { useAuth } from 'context/auth-context';
 import { useGetUserByIdQuery } from 'generated-types';
 import Head from 'next/head';
 import React from 'react';
@@ -6,6 +7,7 @@ import { withBasePath } from 'utils/withBasePath';
 import * as S from './styles';
 
 const HomeContainer = () => {
+  const { user } = useAuth();
   const { loading, data } = useGetUserByIdQuery({
     variables: {
       id: '1',
@@ -27,10 +29,16 @@ const HomeContainer = () => {
 
       <main>
         <Typography variant="h1">
-          Welcome, <S.Name>{data?.getUserById?.name}</S.Name>!
+          Welcome,{' '}
+          <S.Name>
+            <S.Name>{user?.displayName}</S.Name>
+          </S.Name>
+          !
         </Typography>
         <Typography variant="body1">
-          Seu ID é <strong>{data?.getUserById?.id}</strong> e seu status é{' '}
+          A query GraphQL respondeu com o usuário{' '}
+          <strong>{data?.getUserById?.name}</strong>, id{' '}
+          <strong>{data?.getUserById?.id}</strong> e status{' '}
           <strong>{data?.getUserById?.active ? 'Ativo' : 'Inativo'}</strong>
         </Typography>
       </main>

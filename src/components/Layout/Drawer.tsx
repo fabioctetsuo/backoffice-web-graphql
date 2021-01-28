@@ -9,6 +9,9 @@ import strings from 'strings';
 
 import MenuItem from './MenuItem';
 import { MenuItensProps } from './menuItens';
+import LogoutIcon from '@material-ui/icons/ExitToApp';
+import { useAuth } from 'context/auth-context';
+import useToast from 'hooks/useToast';
 
 export const Space = styled.div`
   ${({ theme }) => theme.mixins.toolbar};
@@ -35,10 +38,16 @@ type DrawerProps = {
 
 const Drawer = ({ onToggle, open, menuItens }: DrawerProps) => {
   const router = useRouter();
+  const { logout } = useAuth();
+  const sendToast = useToast();
 
   const goTo = (link: string) => router.push(link);
 
   const isSameRoute = (route: string) => router.pathname === route;
+
+  const handleLogout = () => {
+    logout && logout().catch(() => sendToast(strings.errors.generic, 'error'));
+  };
 
   return (
     <>
@@ -82,6 +91,15 @@ const Drawer = ({ onToggle, open, menuItens }: DrawerProps) => {
           );
         })}
       </MenuList>
+      <div style={{ marginBottom: 24 }}>
+        <MenuItem
+          id="logout"
+          name={strings.sidebar.menuIcon.logout}
+          active={false}
+          Icon={LogoutIcon}
+          onClick={handleLogout}
+        />
+      </div>
     </>
   );
 };

@@ -1,11 +1,22 @@
 import React, { useEffect } from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import GlobalStyle from 'styles/global';
 
+import { makeStyles } from '@material-ui/core/styles';
+import GlobalStyle from 'styles/global';
+import theme from 'theme';
+
+import { SnackbarProvider } from 'notistack';
 import AppProviders from 'context';
+import { AuthProvider } from 'context/auth-context';
+
+const useStyles = makeStyles({
+  error: { background: `${theme.palette.error.main} !important` },
+  success: { background: `${theme.palette.success.main} !important` },
+});
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
+  const classes = useStyles();
   useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
@@ -22,9 +33,21 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         <title>Plataforma Health Hub</title>
       </Head>
       <GlobalStyle />
-      <AppProviders>
-        <Component {...pageProps} />
-      </AppProviders>
+      <SnackbarProvider
+        classes={{ variantError: classes.error, variantSuccess: classes.success }}
+        hideIconVariant
+        maxSnack={3}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+      >
+        <AuthProvider>
+          <AppProviders>
+            <Component {...pageProps} />
+          </AppProviders>
+        </AuthProvider>
+      </SnackbarProvider>
     </>
   );
 };

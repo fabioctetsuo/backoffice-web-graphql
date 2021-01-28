@@ -5,13 +5,27 @@ import { render as rtlRender } from '@testing-library/react';
 import rtlUserEvent from '@testing-library/user-event';
 
 import theme from 'theme';
+import { SnackbarProvider } from 'notistack';
 import { ThemeProvider, StylesProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider as ThemeProviderStyledComponent } from 'styled-components';
 import { DocumentNode } from '@apollo/client';
+import { AuthContextProps, AuthProvider } from 'context/auth-context';
 
 type WrapperProps = {
   children: ReactElement;
+};
+
+const defaultAuthProps: AuthContextProps = {
+  user: {
+    displayName: 'Arthur Dent',
+    email: 'arthur.dent@gmail.com',
+    token: 'token',
+    roles: ['hh-staff'],
+  },
+  login: async () => undefined,
+  logout: async () => undefined,
+  isLoading: false,
 };
 
 type GraphqlMock = {
@@ -26,15 +40,19 @@ type GraphqlMock = {
 
 const customRender = (
   Component: ReactElement,
-  { mocks = [] as GraphqlMock[], ...renderOptions } = {}
+  { mocks = [] as GraphqlMock[], mockAuth = {}, ...renderOptions } = {}
 ) => {
   const Wrapper = ({ children }: WrapperProps) => (
     <MockedProvider mocks={mocks}>
       <StylesProvider injectFirst>
         <ThemeProvider theme={theme}>
           <ThemeProviderStyledComponent theme={theme}>
-            <CssBaseline />
-            {children}
+            <SnackbarProvider maxSnack={3}>
+              <CssBaseline />
+              <AuthProvider value={{ ...defaultAuthProps, ...mockAuth }}>
+                {children}
+              </AuthProvider>
+            </SnackbarProvider>
           </ThemeProviderStyledComponent>
         </ThemeProvider>
       </StylesProvider>
@@ -50,8 +68,10 @@ const customServerRender = (ui: ReactElement, { mocks = [] as GraphqlMock[] } = 
       <StylesProvider injectFirst>
         <ThemeProvider theme={theme}>
           <ThemeProviderStyledComponent theme={theme}>
-            <CssBaseline />
-            {ui}
+            <SnackbarProvider maxSnack={3}>
+              <CssBaseline />
+              <AuthProvider value={defaultAuthProps}>{ui}</AuthProvider>
+            </SnackbarProvider>
           </ThemeProviderStyledComponent>
         </ThemeProvider>
       </StylesProvider>
