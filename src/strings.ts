@@ -35,4 +35,28 @@ export default {
       logout: 'Sair',
     },
   },
+  services: {
+    list: {
+      title: 'Serviços',
+      table: {
+        general: {
+          title: 'Tabela de serviços do health hub',
+          column: {
+            serviceName: 'Serviço',
+            serviceType: 'Tipo de Serviço',
+            edit: 'Editar',
+          },
+          hideInfo: 'Ocultar detalhes do serviço',
+          showInfo: 'Ver detalhes do serviço',
+          edit: 'Editar serviço',
+        },
+        additionalInfo: {
+          title: 'Informações complementares',
+          price: 'Valor:',
+          attachMedicalReport: 'Anexar relatório médico:',
+          emitDeclaration: 'Emitir declaração:',
+        },
+      },
+    },
+  },
 };
