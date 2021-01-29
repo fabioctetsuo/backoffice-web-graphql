@@ -46,7 +46,7 @@ export const authSSR = async (ctx: GetServerSidePropsContext) => {
   };
 
   try {
-    const { token } = nookies.get(ctx);
+    const { token = '' } = nookies.get(ctx);
 
     if (!decodeToken(token)) {
       redirectToLogin();

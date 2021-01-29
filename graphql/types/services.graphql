@@ -1,0 +1,116 @@
+enum HealthHubServiceFieldType {
+  FLOAT
+  INTEGER
+  BOOLEAN
+  DATE
+  DATETIME
+  TEXT
+  TEXTAREA
+  SELECT
+  FILE_UPLOAD
+  LABEL
+}
+
+enum HealthHubFieldType {
+  VACCINE
+  PHARMA_SERVICE
+  RAPID_TEST
+}
+
+type HealthHubServiceValue {
+  key: String!
+  label: String!
+  data: JSONObject
+}
+
+input HealthHubServiceValueInput {
+  key: String!
+  label: String!
+  data: JSONObject
+}
+
+type HealthHubFieldValidation {
+  min: Float
+  max: Float
+  required: Boolean
+  numbersOnly: Boolean
+  currentDate: Boolean
+}
+
+input HealthHubFieldValidationInput {
+  min: Float
+  max: Float
+  required: Boolean
+  numbersOnly: Boolean
+  currentDate: Boolean
+}
+
+type HealthHubServiceFieldData {
+  unit: String
+}
+
+input HealthHubServiceFieldDataInput {
+  unit: String
+}
+
+type HealthHubServiceField {
+  key: String
+  label: String!
+  type: HealthHubServiceFieldType!
+  value: String
+  values: [HealthHubServiceValue!]
+  validations: HealthHubFieldValidation
+  data: HealthHubServiceFieldData
+}
+
+input HealthHubServiceFieldInput {
+  key: String
+  label: String!
+  type: HealthHubServiceFieldType!
+  value: String
+  values: [HealthHubServiceValueInput!]
+  validations: HealthHubFieldValidationInput
+  data: HealthHubServiceFieldDataInput
+}
+
+type HealthHubService {
+  id: ID!
+  info: String
+  name: String!
+  price: Float
+  procedureFields: [HealthHubServiceField]!
+  type: HealthHubFieldType!
+  attachMedicalReport: Boolean
+  emitDeclaration: Boolean
+}
+
+input HealthHubServiceInput {
+  info: String
+  name: String!
+  price: Float
+  procedureFields: [HealthHubServiceFieldInput]!
+  type: HealthHubFieldType!
+  attachMedicalReport: Boolean
+  emitDeclaration: Boolean
+}
+
+type HealthHubServiceAll {
+  content: [HealthHubService]
+  page: Int
+  totalElements: Int
+  totalPages: Int
+}
+
+type Query {
+  service(id: ID!): HealthHubService
+  services(
+    type: HealthHubFieldType
+    sort: String
+    size: Int
+    page: Int
+  ): HealthHubServiceAll
+}
+
+type Mutation {
+  updateService(service: HealthHubServiceInput!, id: ID!): HealthHubService
+}

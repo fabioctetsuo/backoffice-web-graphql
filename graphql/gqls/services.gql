@@ -1,0 +1,51 @@
+fragment ServiceParts on HealthHubService {
+  id
+  info
+  name
+  price
+  type
+  procedureFields {
+    key
+    label
+    type
+    validations {
+      min
+      max
+      required
+      numbersOnly
+      currentDate
+    }
+    value
+    values {
+      key
+      label
+      data
+    }
+    data {
+      unit
+    }
+  }
+}
+
+query service($id: ID!) {
+  service(id: $id) {
+    ...ServiceParts
+  }
+}
+
+query services($page: Int, $size: Int, $type: HealthHubFieldType, $sort: String) {
+  services(page: $page, size: $size, type: $type, sort: $sort) {
+    content {
+      ...ServiceParts
+    }
+    page
+    totalPages
+    totalElements
+  }
+}
+
+mutation updateService($id: ID!, $service: HealthHubServiceInput!) {
+  updateService(id: $id, service: $service) {
+    ...ServiceParts
+  }
+}

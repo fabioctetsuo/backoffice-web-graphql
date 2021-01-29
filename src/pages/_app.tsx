@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
-import { AppProps } from 'next/app';
+import nookies from 'nookies';
+
+import App, { AppContext, AppProps } from 'next/app';
 import Head from 'next/head';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,7 +17,11 @@ const useStyles = makeStyles({
   success: { background: `${theme.palette.success.main} !important` },
 });
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
+type RouterProps = {
+  token: string;
+};
+
+const MyApp = ({ Component, pageProps, token }: AppProps & RouterProps) => {
   const classes = useStyles();
   useEffect(() => {
     // Remove the server-side injected CSS.
@@ -43,13 +49,23 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         }}
       >
         <AuthProvider>
-          <AppProviders>
+          <AppProviders token={token}>
             <Component {...pageProps} />
           </AppProviders>
         </AuthProvider>
       </SnackbarProvider>
     </>
   );
+};
+
+MyApp.getInitialProps = async (appContext: AppContext) => {
+  const appProps = await App.getInitialProps(appContext);
+  const { token } = nookies.get(appContext.ctx);
+
+  return {
+    token,
+    ...appProps,
+  };
 };
 
 export default MyApp;

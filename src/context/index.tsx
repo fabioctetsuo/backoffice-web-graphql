@@ -8,17 +8,33 @@ import { ThemeProvider as ThemeProviderStyledComponent } from 'styled-components
 
 import { InMemoryCache, ApolloClient, HttpLink } from '@apollo/client';
 import { ApolloProvider } from '@apollo/react-hooks';
+import { setContext } from '@apollo/client/link/context';
 import { withBasePath } from 'utils/withBasePath';
+import { useAuth } from 'context/auth-context';
 
 type AppProviderdProps = {
   children: ReactChild;
+  token: string;
 };
 
-function AppProviders({ children }: AppProviderdProps) {
+function AppProviders({ children, token: cookieToken }: AppProviderdProps) {
+  const { user } = useAuth();
+
   const httpLink = new HttpLink({ uri: withBasePath('/graphql'), fetch });
 
+  const authLink = setContext((_, { headers }) => {
+    const token = user?.token ? user?.token : cookieToken;
+
+    return {
+      headers: {
+        ...headers,
+        authorization: `Bearer ${token}`,
+      },
+    };
+  });
+
   const client = new ApolloClient({
-    link: httpLink,
+    link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
   });
 

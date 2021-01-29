@@ -7,6 +7,7 @@ class CustomRestDataSource extends RESTDataSource {
   }
 
   willSendRequest(request) {
+    request.headers.set('Authorization', this.context.token);
     request.headers.set('Content-Type', 'application/json');
   }
 
