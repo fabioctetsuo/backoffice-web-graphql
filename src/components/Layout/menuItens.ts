@@ -1,19 +1,19 @@
 import { ComponentType } from 'react';
 import { SvgIconProps } from '@material-ui/core/SvgIcon';
-import HomeIcon from '@material-ui/icons/Home';
+import ServicesIcon from '@material-ui/icons/Ballot';
 
-export type MenuItensProps = {
+export type MenuItemProps = {
   id: string;
   route: string;
   name: string;
   Icon: ComponentType<SvgIconProps>;
 };
 
-export const getMenuItens = (): MenuItensProps[] => [
+export const getMenuItems = (): MenuItemProps[] => [
   {
-    id: 'menu-item-homepage',
-    name: 'Página inicial',
-    Icon: HomeIcon,
-    route: '/',
+    id: 'menu-item-services',
+    name: 'Serviços',
+    Icon: ServicesIcon,
+    route: '/services',
   },
 ];

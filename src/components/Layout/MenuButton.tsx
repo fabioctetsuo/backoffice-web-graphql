@@ -13,7 +13,7 @@ const ListItem = styled(MaterialListItem)`
   cursor: pointer;
 `;
 
-type MenuItemProps = {
+type MenuButtonProps = {
   id?: string;
   name: string;
   active: boolean;
@@ -21,7 +21,7 @@ type MenuItemProps = {
   onClick: (event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => void;
 };
 
-const MenuItem = ({ id, name, active, Icon, onClick }: MenuItemProps) => {
+const MenuButton = ({ id, name, active, Icon, onClick }: MenuButtonProps) => {
   const [hover, setHover] = useState(false);
   const color = active || hover ? '#fff' : 'hsla(0,0%,100%,.65)';
 
@@ -33,12 +33,12 @@ const MenuItem = ({ id, name, active, Icon, onClick }: MenuItemProps) => {
       onClick={onClick}
       data-testid={id}
     >
-      <ListItemIcon>
-        <Icon style={{ color, marginLeft: 8 }} data-testid="menu-icon" />
+      <ListItemIcon style={{ minWidth: 32, marginLeft: 8 }}>
+        <Icon style={{ color }} data-testid="menu-icon" />
       </ListItemIcon>
       <ListItemText primary={name} style={{ color }} />
     </ListItem>
   );
 };
 
-export default MenuItem;
+export default MenuButton;

@@ -28,6 +28,17 @@ export default {
     },
     submitButton: 'Entrar',
   },
+  appBar: {
+    label: 'Menu de navegação',
+    userDetails: {
+      label: 'Usuário',
+      settings: {
+        label: 'Mostrar opções do usuário',
+        menuOptions: 'Menu de opções',
+        logout: 'Sair',
+      },
+    },
+  },
   sidebar: {
     menuIcon: {
       open: 'Abrir menu de navegação',
