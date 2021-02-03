@@ -1,4 +1,6 @@
 fragment ServiceParts on HealthHubService {
+  attachMedicalReport
+  emitDeclaration
   id
   info
   name

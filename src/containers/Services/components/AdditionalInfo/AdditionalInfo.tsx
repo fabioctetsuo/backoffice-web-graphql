@@ -1,5 +1,5 @@
 import { Box, Typography, Grid } from '@material-ui/core';
-import { HealthHubService } from 'containers/Services';
+import { HealthHubService } from 'generated-types';
 import strings from 'strings';
 
 interface Props {
@@ -25,14 +25,16 @@ function AdditionalInfo({ row }: Props) {
       </Typography>
       <Grid container spacing={1} style={{ marginTop: 8, marginBottom: 24 }}>
         <Grid item xs={12} sm={6}>
-          <strong>{texts.price}</strong> {getPriceInfo(row)}
+          <strong>{texts.price}</strong>
+          <span>{getPriceInfo(row)}</span>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <strong>{texts.attachMedicalReport}</strong>{' '}
-          {row.attachMedicalReport ? 'Sim' : 'Não'}
+          <strong>{texts.attachMedicalReport}</strong>
+          <span>{row.attachMedicalReport ? 'Sim' : 'Não'}</span>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <strong>{texts.emitDeclaration}</strong> {row.emitDeclaration ? 'Sim' : 'Não'}
+          <strong>{texts.emitDeclaration}</strong>
+          <span>{row.emitDeclaration ? 'Sim' : 'Não'}</span>
         </Grid>
       </Grid>
     </Box>

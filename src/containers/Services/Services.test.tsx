@@ -8,11 +8,87 @@ import {
 } from 'utils/testing';
 import Services from './Services';
 
-describe('Services list', () => {
-  it('Must render services list correctly', () => {
-    render(<Services />);
+import graphqlMock from './mocks';
+import {
+  vaccineQuestions,
+  lipidProfileQuestions,
+  covidQuestions,
+} from './expectedQuestions';
 
-    const table = screen.getByLabelText(/Tabela de serviços do health hub/i);
+const getServiceData = (dataExpandRow: HTMLElement) => {
+  const expandRowButton = within(dataExpandRow).getByRole('button', {
+    name: 'Ver detalhes do serviço',
+  });
+
+  userEvent.click(expandRowButton);
+
+  const elementsInfos = screen
+    .getByText(/^informações complementares/i)
+    .nextElementSibling?.querySelectorAll('strong');
+
+  const infos = Array.from(elementsInfos as NodeList).map(info => {
+    const element = info as HTMLElement;
+    const infoKey = element.textContent?.split(':')[0] as string;
+    const infoValue = element?.nextElementSibling?.textContent;
+    return {
+      [infoKey]: infoValue,
+    };
+  });
+
+  const questions = screen.getAllByLabelText('Label').map(question => {
+    const validationsColumn = question.nextElementSibling
+      ?.nextElementSibling as HTMLElement;
+    const validations = within(validationsColumn)
+      .queryAllByTestId('table-validations-column')
+      .reduce((prev, curr) => {
+        const [label, value] = curr?.textContent?.split(': ') || [];
+        return { ...prev, [label]: value };
+      }, {});
+    return {
+      label: question.textContent,
+      type: question.nextElementSibling?.textContent,
+      validations,
+    };
+  });
+
+  return {
+    infos,
+    questions,
+  };
+};
+
+const closeRow = async (dataExpandRow: HTMLElement) => {
+  userEvent.click(
+    within(dataExpandRow).getByRole('button', {
+      name: 'Ocultar detalhes do serviço',
+    })
+  );
+
+  await waitForElementToBeRemoved(
+    screen.getByRole('heading', {
+      name: /informações complementares/i,
+    })
+  )
+    .then(() => {
+      expect(
+        screen.queryByRole('heading', {
+          name: /informações complementares/i,
+        })
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByRole('heading', { name: /Campos de perguntas/i })
+      ).not.toBeInTheDocument();
+    })
+    .catch(err => console.log(err));
+};
+
+describe('Services list', () => {
+  it('Must render services list correctly', async () => {
+    render(<Services />, {
+      mocks: [graphqlMock.getServicesSuccess],
+    });
+
+    const table = await screen.findByLabelText(/Tabela de serviços do health hub/i);
     const serviceList = within(table)
       .getAllByLabelText(/^serviço/i)
       .map(service => {
@@ -22,53 +98,53 @@ describe('Services list', () => {
         };
       });
     expect(serviceList).toEqual([
-      { service: 'Hepatite A e B', type: 'Vacina' },
-      { service: 'Gripe tetravalente', type: 'Vacina' },
+      { service: 'Perfil Lipídico', type: 'Teste Rápido' },
+      { service: 'Vacina Gripe', type: 'Vacina' },
+      { service: 'Covid 19', type: 'Serviços Farmacêuticos' },
     ]);
   });
 
-  it('must render service details', () => {
-    render(<Services />);
-
-    const table = screen.getByLabelText(/Tabela de serviços do health hub/i);
-    const hepatitisRow = within(table).getByText(/^hepatite a e b/i);
-    const hepatitisExpandRow = hepatitisRow.previousElementSibling as HTMLElement;
-    const expandRowButton = within(hepatitisExpandRow).getByRole('button', {
-      name: 'Ver detalhes do serviço',
+  it('must render service details', async () => {
+    render(<Services />, {
+      mocks: [graphqlMock.getServicesSuccess],
     });
 
-    userEvent.click(expandRowButton);
+    const table = await screen.findByLabelText(/Tabela de serviços do health hub/i);
 
-    expect(
-      screen.getByRole('heading', {
-        name: /informações complementares/i,
-      })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole('heading', { name: /Campos de perguntas/i })
-    ).toBeInTheDocument();
+    const vaccineRow = within(table).getByText(/^vacina gripe/i)
+      .previousElementSibling as HTMLElement;
+    const vaccineFieldsTable = getServiceData(vaccineRow);
 
-    userEvent.click(
-      within(hepatitisExpandRow).getByRole('button', {
-        name: 'Ocultar detalhes do serviço',
-      })
-    );
+    expect(vaccineFieldsTable.infos).toEqual([
+      { Valor: 'R$\xa0150,59' },
+      { 'Anexar relatório médico': 'Sim' },
+      { 'Emitir declaração': 'Não' },
+    ]);
+    expect(vaccineFieldsTable.questions).toEqual(vaccineQuestions);
+    await closeRow(vaccineRow);
 
-    waitForElementToBeRemoved(
-      screen.getByRole('heading', {
-        name: /informações complementares/i,
-      })
-    )
-      .then(() => {
-        expect(
-          screen.queryByRole('heading', {
-            name: /informações complementares/i,
-          })
-        ).not.toBeInTheDocument();
-        expect(
-          screen.queryByRole('heading', { name: /Campos de perguntas/i })
-        ).not.toBeInTheDocument();
-      })
-      .catch(err => console.log(err));
+    const lipidProfileRow = within(table).getByText(/^perfil lipídico/i)
+      .previousElementSibling as HTMLElement;
+    const lipidProfileTable = getServiceData(lipidProfileRow);
+
+    expect(lipidProfileTable.infos).toEqual([
+      { Valor: 'R$\xa045,00' },
+      { 'Anexar relatório médico': 'Não' },
+      { 'Emitir declaração': 'Sim' },
+    ]);
+    expect(lipidProfileTable.questions).toEqual(lipidProfileQuestions);
+    await closeRow(lipidProfileRow);
+
+    const covidRow = within(table).getByText(/^Covid 19/i)
+      .previousElementSibling as HTMLElement;
+    const covidTable = getServiceData(covidRow);
+
+    expect(covidTable.infos).toEqual([
+      { Valor: 'Diretamente na farmácia' },
+      { 'Anexar relatório médico': 'Não' },
+      { 'Emitir declaração': 'Não' },
+    ]);
+    expect(covidTable.questions).toEqual(covidQuestions);
+    await closeRow(covidRow);
   });
 });

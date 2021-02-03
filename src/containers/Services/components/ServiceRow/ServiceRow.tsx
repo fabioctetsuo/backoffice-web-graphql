@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { makeStyles, TableRow, TableCell, IconButton, Collapse } from '@material-ui/core';
 import { KeyboardArrowUp, KeyboardArrowDown, Edit } from '@material-ui/icons';
-import { HealthHubService } from 'containers/Services';
 import { SERVICE_TYPES } from 'containers/Services/Services';
 import strings from 'strings';
 import ServiceQuestions from '../ServiceQuestions';
 import AdditionalInfo from '../AdditionalInfo';
+import { HealthHubService } from 'generated-types';
 
 type Props = { row: HealthHubService };
 
@@ -40,11 +40,7 @@ function ServiceRow({ row }: Props) {
         </TableCell>
         <TableCell>{SERVICE_TYPES[row.type]}</TableCell>
         <TableCell align="right">
-          <IconButton
-            aria-label={tableTexts.general.column.edit}
-            size="small"
-            onClick={console.log}
-          >
+          <IconButton aria-label={tableTexts.general.column.edit} size="small">
             <Edit />
           </IconButton>
         </TableCell>

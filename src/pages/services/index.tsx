@@ -1,5 +1,6 @@
 import Layout from 'components/Layout';
 import ServicesList from 'containers/Services';
+import { authSSR } from 'utils/authentication';
 
 const Services = () => {
   return (
@@ -8,5 +9,7 @@ const Services = () => {
     </Layout>
   );
 };
+
+export const getServerSideProps = authSSR;
 
 export default Services;

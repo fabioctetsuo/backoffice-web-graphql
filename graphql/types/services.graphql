@@ -78,7 +78,7 @@ type HealthHubService {
   info: String
   name: String!
   price: Float
-  procedureFields: [HealthHubServiceField]!
+  procedureFields: [HealthHubServiceField!]!
   type: HealthHubFieldType!
   attachMedicalReport: Boolean
   emitDeclaration: Boolean
@@ -95,7 +95,7 @@ input HealthHubServiceInput {
 }
 
 type HealthHubServiceAll {
-  content: [HealthHubService]
+  content: [HealthHubService!]!
   page: Int
   totalElements: Int
   totalPages: Int

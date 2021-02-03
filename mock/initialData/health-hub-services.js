@@ -258,11 +258,6 @@ module.exports = [
           },
         ],
       },
-      // {
-      //   key: 'healthcare_professional_area',
-      //   label: 'Se sim',
-      //   position: 3,
-      // },
       {
         key: 'symptoms_date',
         label: 'Data de início dos sintomas',

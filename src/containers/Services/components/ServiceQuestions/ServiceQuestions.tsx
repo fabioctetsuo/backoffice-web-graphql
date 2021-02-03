@@ -7,7 +7,11 @@ import {
   TableCell,
   TableBody,
 } from '@material-ui/core';
-import { HealthHubService } from 'containers/Services';
+import {
+  HealthHubService,
+  HealthHubFieldValidation,
+  HealthHubServiceFieldType,
+} from 'generated-types';
 import * as React from 'react';
 import styled from 'styled-components';
 
@@ -15,17 +19,11 @@ type Props = {
   row: HealthHubService;
 };
 
-type ValidationsType = {
-  min?: number;
-  max?: number;
-  required?: boolean;
-  numbersOnly?: boolean;
-  currentDate?: boolean;
-};
-
 export const VALIDATIONS_DICT: Record<string, string> = {
   min: 'Valor mínimo',
   max: 'Valor máximo',
+  minText: 'Mínimo de caracteres',
+  maxText: 'Máximo de caracteres',
   required: 'Campo obrigatório',
   numbersOnly: 'Númerico',
   currentDate: 'Data corrente',
@@ -50,16 +48,61 @@ const StyledColumn = styled.p`
   width: -webkit-max-content;
 `;
 
-const ValidationsColumn = ({ validations }: { validations?: ValidationsType }) => {
-  const validationsList = validations ? Object?.entries(validations) : [];
-  const getBooleanLabel = (value: boolean) => (value ? 'Sim' : 'Não');
+const getValidations = (validations?: HealthHubFieldValidation) => {
+  if (!validations) {
+    return [];
+  }
+
+  const validationsEntries = Object.entries(validations);
+
+  return validationsEntries.filter(([keyValidation]) => keyValidation !== '__typename');
+};
+
+const getValue = (key: string, value: unknown) => {
+  if (value === null) {
+    if (key === VALIDATIONS_DICT.required) return 'Sim';
+    return 'Não';
+  }
+
+  return value;
+};
+
+const getBooleanLabel = (value: boolean) => (value ? 'Sim' : 'Não');
+
+const ValidationsColumn = ({
+  validations,
+  typeField,
+}: {
+  validations?: HealthHubFieldValidation;
+  typeField: HealthHubServiceFieldType;
+}) => {
+  const validationsList = getValidations(validations);
+
+  const isTextField =
+    typeField === HealthHubServiceFieldType.Text ||
+    typeField === HealthHubServiceFieldType.Textarea;
+
+  const getKey = (validationKey: string) => {
+    if (validationKey === 'max' && isTextField) {
+      return VALIDATIONS_DICT.maxText;
+    }
+
+    if (validationKey === 'min' && isTextField) {
+      return VALIDATIONS_DICT.minText;
+    }
+
+    return VALIDATIONS_DICT[validationKey];
+  };
+
   return (
     <div>
       {validationsList.map(([key, value]) => {
-        const renderValue = typeof value === 'boolean' ? getBooleanLabel(value) : value;
+        const renderValue =
+          typeof value === 'boolean' ? getBooleanLabel(value) : getValue(key, value);
+
         return (
           <StyledColumn key={`${key}-${value}`} data-testid="table-validations-column">
-            {VALIDATIONS_DICT[key]}: {renderValue}
+            {getKey(key)}: {renderValue}
           </StyledColumn>
         );
       })}
@@ -98,7 +141,12 @@ function ServiceQuestions({ row }: Props) {
                 <StyledColumn>{FIELD_TYPE_DICT[procedureField.type]}</StyledColumn>
               </TableCell>
               <TableCell>
-                <ValidationsColumn validations={procedureField.validations} />
+                {procedureField.validations && (
+                  <ValidationsColumn
+                    validations={procedureField.validations}
+                    typeField={procedureField.type}
+                  />
+                )}
               </TableCell>
             </TableRow>
           ))}

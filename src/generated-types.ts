@@ -102,7 +102,7 @@ export type HealthHubService = {
   info?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   price?: Maybe<Scalars['Float']>;
-  procedureFields: Array<Maybe<HealthHubServiceField>>;
+  procedureFields: Array<HealthHubServiceField>;
   type: HealthHubFieldType;
   attachMedicalReport?: Maybe<Scalars['Boolean']>;
   emitDeclaration?: Maybe<Scalars['Boolean']>;
@@ -120,7 +120,7 @@ export type HealthHubServiceInput = {
 
 export type HealthHubServiceAll = {
   __typename?: 'HealthHubServiceAll';
-  content?: Maybe<Array<Maybe<HealthHubService>>>;
+  content: Array<HealthHubService>;
   page?: Maybe<Scalars['Int']>;
   totalElements?: Maybe<Scalars['Int']>;
   totalPages?: Maybe<Scalars['Int']>;
@@ -167,36 +167,34 @@ export type User = {
 
 export type ServicePartsFragment = { __typename?: 'HealthHubService' } & Pick<
   HealthHubService,
-  'id' | 'info' | 'name' | 'price' | 'type'
+  'attachMedicalReport' | 'emitDeclaration' | 'id' | 'info' | 'name' | 'price' | 'type'
 > & {
     procedureFields: Array<
-      Maybe<
-        { __typename?: 'HealthHubServiceField' } & Pick<
-          HealthHubServiceField,
-          'key' | 'label' | 'type' | 'value'
-        > & {
-            validations?: Maybe<
-              { __typename?: 'HealthHubFieldValidation' } & Pick<
-                HealthHubFieldValidation,
-                'min' | 'max' | 'required' | 'numbersOnly' | 'currentDate'
+      { __typename?: 'HealthHubServiceField' } & Pick<
+        HealthHubServiceField,
+        'key' | 'label' | 'type' | 'value'
+      > & {
+          validations?: Maybe<
+            { __typename?: 'HealthHubFieldValidation' } & Pick<
+              HealthHubFieldValidation,
+              'min' | 'max' | 'required' | 'numbersOnly' | 'currentDate'
+            >
+          >;
+          values?: Maybe<
+            Array<
+              { __typename?: 'HealthHubServiceValue' } & Pick<
+                HealthHubServiceValue,
+                'key' | 'label' | 'data'
               >
-            >;
-            values?: Maybe<
-              Array<
-                { __typename?: 'HealthHubServiceValue' } & Pick<
-                  HealthHubServiceValue,
-                  'key' | 'label' | 'data'
-                >
-              >
-            >;
-            data?: Maybe<
-              { __typename?: 'HealthHubServiceFieldData' } & Pick<
-                HealthHubServiceFieldData,
-                'unit'
-              >
-            >;
-          }
-      >
+            >
+          >;
+          data?: Maybe<
+            { __typename?: 'HealthHubServiceFieldData' } & Pick<
+              HealthHubServiceFieldData,
+              'unit'
+            >
+          >;
+        }
     >;
   };
 
@@ -220,11 +218,7 @@ export type ServicesQuery = { __typename?: 'Query' } & {
     { __typename?: 'HealthHubServiceAll' } & Pick<
       HealthHubServiceAll,
       'page' | 'totalPages' | 'totalElements'
-    > & {
-        content?: Maybe<
-          Array<Maybe<{ __typename?: 'HealthHubService' } & ServicePartsFragment>>
-        >;
-      }
+    > & { content: Array<{ __typename?: 'HealthHubService' } & ServicePartsFragment> }
   >;
 };
 
@@ -247,6 +241,8 @@ export type GetUserByIdQuery = { __typename?: 'Query' } & {
 
 export const ServicePartsFragmentDoc = gql`
   fragment ServiceParts on HealthHubService {
+    attachMedicalReport
+    emitDeclaration
     id
     info
     name

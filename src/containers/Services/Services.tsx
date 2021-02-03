@@ -15,10 +15,10 @@ import FormatListBulleted from '@material-ui/icons/FormatListBulleted';
 import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import CustomContainer from 'components/Container';
 import Title from 'components/Title';
+import Loading from 'components/Loading';
 import strings from 'strings';
-import mocks from './mocks';
 import ServiceRow from './components/ServiceRow';
-import { HealthHubService } from '.';
+import { useServicesQuery, HealthHubService } from 'generated-types';
 
 export type Services = {
   content: HealthHubService[];
@@ -57,13 +57,11 @@ const useStyles = makeStyles({
 
 function Services() {
   const classes = useStyles();
-  const [data, setData] = React.useState<Services | null>(null);
 
-  React.useEffect(() => {
-    if (mocks) {
-      setData(mocks);
-    }
-  }, []);
+  const { data: { services } = {}, refetch, loading } = useServicesQuery();
+  if (loading) {
+    return <Loading overlay />;
+  }
 
   return (
     <Container maxWidth="lg">
@@ -83,12 +81,12 @@ function Services() {
                     {texts.table.general.column.serviceType}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {texts.table.general.column.edit}r
+                    {texts.table.general.column.edit}
                   </StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {data?.content?.map(row => (
+                {services?.content?.map(row => (
                   <ServiceRow key={row.id} row={row} />
                 ))}
               </TableBody>
@@ -96,10 +94,14 @@ function Services() {
                 <TableRow>
                   <TablePagination
                     rowsPerPageOptions={[]}
-                    count={data?.totalElements ?? 0}
+                    count={services?.totalElements ?? 0}
                     rowsPerPage={20}
-                    page={data?.number ?? 0}
-                    onChangePage={console.log}
+                    page={services?.page ?? 0}
+                    onChangePage={(a, page) => {
+                      refetch({
+                        page,
+                      });
+                    }}
                   />
                 </TableRow>
               </TableFooter>
