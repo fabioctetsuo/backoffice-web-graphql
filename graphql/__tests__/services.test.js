@@ -19,7 +19,6 @@ const originalService = {
   name: 'Vacina Gripe',
   price: 150.59,
   info: 'Aplicável em pessoas fora de grupo de risco',
-  attachMedicalReport: true,
   emitDeclaration: false,
   procedureFields: [
     {
@@ -52,7 +51,6 @@ const graphqlResponseService = {
   name: 'Vacina Gripe',
   price: 150.59,
   info: 'Aplicável em pessoas fora de grupo de risco',
-  attachMedicalReport: true,
   emitDeclaration: false,
   procedureFields: [
     {

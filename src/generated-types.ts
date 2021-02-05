@@ -167,7 +167,7 @@ export type User = {
 
 export type ServicePartsFragment = { __typename?: 'HealthHubService' } & Pick<
   HealthHubService,
-  'attachMedicalReport' | 'emitDeclaration' | 'id' | 'info' | 'name' | 'price' | 'type'
+  'emitDeclaration' | 'id' | 'info' | 'name' | 'price' | 'type'
 > & {
     procedureFields: Array<
       { __typename?: 'HealthHubServiceField' } & Pick<
@@ -241,7 +241,6 @@ export type GetUserByIdQuery = { __typename?: 'Query' } & {
 
 export const ServicePartsFragmentDoc = gql`
   fragment ServiceParts on HealthHubService {
-    attachMedicalReport
     emitDeclaration
     id
     info

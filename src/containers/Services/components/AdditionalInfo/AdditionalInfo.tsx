@@ -25,16 +25,14 @@ function AdditionalInfo({ row }: Props) {
       </Typography>
       <Grid container spacing={1} style={{ marginTop: 8, marginBottom: 24 }}>
         <Grid item xs={12} sm={6}>
-          <strong>{texts.price}</strong>
-          <span>{getPriceInfo(row)}</span>
+          <strong id={`${row.name}-price`}>{texts.price}</strong>{' '}
+          <span aria-labelledby={`${row.name}-price`}>{getPriceInfo(row)}</span>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <strong>{texts.attachMedicalReport}</strong>
-          <span>{row.attachMedicalReport ? 'Sim' : 'Não'}</span>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <strong>{texts.emitDeclaration}</strong>
-          <span>{row.emitDeclaration ? 'Sim' : 'Não'}</span>
+          <strong id={`${row.name}-declaration`}>{texts.emitDeclaration}</strong>{' '}
+          <span aria-labelledby={`${row.name}-declaration`}>
+            {row.emitDeclaration ? 'Sim' : 'Não'}
+          </span>
         </Grid>
       </Grid>
     </Box>
