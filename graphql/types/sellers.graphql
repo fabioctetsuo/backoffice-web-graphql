@@ -1,0 +1,81 @@
+input SellerServiceInput {
+  id: ID!
+  name: String!
+  type: String!
+  price: Float
+  info: String
+}
+
+type SellerService {
+  id: ID!
+  name: String!
+  type: String!
+  price: Float
+  info: String
+}
+
+input SellerAddressInput {
+  city: String
+  country: String
+  neighborhood: String
+  number: Int
+  state: String
+  street: String
+  zipCode: String
+}
+
+type SellerAddress {
+  city: String
+  country: String
+  neighborhood: String
+  number: Int
+  state: String
+  street: String
+  zipCode: String
+}
+
+input SellerInput {
+  name: String
+  services: [SellerServiceInput!]
+  address: SellerAddressInput!
+  externalCode: String
+  documentNumber: String!
+  mobileNumber: String!
+  phoneNumber: String!
+  tradingName: String!
+}
+
+type Seller {
+  id: ID!
+  name: String
+  services: [SellerService!]
+  address: SellerAddress!
+  externalCode: String
+  documentNumber: String!
+  mobileNumber: String!
+  phoneNumber: String!
+  tradingName: String!
+}
+
+type SellersAll {
+  content: [Seller!]!
+  page: Int
+  totalElements: Int
+  totalPages: Int
+}
+
+type Query {
+  seller(id: ID!): Seller!
+  sellers(
+    sort: String
+    name: String
+    documentNumber: String
+    size: Int
+    page: Int
+  ): SellersAll!
+}
+
+type Mutation {
+  createSeller(seller: SellerInput!): Seller
+  updateSeller(seller: SellerInput!, id: ID!): Seller
+}
