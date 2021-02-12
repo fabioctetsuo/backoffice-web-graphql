@@ -17,6 +17,12 @@ enum HealthHubFieldType {
   RAPID_TEST
 }
 
+type HealthHubServiceValueById {
+  key: String!
+  label: String!
+  data: [JSONObject]
+}
+
 type HealthHubServiceValue {
   key: String!
   label: String!
@@ -53,11 +59,19 @@ input HealthHubServiceFieldDataInput {
   unit: String
 }
 
+type HealthHubServiceFieldById {
+  key: String
+  label: String!
+  type: HealthHubServiceFieldType!
+  values: [HealthHubServiceValueById!]
+  validations: HealthHubFieldValidation
+  data: HealthHubServiceFieldData
+}
+
 type HealthHubServiceField {
   key: String
   label: String!
   type: HealthHubServiceFieldType!
-  value: String
   values: [HealthHubServiceValue!]
   validations: HealthHubFieldValidation
   data: HealthHubServiceFieldData
@@ -67,7 +81,6 @@ input HealthHubServiceFieldInput {
   key: String
   label: String!
   type: HealthHubServiceFieldType!
-  value: String
   values: [HealthHubServiceValueInput!]
   validations: HealthHubFieldValidationInput
   data: HealthHubServiceFieldDataInput
@@ -81,6 +94,16 @@ type HealthHubService {
   procedureFields: [HealthHubServiceField!]!
   type: HealthHubFieldType!
   attachMedicalReport: Boolean
+  emitDeclaration: Boolean
+}
+
+type HealthHubServiceById {
+  id: ID!
+  info: String
+  name: String!
+  price: Float
+  procedureFields: [HealthHubServiceFieldById!]!
+  type: HealthHubFieldType!
   emitDeclaration: Boolean
 }
 
@@ -102,7 +125,7 @@ type HealthHubServiceAll {
 }
 
 type Query {
-  service(id: ID!): HealthHubService
+  service(id: ID!): HealthHubServiceById
   services(
     type: HealthHubFieldType
     sort: String

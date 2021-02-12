@@ -34,7 +34,7 @@ export const FIELD_TYPE_DICT: Record<string, string> = {
   INTEGER: 'Inteiro',
   BOOLEAN: 'Opção',
   DATE: 'Data',
-  Datetime: 'Data hora',
+  DATETIME: 'Data hora',
   TEXT: 'Texto',
   TEXTAREA: 'Área de texto',
   SELECT: 'Seletor',

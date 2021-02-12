@@ -59,7 +59,6 @@ const graphqlResponseService = {
       data: null,
       validations: null,
       type: 'SELECT',
-      value: null,
       values: [
         {
           key: 'low',
@@ -96,7 +95,19 @@ describe('Graphql Integration - Services', () => {
       },
     });
 
-    expect(responseRequest.data.service).toEqual(graphqlResponseService);
+    expect(responseRequest.data.service).toEqual({
+      ...graphqlResponseService,
+      procedureFields: [
+        {
+          ...graphqlResponseService.procedureFields[0],
+          values: [
+            { key: 'low', label: 'Sedentário', data: [] },
+            { key: 'active', label: 'Ativo', data: [] },
+            { key: 'atleta', label: 'Atleta', data: [] },
+          ],
+        },
+      ],
+    });
   });
 
   it('Get services', async () => {

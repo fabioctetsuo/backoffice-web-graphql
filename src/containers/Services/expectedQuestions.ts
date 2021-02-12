@@ -66,7 +66,7 @@ export const vaccineQuestions = [
       'Data corrente': 'Sim',
     },
   },
-  { label: 'Data e hora do exame', type: '', validations: {} },
+  { label: 'Data e hora do exame', type: 'Data hora', validations: {} },
   {
     label: 'Observação',
     type: 'Área de texto',

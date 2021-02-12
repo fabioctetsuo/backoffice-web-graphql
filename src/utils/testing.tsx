@@ -34,7 +34,7 @@ type GraphqlMock = {
     variables: Record<string, unknown>;
   };
   result: {
-    data: Record<string, unknown>;
+    data?: Record<string, unknown>;
   };
 };
 

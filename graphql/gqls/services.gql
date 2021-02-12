@@ -16,7 +16,6 @@ fragment ServiceParts on HealthHubService {
       numbersOnly
       currentDate
     }
-    value
     values {
       key
       label
@@ -30,7 +29,32 @@ fragment ServiceParts on HealthHubService {
 
 query service($id: ID!) {
   service(id: $id) {
-    ...ServiceParts
+    emitDeclaration
+    id
+    info
+    name
+    price
+    type
+    procedureFields {
+      key
+      label
+      type
+      validations {
+        min
+        max
+        required
+        numbersOnly
+        currentDate
+      }
+      values {
+        key
+        label
+        data
+      }
+      data {
+        unit
+      }
+    }
   }
 }
 

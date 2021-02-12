@@ -69,5 +69,89 @@ export default {
         },
       },
     },
+    edit: {
+      title: 'Editar serviço',
+      form: {
+        main: {
+          title: 'Informações principais',
+          name: 'Nome do serviço',
+          type: 'Tipo de serviço',
+          info: 'Informações',
+          price: 'Valor',
+        },
+        questions: {
+          title: 'Formulário de perguntas',
+          newQuestion: 'Nova pergunta',
+          table: {
+            a11y: {
+              label: 'Tabela com campos de perguntas',
+              viewDetails: 'Ver campos do formulário para pergunta',
+              remove: 'Remover pergunta',
+            },
+            head: {
+              label: 'Legenda',
+            },
+            fields: {
+              title: 'Configuração do campo',
+              key: {
+                label: 'Identificação',
+              },
+              label: {
+                text: 'Legenda',
+                required: 'O campo de legenda é obrigatório',
+              },
+              fieldType: {
+                text: 'Tipo de campo',
+                required: 'O tipo do campo é obrigatório',
+              },
+              unit: {
+                text: 'Unidade de medida',
+                placeholder: 'Exemplo: mg/dl',
+              },
+              options: {
+                title: 'Opções',
+                label: {
+                  text: 'Legenda da opção',
+                  required: 'Campo legenda é obrigatório',
+                },
+                value: {
+                  text: 'Valor',
+                  required: 'Campo valor é obrigatório',
+                },
+                remove: 'Remover opção',
+                add: 'Adicionar opção',
+                a11y: {
+                  trash: 'Lixeira',
+                  remove: 'Remover opção',
+                },
+                optionData: {
+                  add: 'Adicionar detalhes à opção',
+                  label: {
+                    text: 'Legenda do detalhe',
+                    required: 'Campo legenda é obrigatório',
+                  },
+                  value: {
+                    text: 'Valor do detalhe',
+                    required: 'Campo valor é obrigatório',
+                  },
+                },
+              },
+            },
+            validations: {
+              min: 'Mínimo',
+              max: 'Máximo',
+              required: 'Obrigatório',
+              numbersOnly: 'Numérico',
+              currentDate: 'Data corrente',
+            },
+          },
+        },
+        save: 'Salvar serviço',
+        feedback: {
+          success: 'Serviço atualizado com sucesso.',
+          error: 'Houve um erro ao cadastrar o serviço, por favor tente novamente',
+        },
+      },
+    },
   },
 };
