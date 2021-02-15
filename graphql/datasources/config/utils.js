@@ -1,7 +1,7 @@
 const { pickBy } = require('lodash');
 
 const reducerPageableApi = ({
-  content,
+  content = [],
   pageable: { pageNumber },
   totalElements,
   totalPages,

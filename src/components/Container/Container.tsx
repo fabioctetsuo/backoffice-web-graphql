@@ -12,6 +12,13 @@ const CustomPaper = styled(Paper)`
   padding: ${({ theme }) => theme.spacing(2, 4)};
 `;
 
+const TitleContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+`;
+
 const ButtonContainer = styled.div`
   width: 100%;
   display: flex;
@@ -22,15 +29,29 @@ const ButtonContainer = styled.div`
 type ContainerProps = {
   title?: React.ReactChild;
   children: React.ReactChild | React.ReactChild[];
+  TopButton?: React.ComponentType;
   RightButton?: React.ComponentType;
   elevation?: number;
 };
 
-const Container = ({ title, children, RightButton, elevation = 3 }: ContainerProps) => {
+const Container = ({
+  title,
+  children,
+  TopButton,
+  RightButton,
+  elevation = 3,
+}: ContainerProps) => {
   return (
     <CustomPaper elevation={elevation}>
-      {title}
-      {title && <Divider />}
+      <TitleContainer>
+        {title}
+        {TopButton && (
+          <div>
+            <TopButton />
+          </div>
+        )}
+      </TitleContainer>
+      {(title || TopButton) && <Divider />}
       <InnerContainer>{children}</InnerContainer>
       {RightButton && (
         <ButtonContainer>

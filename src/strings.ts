@@ -154,4 +154,24 @@ export default {
       },
     },
   },
+  sellers: {
+    list: {
+      title: 'Lojas',
+      newSellerButton: 'Nova loja',
+      search: {
+        nameInputLabel: 'Nome',
+        documentNumberInputLabel: 'CNPJ',
+        submitButton: 'Pesquisar',
+        clearButton: 'limpar pesquisa',
+      },
+      table: {
+        title: 'tabela de lojas',
+        header: {
+          sellerName: 'Nome da loja',
+          edit: 'Editar',
+        },
+        emptyState: 'Nenhuma loja encontrada',
+      },
+    },
+  },
 };

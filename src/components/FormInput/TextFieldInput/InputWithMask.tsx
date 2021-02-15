@@ -16,7 +16,7 @@ type InputWithMaskProps = {
   id: string;
   label: string;
   mask: MaskType | ((rawValue: string) => MaskType);
-  adornment?: React.ReactNode;
+  endAdornment?: React.ReactNode;
 };
 
 type TextMaskCustomProps = {
@@ -40,16 +40,16 @@ function TextMaskCustom(props: TextMaskCustomProps) {
   );
 }
 
-function InputWithMask({
+export const InputWithMask = ({
   id,
   field,
   rules,
   label,
   mask,
-  adornment,
+  endAdornment,
   helperText,
   ...inputProps
-}: TextFieldInputProps & InputWithMaskProps) {
+}: TextFieldInputProps & InputWithMaskProps) => {
   const { path } = useContext(FieldContext);
   const { errors } = useFormContext();
   const name = getName(path, field);
@@ -79,7 +79,7 @@ function InputWithMask({
             inputProps={{ mask }}
             inputRef={inputMaskRef}
             error={error}
-            endAdornment={adornment}
+            endAdornment={endAdornment}
             {...inputProps}
           />
         }
@@ -90,6 +90,6 @@ function InputWithMask({
       </FormHelperText>
     </FormControl>
   );
-}
+};
 
 export default withPadding(InputWithMask);

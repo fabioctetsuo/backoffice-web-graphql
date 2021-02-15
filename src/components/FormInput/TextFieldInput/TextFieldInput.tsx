@@ -23,6 +23,7 @@ const TextFieldInput = ({
   rules,
   helperText,
   defaultValue = '',
+  endAdornment,
   ...props
 }: TextFieldInputProps & TextFieldProps) => {
   const { path } = React.useContext(FieldContext);
@@ -48,6 +49,7 @@ const TextFieldInput = ({
           error={isError(name, errors)}
           helperText={getHelperText(name, errors, helperText)}
           inputRef={inputRef}
+          InputProps={{ endAdornment }}
           {...props}
         />
       }
