@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/15852005/106149482-16f3eb80-6159-11eb-9487-4ea7e33b5132.png" alt="Foguete" width="500" />
+</p>
+
 # Health-hub backoffice
 
 Sistema de backoffice para gerenciamento dos Health hubs
@@ -40,6 +44,48 @@ yarn dev
 ```
 
 [Clique aqui para acessar a página inicial do projeto.](http://localhost:3000/)
+
+#### Autenticação em ambiente local
+
+Esse projeto usa o Firebase Authentication para realizar o fluxo de autenticação do usuário na aplicação.
+Para realizar o login em ambiente local, você deve possuir o firebase command tools instalado em sua máquina, o mesmo é responsável por emular o firebase localmente.
+Caso não tenha, rode o seguinte comando para instalar o firebase-tools
+
+```sh
+npm install -g firebase-tools
+```
+
+Com o firebase instalado globalmente, faça login com sua conta do Google da RDSaúde rodando o seguinte comando:
+
+```sh
+firebase login
+```
+
+Agora com o firebase logado, inicie o emulador do firebase, rodando o seguinte comando:
+
+```sh
+firebase emulators:start
+
+┌───────────────────────────────────────────────────────────────────────┐
+│ ✔  All emulators ready! View status and logs at http://localhost:3002 │
+└───────────────────────────────────────────────────────────────────────┘
+
+┌────────────────┬────────────────┬────────────────────────────┐
+│ Emulator       │ Host:Port      │ View in Emulator UI        │
+├────────────────┼────────────────┼────────────────────────────┤
+│ Authentication │ localhost:9099 │ http://localhost:3002/auth │ <---- URL
+└────────────────┴────────────────┴────────────────────────────┘
+```
+
+Acesse a UI do emulador de autenticação mostrada no seu terminal e vamos criar um usuário clicando em `Add User`
+Preencha o `Display Name`, `Email` e `Password` da forma como preferir
+Em `Custom Claims` use o seguite payload:
+
+```json
+{ "roles": ["hh-staff"] }
+```
+
+Obs: Esse usuário criado é alocado em memória. A partir do momento que você encerrar o processo do emulador o usuário também será deletado.
 
 ## Filosofia
 

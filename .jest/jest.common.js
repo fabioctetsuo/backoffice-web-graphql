@@ -18,4 +18,8 @@ module.exports = {
     'jest-watch-typeahead/filename',
     'jest-watch-typeahead/testname',
   ],
+  transform: {
+    '\\.(gql|graphql)$': 'jest-transform-graphql',
+    '.*': 'babel-jest',
+  },
 };

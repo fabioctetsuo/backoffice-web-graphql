@@ -1,0 +1,66 @@
+fragment SellerParts on Seller {
+  id
+  name
+  externalCode
+  documentNumber
+  mobileNumber
+  phoneNumber
+  tradingName
+  address {
+    zipCode
+    city
+    neighborhood
+    country
+    state
+    street
+    number
+  }
+  services {
+    id
+    name
+    type
+    price
+    info
+  }
+}
+
+query seller($id: ID!) {
+  seller(id: $id) {
+    ...SellerParts
+  }
+}
+
+query sellers(
+  $page: Int
+  $size: Int
+  $sort: String
+  $name: String
+  $documentNumber: String
+) {
+  sellers(
+    page: $page
+    size: $size
+    sort: $sort
+    name: $name
+    documentNumber: $documentNumber
+  ) {
+    content {
+      ...SellerParts
+    }
+    page
+    totalPages
+    totalElements
+  }
+}
+
+mutation createSeller($seller: SellerInput!) {
+  createSeller(seller: $seller) {
+    ...SellerParts
+  }
+}
+
+mutation updateSeller($id: ID!, $seller: SellerInput!) {
+  updateSeller(id: $id, seller: $seller) {
+    ...SellerParts
+  }
+}

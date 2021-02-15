@@ -1,63 +1,35 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-
-import Sidebar from './Sidebar';
-import Breadcrumbs, { PathProps } from './Breadcrumbs';
-
-import { getMenuItens } from './menuItens';
-import MenuIcon from '@material-ui/icons/Menu';
-import IconButton from '@material-ui/core/IconButton';
-import Hidden from '@material-ui/core/Hidden';
-import strings from 'strings';
-
-const drawerWidth = 240;
+import Appbar from './Appbar';
+import { getMenuItems } from './menuItens';
 
 const Container = styled.div`
   display: flex;
+  flex-direction: row;
+  height: calc(100% - 90px);
 `;
 
 const Content = styled.main`
-  flex-grow: 1;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
   padding: ${({ theme }) => theme.spacing(2, 4)};
 `;
 
 type LayoutProps = {
-  children: ReactElement;
-  path?: PathProps[];
+  showSidebar?: boolean;
+  withErrorBoundary?: boolean;
 };
 
-const Layout = ({ children, path }: LayoutProps) => {
-  const [open, setOpen] = React.useState(false);
-
-  const menuItens = getMenuItens();
-
+const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const menuItems = getMenuItems();
   return (
-    <Container>
-      <Sidebar
-        open={open}
-        onToggle={setOpen}
-        drawerWidth={drawerWidth}
-        menuItens={menuItens}
-      />
-      <Content>
-        <div>
-          <Hidden smUp>
-            <IconButton
-              onClick={() => setOpen(true)}
-              style={{ padding: 0, marginBottom: 16 }}
-            >
-              <MenuIcon
-                style={{ color: '#000', fontSize: 40 }}
-                titleAccess={strings.sidebar.menuIcon.open}
-              />
-            </IconButton>
-          </Hidden>
-          {path && <Breadcrumbs path={path} />}
-        </div>
-
-        {children}
-      </Content>
-    </Container>
+    <>
+      <Appbar menuItems={menuItems} />
+      <Container>
+        <Content>{children}</Content>
+      </Container>
+    </>
   );
 };
 

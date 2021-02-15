@@ -1,0 +1,139 @@
+enum HealthHubServiceFieldType {
+  FLOAT
+  INTEGER
+  BOOLEAN
+  DATE
+  DATETIME
+  TEXT
+  TEXTAREA
+  SELECT
+  FILE_UPLOAD
+  LABEL
+}
+
+enum HealthHubFieldType {
+  VACCINE
+  PHARMA_SERVICE
+  RAPID_TEST
+}
+
+type HealthHubServiceValueById {
+  key: String!
+  label: String!
+  data: [JSONObject]
+}
+
+type HealthHubServiceValue {
+  key: String!
+  label: String!
+  data: JSONObject
+}
+
+input HealthHubServiceValueInput {
+  key: String!
+  label: String!
+  data: JSONObject
+}
+
+type HealthHubFieldValidation {
+  min: Float
+  max: Float
+  required: Boolean
+  numbersOnly: Boolean
+  currentDate: Boolean
+}
+
+input HealthHubFieldValidationInput {
+  min: Float
+  max: Float
+  required: Boolean
+  numbersOnly: Boolean
+  currentDate: Boolean
+}
+
+type HealthHubServiceFieldData {
+  unit: String
+}
+
+input HealthHubServiceFieldDataInput {
+  unit: String
+}
+
+type HealthHubServiceFieldById {
+  key: String
+  label: String!
+  type: HealthHubServiceFieldType!
+  values: [HealthHubServiceValueById!]
+  validations: HealthHubFieldValidation
+  data: HealthHubServiceFieldData
+}
+
+type HealthHubServiceField {
+  key: String
+  label: String!
+  type: HealthHubServiceFieldType!
+  values: [HealthHubServiceValue!]
+  validations: HealthHubFieldValidation
+  data: HealthHubServiceFieldData
+}
+
+input HealthHubServiceFieldInput {
+  key: String
+  label: String!
+  type: HealthHubServiceFieldType!
+  values: [HealthHubServiceValueInput!]
+  validations: HealthHubFieldValidationInput
+  data: HealthHubServiceFieldDataInput
+}
+
+type HealthHubService {
+  id: ID!
+  info: String
+  name: String!
+  price: Float
+  procedureFields: [HealthHubServiceField!]!
+  type: HealthHubFieldType!
+  attachMedicalReport: Boolean
+  emitDeclaration: Boolean
+}
+
+type HealthHubServiceById {
+  id: ID!
+  info: String
+  name: String!
+  price: Float
+  procedureFields: [HealthHubServiceFieldById!]!
+  type: HealthHubFieldType!
+  emitDeclaration: Boolean
+}
+
+input HealthHubServiceInput {
+  info: String
+  name: String!
+  price: Float
+  procedureFields: [HealthHubServiceFieldInput]!
+  type: HealthHubFieldType!
+  attachMedicalReport: Boolean
+  emitDeclaration: Boolean
+}
+
+type HealthHubServiceAll {
+  content: [HealthHubService!]!
+  page: Int
+  totalElements: Int
+  totalPages: Int
+}
+
+type Query {
+  service(id: ID!): HealthHubServiceById
+  services(
+    type: HealthHubFieldType
+    sort: String
+    size: Int
+    page: Int
+  ): HealthHubServiceAll
+}
+
+type Mutation {
+  updateService(service: HealthHubServiceInput!, id: ID!): HealthHubService
+}
