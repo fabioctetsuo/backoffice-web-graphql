@@ -173,5 +173,92 @@ export default {
         emptyState: 'Nenhuma loja encontrada',
       },
     },
+    edit: {
+      title: 'Editar loja',
+      buttons: {
+        save: 'Salvar',
+        cancel: 'Cancelar',
+      },
+      fields: {
+        tradingName: {
+          label: 'Bandeira',
+          required: 'O campo "Bandeira" é obrigatório',
+        },
+        name: {
+          label: 'Nome',
+          required: 'O campo "Nome" é obrigatório',
+        },
+        documentNumber: {
+          label: 'CNPJ',
+          required: 'O campo "CNPJ" é obrigatório',
+        },
+        externalCode: {
+          label: 'Código externo',
+        },
+        phoneNumber: {
+          label: 'Telefone fixo',
+          required: 'O campo "Telefone" é obrigatório',
+        },
+        mobilePhone: {
+          label: 'Telefone celular',
+          required: 'O campo "Celular" é obrigatório',
+        },
+      },
+      feedback: {
+        success: 'Loja atualizada com sucesso.',
+        error: 'Houve um erro ao atualizar a loja. Por favor, tente novamente.',
+        loadSellerError:
+          'Não foi possível encontrar a loja selecionada. Tente novamente.',
+        cnpjAlreadyRegistered: 'Já existe uma loja cadastrada com este CNPJ.',
+      },
+      alertDialog: {
+        title: 'Deseja cancelar a edição?',
+        contentText: 'Alterações não salvas serão perdidas. Deseja mesmo continuar?',
+        buttons: {
+          confirm: 'Sim',
+          cancel: 'Não',
+        },
+      },
+    },
+  },
+  address: {
+    buttons: {
+      search: 'Pesquisar',
+      loading: 'Pesquisando...',
+    },
+    fields: {
+      zipcode: {
+        label: 'CEP',
+        required: 'O campo "CEP" é obrigatório',
+      },
+      street: {
+        label: 'Logradouro',
+        required: 'O campo "Logradouro" é obrigatório',
+      },
+      number: {
+        label: 'Número',
+        required: 'O campo "Número" é obrigatório',
+      },
+      complement: {
+        label: 'Complemento',
+      },
+      neighborhood: {
+        label: 'Bairro',
+        required: 'O campo "Bairro" é obrigatório',
+      },
+      city: {
+        label: 'Cidade',
+        required: 'O campo "Cidade" é obrigatório',
+      },
+      state: {
+        label: 'Estado',
+        required: 'O campo "Estado" é obrigatório',
+      },
+    },
+    toasts: {
+      success: 'Cadastro atualizado com sucesso.',
+      error: 'Ocorreu um erro durante o cadastro de endereço. Tente novamente.',
+      zipCodeError: 'Não conseguimos encontrar este CEP. Por favor, complete o endereço.',
+    },
   },
 };

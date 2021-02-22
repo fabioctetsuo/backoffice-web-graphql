@@ -1,0 +1,9 @@
+query getAddressByZipcode($zipcode: String!) {
+  getAddressByZipcode(zipcode: $zipcode) {
+    zipcode
+    street
+    neighborhood
+    city
+    state
+  }
+}

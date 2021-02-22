@@ -43,7 +43,7 @@ const customRender = (
   { mocks = [] as GraphqlMock[], mockAuth = {}, ...renderOptions } = {}
 ) => {
   const Wrapper = ({ children }: WrapperProps) => (
-    <MockedProvider mocks={mocks}>
+    <MockedProvider mocks={mocks} addTypename={false}>
       <StylesProvider injectFirst>
         <ThemeProvider theme={theme}>
           <ThemeProviderStyledComponent theme={theme}>

@@ -1,14 +1,15 @@
 import Layout from 'components/Layout';
+import EditSeller from 'containers/EditSeller';
 import { authSSR } from 'utils/authentication';
 
-const SellerPage = () => {
+const EditSellerPage = () => {
   return (
     <Layout>
-      <div>Edição de loja</div>
+      <EditSeller />
     </Layout>
   );
 };
 
 export const getServerSideProps = authSSR;
 
-export default SellerPage;
+export default EditSellerPage;

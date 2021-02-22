@@ -4,6 +4,7 @@ const resolvers = require('./resolvers');
 const UsersAPI = require('./datasources/users');
 const ServicesAPI = require('./datasources/services');
 const SellersAPI = require('./datasources/sellers');
+const ZipcodeAPI = require('./datasources/zipcode');
 
 module.exports = (app, path) => {
   const server = new ApolloServer({
@@ -13,6 +14,7 @@ module.exports = (app, path) => {
       users: new UsersAPI(),
       services: new ServicesAPI(),
       sellers: new SellersAPI(),
+      zipcode: new ZipcodeAPI(),
     }),
     context: ({ req }) => {
       const token = req.headers.authorization || '';

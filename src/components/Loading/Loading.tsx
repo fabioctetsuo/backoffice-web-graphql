@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { CircularProgress, Typography } from '@material-ui/core';
+import { CircularProgress, CircularProgressProps, Typography } from '@material-ui/core';
 
 type Props = {
-  size?: number | string;
   overlay?: boolean;
   text?: string;
 };
@@ -37,7 +36,12 @@ const CustomTypography = styled(Typography)`
   }
 `;
 
-function Loading({ size = 40, overlay = true, text, ...props }: Props) {
+function Loading({
+  size = 40,
+  overlay = true,
+  text,
+  ...props
+}: Props & CircularProgressProps) {
   if (!overlay) return <CircularProgress size={size} {...props} />;
   return (
     <OverlayContainer data-testid="loading-overlay">

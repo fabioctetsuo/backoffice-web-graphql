@@ -42,7 +42,7 @@ function Appbar({ menuItems }: AppbarProps) {
                 name={name}
                 key={id}
                 Icon={Icon}
-                active={route === router.pathname}
+                active={router.pathname.includes(route)}
                 onClick={() => goTo(route)}
               />
             );

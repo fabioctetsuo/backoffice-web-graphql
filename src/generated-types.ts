@@ -35,24 +35,24 @@ export type SellerService = {
 };
 
 export type SellerAddressInput = {
-  city?: Maybe<Scalars['String']>;
-  country?: Maybe<Scalars['String']>;
-  neighborhood?: Maybe<Scalars['String']>;
-  number?: Maybe<Scalars['Int']>;
-  state?: Maybe<Scalars['String']>;
-  street?: Maybe<Scalars['String']>;
-  zipCode?: Maybe<Scalars['String']>;
+  city: Scalars['String'];
+  country: Scalars['String'];
+  neighborhood: Scalars['String'];
+  number: Scalars['Int'];
+  state: Scalars['String'];
+  street: Scalars['String'];
+  zipCode: Scalars['String'];
 };
 
 export type SellerAddress = {
   __typename?: 'SellerAddress';
-  city?: Maybe<Scalars['String']>;
-  country?: Maybe<Scalars['String']>;
-  neighborhood?: Maybe<Scalars['String']>;
-  number?: Maybe<Scalars['Int']>;
-  state?: Maybe<Scalars['String']>;
-  street?: Maybe<Scalars['String']>;
-  zipCode?: Maybe<Scalars['String']>;
+  city: Scalars['String'];
+  country: Scalars['String'];
+  neighborhood: Scalars['String'];
+  number: Scalars['Int'];
+  state: Scalars['String'];
+  street: Scalars['String'];
+  zipCode: Scalars['String'];
 };
 
 export type SellerInput = {
@@ -89,11 +89,16 @@ export type SellersAll = {
 
 export type Query = {
   __typename?: 'Query';
+  getAddressByZipcode?: Maybe<AddressByZipCode>;
   getUserById?: Maybe<User>;
   seller: Seller;
   sellers: SellersAll;
   service?: Maybe<HealthHubServiceById>;
   services?: Maybe<HealthHubServiceAll>;
+};
+
+export type QueryGetAddressByZipcodeArgs = {
+  zipcode: Scalars['String'];
 };
 
 export type QueryGetUserByIdArgs = {
@@ -286,6 +291,45 @@ export type User = {
   active?: Maybe<Scalars['String']>;
 };
 
+export enum States {
+  Ac = 'AC',
+  Al = 'AL',
+  Ap = 'AP',
+  Am = 'AM',
+  Ba = 'BA',
+  Ce = 'CE',
+  Df = 'DF',
+  Es = 'ES',
+  Go = 'GO',
+  Ma = 'MA',
+  Mt = 'MT',
+  Ms = 'MS',
+  Mg = 'MG',
+  Pa = 'PA',
+  Pb = 'PB',
+  Pr = 'PR',
+  Pe = 'PE',
+  Pi = 'PI',
+  Rj = 'RJ',
+  Rn = 'RN',
+  Rs = 'RS',
+  Ro = 'RO',
+  Rr = 'RR',
+  Sc = 'SC',
+  Sp = 'SP',
+  Se = 'SE',
+  To = 'TO',
+}
+
+export type AddressByZipCode = {
+  __typename?: 'AddressByZipCode';
+  zipcode?: Maybe<Scalars['String']>;
+  street?: Maybe<Scalars['String']>;
+  neighborhood?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
+  state?: Maybe<States>;
+};
+
 export type SellerPartsFragment = { __typename?: 'Seller' } & Pick<
   Seller,
   | 'id'
@@ -455,6 +499,19 @@ export type GetUserByIdQueryVariables = Exact<{
 
 export type GetUserByIdQuery = { __typename?: 'Query' } & {
   getUserById?: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'name' | 'active'>>;
+};
+
+export type GetAddressByZipcodeQueryVariables = Exact<{
+  zipcode: Scalars['String'];
+}>;
+
+export type GetAddressByZipcodeQuery = { __typename?: 'Query' } & {
+  getAddressByZipcode?: Maybe<
+    { __typename?: 'AddressByZipCode' } & Pick<
+      AddressByZipCode,
+      'zipcode' | 'street' | 'neighborhood' | 'city' | 'state'
+    >
+  >;
 };
 
 export const SellerPartsFragmentDoc = gql`
@@ -933,4 +990,64 @@ export type GetUserByIdLazyQueryHookResult = ReturnType<typeof useGetUserByIdLaz
 export type GetUserByIdQueryResult = Apollo.QueryResult<
   GetUserByIdQuery,
   GetUserByIdQueryVariables
+>;
+export const GetAddressByZipcodeDocument = gql`
+  query getAddressByZipcode($zipcode: String!) {
+    getAddressByZipcode(zipcode: $zipcode) {
+      zipcode
+      street
+      neighborhood
+      city
+      state
+    }
+  }
+`;
+
+/**
+ * __useGetAddressByZipcodeQuery__
+ *
+ * To run a query within a React component, call `useGetAddressByZipcodeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAddressByZipcodeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAddressByZipcodeQuery({
+ *   variables: {
+ *      zipcode: // value for 'zipcode'
+ *   },
+ * });
+ */
+export function useGetAddressByZipcodeQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetAddressByZipcodeQuery,
+    GetAddressByZipcodeQueryVariables
+  >
+) {
+  return Apollo.useQuery<GetAddressByZipcodeQuery, GetAddressByZipcodeQueryVariables>(
+    GetAddressByZipcodeDocument,
+    baseOptions
+  );
+}
+export function useGetAddressByZipcodeLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetAddressByZipcodeQuery,
+    GetAddressByZipcodeQueryVariables
+  >
+) {
+  return Apollo.useLazyQuery<GetAddressByZipcodeQuery, GetAddressByZipcodeQueryVariables>(
+    GetAddressByZipcodeDocument,
+    baseOptions
+  );
+}
+export type GetAddressByZipcodeQueryHookResult = ReturnType<
+  typeof useGetAddressByZipcodeQuery
+>;
+export type GetAddressByZipcodeLazyQueryHookResult = ReturnType<
+  typeof useGetAddressByZipcodeLazyQuery
+>;
+export type GetAddressByZipcodeQueryResult = Apollo.QueryResult<
+  GetAddressByZipcodeQuery,
+  GetAddressByZipcodeQueryVariables
 >;

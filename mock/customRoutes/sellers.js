@@ -38,7 +38,10 @@ module.exports = function (server, router) {
     const sellerFound = sellersData.find(({ id: sellerID }) => sellerID === id).value();
 
     if (sellerFound) {
-      const originalSellerIndex = sellersData.indexOf(seller);
+      const originalSellerIndex = sellersData
+        .findIndex(({ id: sellerID }) => sellerID === id)
+        .value();
+
       const updatedSeller = {
         ...sellerFound,
         ...seller,

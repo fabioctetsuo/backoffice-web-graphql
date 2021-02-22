@@ -15,23 +15,23 @@ type SellerService {
 }
 
 input SellerAddressInput {
-  city: String
-  country: String
-  neighborhood: String
-  number: Int
-  state: String
-  street: String
-  zipCode: String
+  city: String!
+  country: String!
+  neighborhood: String!
+  number: Int!
+  state: String!
+  street: String!
+  zipCode: String!
 }
 
 type SellerAddress {
-  city: String
-  country: String
-  neighborhood: String
-  number: Int
-  state: String
-  street: String
-  zipCode: String
+  city: String!
+  country: String!
+  neighborhood: String!
+  number: Int!
+  state: String!
+  street: String!
+  zipCode: String!
 }
 
 input SellerInput {

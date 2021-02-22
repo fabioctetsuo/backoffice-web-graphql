@@ -6,7 +6,7 @@ import { ThemeProvider, StylesProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider as ThemeProviderStyledComponent } from 'styled-components';
 
-import { InMemoryCache, ApolloClient, HttpLink } from '@apollo/client';
+import { InMemoryCache, ApolloClient, HttpLink, ApolloLink } from '@apollo/client';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { setContext } from '@apollo/client/link/context';
 import { withBasePath } from 'utils/withBasePath';
@@ -15,6 +15,17 @@ type AppProviderdProps = {
   children: ReactChild;
   token: string;
 };
+
+const cleanTypeName = new ApolloLink((operation, forward) => {
+  if (operation.variables) {
+    const omitTypename = (key: string, value: unknown) =>
+      key === '__typename' ? undefined : value;
+    operation.variables = JSON.parse(JSON.stringify(operation.variables), omitTypename);
+  }
+  return forward(operation).map(data => {
+    return data;
+  });
+});
 
 function AppProviders({ children, token }: AppProviderdProps) {
   const httpLink = new HttpLink({ uri: withBasePath('/graphql'), fetch });
@@ -29,7 +40,7 @@ function AppProviders({ children, token }: AppProviderdProps) {
   });
 
   const client = new ApolloClient({
-    link: authLink.concat(httpLink),
+    link: HttpLink.from([cleanTypeName, authLink.concat(httpLink)]),
     cache: new InMemoryCache(),
   });
 
