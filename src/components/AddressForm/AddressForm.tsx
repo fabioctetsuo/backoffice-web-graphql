@@ -138,7 +138,14 @@ const AddressForm = () => {
           />
         </Grid>
         <Grid item xs={12} md={4}>
-          <TextField disabled={zipcodeLoading} field="country" label="País" />
+          <TextField
+            disabled={zipcodeLoading}
+            field="country"
+            label={fieldTexts.country.label}
+            rules={{
+              required: fieldTexts.country.required,
+            }}
+          />
         </Grid>
       </Grid>
     </FieldContext.Provider>

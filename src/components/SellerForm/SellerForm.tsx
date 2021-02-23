@@ -17,7 +17,7 @@ import AlertDialog from './AlertDialog';
 import { Seller } from 'generated-types';
 
 import strings from 'strings';
-const texts = strings.sellers.edit;
+const texts = strings.sellers.sellerForm;
 
 const tradingNameOptions = [
   { label: 'Raia', value: 'Raia' },
@@ -30,11 +30,7 @@ type SellerFormProps = {
   isSubmitting: boolean;
 };
 
-export const SellerForm = ({
-  defaultValues,
-  onSubmit,
-  isSubmitting,
-}: SellerFormProps) => {
+const SellerForm = ({ defaultValues, onSubmit, isSubmitting }: SellerFormProps) => {
   const router = useRouter();
   const methods = useForm({
     defaultValues,
@@ -57,7 +53,7 @@ export const SellerForm = ({
   const handleEditSeller = (data: Seller) => {
     const payload = {
       ...data,
-      services: defaultValues?.services,
+      services: defaultValues?.services || [],
     };
 
     onSubmit(payload);
@@ -165,3 +161,5 @@ export const SellerForm = ({
     </FormProvider>
   );
 };
+
+export default SellerForm;

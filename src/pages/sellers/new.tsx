@@ -1,10 +1,11 @@
 import Layout from 'components/Layout';
+import NewSeller from 'containers/NewSeller';
 import { authSSR } from 'utils/authentication';
 
 const SellerPage = () => {
   return (
     <Layout>
-      <div>cadastro de loja</div>
+      <NewSeller />
     </Layout>
   );
 };

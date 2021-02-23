@@ -1,37 +1,24 @@
 import React from 'react';
 import { Container } from '@material-ui/core';
-import { EditOutlined } from '@material-ui/icons';
+import { BusinessOutlined } from '@material-ui/icons';
 import Title from 'components/Title';
 import CustomContainer from 'components/Container';
 import { useRouter } from 'next/router';
 
 import strings from 'strings';
-import { Seller, useSellerQuery, useUpdateSellerMutation } from 'generated-types';
+import { Seller, useCreateSellerMutation } from 'generated-types';
 import SellerForm from 'components/SellerForm';
-import Loading from 'components/Loading';
 import useToast from 'hooks/useToast';
 import removeInputMask from 'components/FormInput/TextFieldInput/helpers/removeInputMask';
 import { handleGraphqlError } from 'utils/graphql';
 
-const texts = strings.sellers.edit;
+const texts = strings.sellers.new;
 
-const EditSeller = () => {
+const NewSeller = () => {
   const router = useRouter();
   const renderToast = useToast();
 
-  const sellerID = router.query['id'] as string;
-
-  const { data: sellerData, loading } = useSellerQuery({
-    variables: {
-      id: sellerID,
-    },
-    onError: () => {
-      router.push('/sellers');
-      renderToast(texts.feedback.loadSellerError, 'error');
-    },
-  });
-
-  const [updateSeller, { loading: updateSellerLoading }] = useUpdateSellerMutation({
+  const [createSeller, { loading: createSellerLoading }] = useCreateSellerMutation({
     onError: error => {
       handleGraphqlError(error.graphQLErrors, codes => {
         if (codes.length) {
@@ -66,9 +53,8 @@ const EditSeller = () => {
       },
     };
 
-    updateSeller({
+    createSeller({
       variables: {
-        id: sellerID,
         seller,
       },
     });
@@ -77,22 +63,14 @@ const EditSeller = () => {
   return (
     <Container maxWidth="lg">
       <main>
-        <CustomContainer title={<Title StartIcon={EditOutlined}>{texts.title}</Title>}>
-          {loading || !sellerData ? (
-            <div style={{ position: 'relative', minHeight: 250 }}>
-              <Loading />
-            </div>
-          ) : (
-            <SellerForm
-              defaultValues={sellerData?.seller}
-              onSubmit={handleSubmit}
-              isSubmitting={updateSellerLoading}
-            />
-          )}
+        <CustomContainer
+          title={<Title StartIcon={BusinessOutlined}>{texts.title}</Title>}
+        >
+          <SellerForm onSubmit={handleSubmit} isSubmitting={createSellerLoading} />
         </CustomContainer>
       </main>
     </Container>
   );
 };
 
-export default EditSeller;
+export default NewSeller;

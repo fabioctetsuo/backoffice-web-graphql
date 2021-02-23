@@ -175,6 +175,39 @@ export default {
     },
     edit: {
       title: 'Editar loja',
+      feedback: {
+        success: 'Loja atualizada com sucesso.',
+        error: 'Houve um erro ao atualizar a loja. Por favor, tente novamente.',
+        loadSellerError:
+          'Não foi possível encontrar a loja selecionada. Tente novamente.',
+        cnpjAlreadyRegistered: 'Já existe uma loja cadastrada com este CNPJ.',
+      },
+      alertDialog: {
+        title: 'Deseja cancelar a edição?',
+        contentText: 'Alterações não salvas serão perdidas. Deseja mesmo continuar?',
+        buttons: {
+          confirm: 'Sim',
+          cancel: 'Não',
+        },
+      },
+    },
+    new: {
+      title: 'Cadastrar loja',
+      feedback: {
+        success: 'Loja cadastrada com sucesso.',
+        error: 'Houve um erro ao cadastrar a loja. Por favor, tente novamente.',
+        cnpjAlreadyRegistered: 'Já existe uma loja cadastrada com este CNPJ.',
+      },
+      alertDialog: {
+        title: 'Deseja cancelar o cadastro?',
+        contentText: 'Alterações não salvas serão perdidas. Deseja mesmo continuar?',
+        buttons: {
+          confirm: 'Sim',
+          cancel: 'Não',
+        },
+      },
+    },
+    sellerForm: {
       buttons: {
         save: 'Salvar',
         cancel: 'Cancelar',
@@ -202,21 +235,6 @@ export default {
         mobilePhone: {
           label: 'Telefone celular',
           required: 'O campo "Celular" é obrigatório',
-        },
-      },
-      feedback: {
-        success: 'Loja atualizada com sucesso.',
-        error: 'Houve um erro ao atualizar a loja. Por favor, tente novamente.',
-        loadSellerError:
-          'Não foi possível encontrar a loja selecionada. Tente novamente.',
-        cnpjAlreadyRegistered: 'Já existe uma loja cadastrada com este CNPJ.',
-      },
-      alertDialog: {
-        title: 'Deseja cancelar a edição?',
-        contentText: 'Alterações não salvas serão perdidas. Deseja mesmo continuar?',
-        buttons: {
-          confirm: 'Sim',
-          cancel: 'Não',
         },
       },
     },
@@ -253,6 +271,10 @@ export default {
       state: {
         label: 'Estado',
         required: 'O campo "Estado" é obrigatório',
+      },
+      country: {
+        label: 'País',
+        required: 'O campo "País" é obrigatório',
       },
     },
     toasts: {
