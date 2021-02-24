@@ -16,7 +16,7 @@ const defaultSellerData = {
     state: 'SP',
     country: 'Brasil',
   },
-  services: [],
+  services: null,
 };
 
 export default {
@@ -47,7 +47,7 @@ export default {
             number: 1257,
             __typename: 'SellerAddress',
           },
-          services: [],
+          services: null,
           __typename: 'Seller',
         },
       },

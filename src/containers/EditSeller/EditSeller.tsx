@@ -84,6 +84,7 @@ const EditSeller = () => {
             </div>
           ) : (
             <SellerForm
+              disableCNPJ
               defaultValues={sellerData?.seller}
               onSubmit={handleSubmit}
               isSubmitting={updateSellerLoading}

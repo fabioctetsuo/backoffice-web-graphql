@@ -252,6 +252,7 @@ export default {
         documentNumber: {
           label: 'CNPJ',
           required: 'O campo "CNPJ" é obrigatório',
+          validate: 'CNPJ inválido',
         },
         externalCode: {
           label: 'Código externo',

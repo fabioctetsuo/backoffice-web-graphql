@@ -17,6 +17,7 @@ type InputWithMaskProps = {
   label: string;
   mask: MaskType | ((rawValue: string) => MaskType);
   endAdornment?: React.ReactNode;
+  disabled?: boolean;
 };
 
 type TextMaskCustomProps = {
@@ -48,6 +49,7 @@ export const InputWithMask = ({
   mask,
   endAdornment,
   helperText,
+  disabled,
   ...inputProps
 }: TextFieldInputProps & InputWithMaskProps) => {
   const { path } = useContext(FieldContext);
@@ -80,6 +82,7 @@ export const InputWithMask = ({
             inputRef={inputMaskRef}
             error={error}
             endAdornment={endAdornment}
+            disabled={disabled}
             {...inputProps}
           />
         }

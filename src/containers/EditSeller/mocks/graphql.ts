@@ -188,7 +188,7 @@ export default {
         id: defaultUpdateVariables.id,
         seller: {
           ...defaultUpdateVariables.seller,
-          documentNumber: '61585865216822',
+          name: 'Loja atualizada',
         },
       },
     },

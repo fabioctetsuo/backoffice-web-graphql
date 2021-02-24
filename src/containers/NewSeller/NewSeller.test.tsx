@@ -134,6 +134,27 @@ describe('<NewSeller />', () => {
       expect(mockRouterPush).toHaveBeenCalledWith('/sellers');
     });
 
+    it('Should validate CNPJ', async () => {
+      render(<NewSeller />);
+
+      // fill with a invalid CNPJ
+      fireEvent.change(screen.getByLabelText(/CNPJ/i), {
+        target: { value: '12123123123411' },
+      });
+
+      userEvent.click(screen.getByRole('button', { name: /salvar/i }));
+      expect(await screen.findByText(/CNPJ inválido/i)).toBeInTheDocument();
+
+      // change to a valid CNPJ
+      fireEvent.change(screen.getByLabelText(/CNPJ/i), {
+        target: { value: '51921594000104' },
+      });
+
+      await waitFor(() => {
+        expect(screen.queryByText(/CNPJ inválido/i)).not.toBeInTheDocument();
+      });
+    });
+
     it('Should do not display the confirm dialog and go to "/sellers" if the form is not dirty', async () => {
       render(<NewSeller />);
 

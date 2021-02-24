@@ -17,6 +17,7 @@ import AlertDialog from './AlertDialog';
 import { Seller } from 'generated-types';
 
 import strings from 'strings';
+import { isCNPJValid } from 'utils/validations/cnpj';
 const texts = strings.sellers.sellerForm;
 
 const tradingNameOptions = [
@@ -28,9 +29,15 @@ type SellerFormProps = {
   defaultValues?: Seller;
   onSubmit: (data: Seller) => void;
   isSubmitting: boolean;
+  disableCNPJ?: boolean;
 };
 
-const SellerForm = ({ defaultValues, onSubmit, isSubmitting }: SellerFormProps) => {
+const SellerForm = ({
+  defaultValues,
+  onSubmit,
+  isSubmitting,
+  disableCNPJ,
+}: SellerFormProps) => {
   const router = useRouter();
   const methods = useForm({
     defaultValues,
@@ -53,7 +60,7 @@ const SellerForm = ({ defaultValues, onSubmit, isSubmitting }: SellerFormProps) 
   const handleEditSeller = (data: Seller) => {
     const payload = {
       ...data,
-      services: defaultValues?.services || [],
+      services: defaultValues?.services || null,
     };
 
     onSubmit(payload);
@@ -88,10 +95,13 @@ const SellerForm = ({ defaultValues, onSubmit, isSubmitting }: SellerFormProps) 
             <InputWithMask
               id="seller-cnpj"
               field="documentNumber"
+              disabled={Boolean(disableCNPJ)}
               label={texts.fields.documentNumber.label}
               mask={CNPJ_MASK}
               rules={{
                 required: texts.fields.documentNumber.required,
+                validate: value =>
+                  isCNPJValid(value) || texts.fields.documentNumber.validate,
               }}
             />
           </Grid>

@@ -1,4 +1,4 @@
-import { render, screen, userEvent, fireEvent, waitFor } from 'utils/testing';
+import { render, screen, userEvent, waitFor } from 'utils/testing';
 import EditSeller from './EditSeller';
 
 import mocks from './mocks/graphql';
@@ -41,6 +41,16 @@ describe('<EditSeller />', () => {
     expect(screen.getByLabelText(/País/i)).toHaveValue('Brasil');
   });
 
+  it('Should disable the CNPJ (documentNumber) field', async () => {
+    render(<EditSeller />, {
+      mocks: [mocks.getSellerSuccess],
+    });
+    await waitFor(() => {
+      expect(screen.getByLabelText(/CNPJ/i)).toHaveValue('61.585.865/2168-39');
+    });
+    expect(screen.getByLabelText(/CNPJ/i)).toBeDisabled();
+  });
+
   it('Should edit the seller name, submit with success and redirect to "/sellers"', async () => {
     render(<EditSeller />, {
       mocks: [mocks.getSellerSuccess, mocks.updateSeller],
@@ -56,30 +66,13 @@ describe('<EditSeller />', () => {
     });
   });
 
-  it('Should display a toast message if CNPJ is already registered', async () => {
-    render(<EditSeller />, {
-      mocks: [mocks.getSellerSuccess, mocks.updateSellerWithCnpjAlreadRegistered],
-    });
-
-    fireEvent.change(await screen.findByLabelText(/CNPJ/i), {
-      target: { value: '61585865216800' },
-    });
-
-    userEvent.click(screen.getByText(/salvar/i));
-
-    expect(
-      await screen.findByText(/Já existe uma loja cadastrada com este CNPJ./i)
-    ).toBeInTheDocument();
-  });
-
   it('Should display a toast message if a generic error occurs when trying to update the seller', async () => {
     render(<EditSeller />, {
       mocks: [mocks.getSellerSuccess, mocks.updateSellerError],
     });
 
-    fireEvent.change(await screen.findByLabelText(/CNPJ/i), {
-      target: { value: '61585865216822' },
-    });
+    userEvent.clear(await screen.findByLabelText(/nome/i));
+    userEvent.type(await screen.findByLabelText(/nome/i), 'Loja atualizada');
 
     userEvent.click(screen.getByText(/salvar/i));
 
