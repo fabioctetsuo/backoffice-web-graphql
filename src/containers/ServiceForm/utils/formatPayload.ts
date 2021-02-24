@@ -3,11 +3,12 @@ import {
   HealthHubServiceFieldData,
   HealthHubServiceFieldById,
   HealthHubServiceById,
+  HealthHubServiceInput,
 } from 'generated-types';
 
 type HealthHubFieldValidationForm = {
-  min?: number | '';
-  max?: number | '';
+  min: number;
+  max: number;
   required: boolean;
   numbersOnly: boolean;
   currentDate: boolean;
@@ -30,14 +31,10 @@ const getFormattedValues = (values?: HealthHubServiceValueById[] | null) => {
 };
 
 const getFormattedValidations = (validations: HealthHubFieldValidationForm) => {
-  return Object.entries(validations)
-    .filter(([_, value]) => value !== '')
-    .reduce((acc, [prevKey, prevValue]) => {
-      if (prevKey === 'min' || prevKey === 'max') {
-        return { ...acc, [prevKey]: parseFloat(prevValue as string) };
-      }
-      return { ...acc, [prevKey]: prevValue };
-    }, {});
+  const { min, max, ...booleanProps } = validations;
+  const optionalMin = min ? { min } : {};
+  const optionalMax = max ? { max } : {};
+  return { ...booleanProps, ...optionalMin, ...optionalMax };
 };
 
 const getFormattedData = (data?: HealthHubServiceFieldData | null) => {
@@ -46,30 +43,29 @@ const getFormattedData = (data?: HealthHubServiceFieldData | null) => {
 };
 
 const getFormattedProcedureFields = (procedureFields: HealthHubServiceFieldById[]) => {
-  return procedureFields.map(procedureField => {
-    const values = getFormattedValues(procedureField.values);
+  return procedureFields.map(({ values, validations, data, ...procedureField }) => {
     return {
       ...procedureField,
-      values,
-      validations: getFormattedValidations(
-        procedureField.validations as HealthHubFieldValidationForm
-      ),
-      data: getFormattedData(procedureField.data),
+      values: getFormattedValues(values),
+      validations: getFormattedValidations(validations as HealthHubFieldValidationForm),
+      data: getFormattedData(data),
     };
   });
 };
 
-const getFormattedPrice = (price?: string | null) => {
+export const getFormattedPrice = (price?: string | null) => {
   if (!price) return null;
   if (typeof price === 'number') return price;
   const unmaskPrice = price.replace(/R\$ /g, '').replace(/\./g, '').replace(',', '.');
   return parseFloat(unmaskPrice);
 };
 
-export const getFormattedPayload = (payload: HealthHubServiceById) => {
+export const getFormattedPayload = (
+  payload: HealthHubServiceById
+): HealthHubServiceInput => {
   return {
     ...payload,
-    price: getFormattedPrice((payload.price as unknown) as string),
+    price: (payload.price as unknown) as number | null,
     procedureFields: getFormattedProcedureFields(payload.procedureFields),
   };
 };

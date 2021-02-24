@@ -17,7 +17,7 @@ type OptionsGeneratorProps = {
   rowType: HealthHubServiceFieldType;
 };
 
-const texts = strings.services.edit.form.questions.table.fields.options;
+const texts = strings.services.form.questions.table.fields.options;
 
 const OptionData: React.FC<OptionDataProps> = ({ rowPosition, procedurePosition }) => {
   const { control } = useFormContext();
@@ -41,10 +41,19 @@ const OptionData: React.FC<OptionDataProps> = ({ rowPosition, procedurePosition 
             <TextField
               field={`procedureFields[${procedurePosition}].values[${rowPosition}].data[${index}].label`}
               label={texts.optionData.label.text}
-              rules={{ required: texts.optionData.label.required }}
+              placeholder={texts.optionData.label.placeholder}
+              helperText={texts.optionData.label.helper}
               defaultValue={option.label}
               fullWidth
               padding="0"
+              rules={{
+                required: texts.optionData.label.required,
+                pattern: {
+                  value: /^[a-zA-Z_]*$/,
+                  message: texts.optionData.label.pattern,
+                },
+                setValueAs: (value: string) => value.toLowerCase(),
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={5}>
@@ -78,13 +87,15 @@ function OptionsGenerator({ position, rowType }: OptionsGeneratorProps) {
     control,
     name: `procedureFields[${position}].values`,
   });
+  const isSelect = rowType === HealthHubServiceFieldType.Select;
+  const disableDeleteButton = fields.length <= 1 && isSelect;
   const handleAddOption = () => {
     append({ key: '', label: '' });
   };
 
-  if (rowType === HealthHubServiceFieldType.Select) {
-    if (fields.length === 0) handleAddOption();
-  }
+  React.useEffect(() => {
+    if (isSelect && fields.length === 0) handleAddOption();
+  }, [rowType]);
 
   return (
     <div style={{ marginTop: 16 }}>
@@ -126,7 +137,7 @@ function OptionsGenerator({ position, rowType }: OptionsGeneratorProps) {
               <Grid item container xs={12} sm={2} alignContent="center" justify="center">
                 <IconButton
                   aria-label={texts.a11y.remove}
-                  disabled={fields.length <= 1}
+                  disabled={disableDeleteButton}
                   onClick={() => remove(rowPosition)}
                 >
                   <DeleteOutline titleAccess={texts.a11y.trash} />

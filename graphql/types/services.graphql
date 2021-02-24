@@ -101,7 +101,7 @@ type HealthHubServiceById {
   id: ID!
   info: String
   name: String!
-  price: Float
+  price: String
   procedureFields: [HealthHubServiceFieldById!]!
   type: HealthHubFieldType!
   emitDeclaration: Boolean
@@ -136,4 +136,5 @@ type Query {
 
 type Mutation {
   updateService(service: HealthHubServiceInput!, id: ID!): HealthHubService
+  createService(service: HealthHubServiceInput!): HealthHubService
 }

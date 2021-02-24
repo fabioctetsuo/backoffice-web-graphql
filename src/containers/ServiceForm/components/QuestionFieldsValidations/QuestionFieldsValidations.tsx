@@ -6,7 +6,7 @@ import { HealthHubServiceField } from 'generated-types';
 import { Typography } from '@material-ui/core';
 import strings from 'strings';
 
-const texts = strings.services.edit.form.questions.table.validations;
+const texts = strings.services.form.questions.table.validations;
 
 const defaultCheckboxes = [
   {
@@ -29,11 +29,14 @@ const defaultCheckboxes = [
 const Container = styled.div`
   margin: 16px 0;
   display: flex;
-  flex-direction: row;
   border: 1px solid #c9c9c9;
   border-radius: 8px;
   gap: 16px;
   padding: 24px;
+
+  ${({ theme }) => theme.breakpoints.down('xs')} {
+    flex-direction: column;
+  }
 `;
 
 function QuestionFieldsValidations({
@@ -57,7 +60,7 @@ function QuestionFieldsValidations({
   return (
     <>
       <Typography variant="subtitle1" style={{ fontWeight: 'bold' }}>
-        Validações do campo
+        {texts.title}
       </Typography>
       <Container>
         <CheckboxesGroup
@@ -73,6 +76,7 @@ function QuestionFieldsValidations({
             defaultValue={row.validations?.min ?? ''}
             fullWidth
             padding="4px 0"
+            rules={{ valueAsNumber: true }}
           />
           <TextField
             type="number"
@@ -80,6 +84,7 @@ function QuestionFieldsValidations({
             defaultValue={row.validations?.max ?? ''}
             fullWidth
             label={texts.max}
+            rules={{ valueAsNumber: true }}
           />
         </div>
       </Container>

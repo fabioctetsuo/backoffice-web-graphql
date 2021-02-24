@@ -35,6 +35,7 @@ type GraphqlMock = {
   };
   result: {
     data?: Record<string, unknown>;
+    errors?: any;
   };
 };
 

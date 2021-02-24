@@ -25,10 +25,14 @@ module.exports = {
               values: formattedValues,
             };
           }
-          return field;
+          return {
+            ...field,
+            values: [],
+          };
         });
         return {
           ...response,
+          price: response.price ? `${response.price}`.replace('.', ',') : null,
           procedureFields: formattedProcedureFields,
         };
       }
@@ -42,6 +46,9 @@ module.exports = {
   Mutation: {
     updateService: (_, { id, service }, { dataSources }) => {
       return dataSources.services.updateResource(id, service);
+    },
+    createService: (_, { service }, { dataSources }) => {
+      return dataSources.services.createResource(service);
     },
   },
 };

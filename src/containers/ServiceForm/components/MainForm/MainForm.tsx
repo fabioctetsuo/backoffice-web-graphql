@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { createNumberMask } from 'text-mask-addons';
 import { TextField } from 'components/FormInput/TextFieldInput/TextFieldInput';
 import SelectInput from 'components/FormInput/SelectInput';
@@ -6,8 +6,10 @@ import { HealthHubFieldType } from 'generated-types';
 import { SERVICE_TYPES } from 'containers/Services/Services';
 import { Grid, Typography } from '@material-ui/core';
 import strings from 'strings';
+import { useWatch, useFormContext } from 'react-hook-form';
+import { getFormattedPrice } from '../../utils/formatPayload';
 
-const texts = strings.services.edit.form.main;
+const texts = strings.services.form.main;
 
 const currencyMask = createNumberMask({
   prefix: 'R$ ',
@@ -15,6 +17,7 @@ const currencyMask = createNumberMask({
   decimalSymbol: ',',
   thousandsSeparatorSymbol: '.',
   integerLimit: 5,
+  decimalLimit: 2,
 });
 
 const selectOptions = Object.values(HealthHubFieldType).map(serviceType => ({
@@ -23,6 +26,12 @@ const selectOptions = Object.values(HealthHubFieldType).map(serviceType => ({
 }));
 
 function MainForm() {
+  const { control } = useFormContext();
+  const price = useWatch<number>({
+    control,
+    name: 'price',
+  });
+
   return (
     <>
       <Grid container style={{ marginBottom: 16 }}>
@@ -34,7 +43,11 @@ function MainForm() {
       </Grid>
       <Grid container spacing={2} aria-labelledby="main-info-form">
         <Grid item xs={12} sm={5}>
-          <TextField field="name" label={texts.name} />
+          <TextField
+            field="name"
+            label={texts.name.text}
+            rules={{ required: texts.name.required }}
+          />
         </Grid>
         <Grid item xs={12} sm={3}>
           <SelectInput
@@ -46,7 +59,17 @@ function MainForm() {
           />
         </Grid>
         <Grid item xs={12} sm={5}>
-          <TextField field="info" label={texts.info} />
+          <TextField
+            field="info"
+            label={texts.info.text}
+            rules={{
+              validate: value => {
+                if (price && price > 0) return true;
+                if (value) return true;
+                return texts.info.required;
+              },
+            }}
+          />
         </Grid>
         <Grid item xs={12} sm={3}>
           <TextField.Mask
@@ -55,6 +78,7 @@ function MainForm() {
             mask={currencyMask}
             id="price"
             padding="0"
+            rules={{ setValueAs: getFormattedPrice }}
           />
         </Grid>
       </Grid>

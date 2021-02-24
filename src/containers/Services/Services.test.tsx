@@ -15,6 +15,8 @@ import {
   covidQuestions,
 } from './expectedQuestions';
 
+const mockedPush = jest.fn();
+
 const getServiceData = (dataExpandRow: HTMLElement) => {
   const expandRowButton = within(dataExpandRow).getByRole('button', {
     name: 'Ver detalhes do serviço',
@@ -82,6 +84,12 @@ const closeRow = async (dataExpandRow: HTMLElement) => {
     .catch(err => console.log(err));
 };
 
+jest.mock('next/router', () => ({
+  useRouter: () => ({
+    push: mockedPush,
+  }),
+}));
+
 describe('Services list', () => {
   it('Must render services list correctly', async () => {
     render(<Services />, {
@@ -143,5 +151,16 @@ describe('Services list', () => {
     ]);
     expect(covidTable.questions).toEqual(covidQuestions);
     await closeRow(covidRow);
+  });
+
+  it('must redirect to new service form page', async () => {
+    render(<Services />, {
+      mocks: [graphqlMock.getServicesSuccess],
+    });
+
+    const newServiceButton = await screen.findByRole('button', { name: /NOVO SERVIÇO/i });
+    userEvent.click(newServiceButton);
+    expect(mockedPush).toHaveBeenCalledTimes(1);
+    expect(mockedPush).toHaveBeenCalledWith('/services/new');
   });
 });

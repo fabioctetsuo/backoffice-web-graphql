@@ -7,7 +7,7 @@ import OptionsGenerator from '../OptionsGenerator';
 import { FIELD_TYPE_DICT } from 'containers/Services/components/ServiceQuestions/ServiceQuestions';
 import strings from 'strings';
 
-const texts = strings.services.edit.form.questions.table.fields;
+const texts = strings.services.form.questions.table.fields;
 
 type Props = {
   row: HealthHubServiceField;
@@ -32,7 +32,8 @@ function QuestionFieldsGenerator({ row, position }: Props) {
   }) as HealthHubServiceFieldType;
   const hasValues = row.values;
   const isSelectOrBoolean = allowedOptionsByType.includes(rowType);
-  const shouldRenderValuesForm = isSelectOrBoolean && hasValues;
+  const shouldRenderValuesForm = Boolean(isSelectOrBoolean && hasValues);
+
   return (
     <div>
       <Typography variant="subtitle1" style={{ fontWeight: 'bold' }}>
@@ -44,7 +45,15 @@ function QuestionFieldsGenerator({ row, position }: Props) {
             label={texts.key.label}
             field={`procedureFields[${position}].key`}
             defaultValue={row.key ?? undefined}
-            disabled={Boolean(row.key)}
+            placeholder={texts.key.placeholder}
+            helperText={texts.key.helper}
+            rules={{
+              required: texts.key.required,
+              pattern: {
+                value: /^[a-zA-Z_]*$/,
+                message: texts.key.pattern,
+              },
+            }}
           />
         </Grid>
         <Grid item xs={12}>

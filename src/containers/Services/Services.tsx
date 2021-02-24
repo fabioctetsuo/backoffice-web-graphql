@@ -10,8 +10,9 @@ import {
   Paper,
   TableFooter,
   TablePagination,
+  Button,
 } from '@material-ui/core';
-import FormatListBulleted from '@material-ui/icons/FormatListBulleted';
+import { FormatListBulleted, AddOutlined } from '@material-ui/icons';
 import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import CustomContainer from 'components/Container';
 import Title from 'components/Title';
@@ -19,6 +20,7 @@ import Loading from 'components/Loading';
 import strings from 'strings';
 import ServiceRow from './components/ServiceRow';
 import { useServicesQuery, HealthHubService } from 'generated-types';
+import { useRouter } from 'next/router';
 
 export type Services = {
   content: HealthHubService[];
@@ -57,6 +59,7 @@ const useStyles = makeStyles({
 
 function Services() {
   const classes = useStyles();
+  const router = useRouter();
 
   const { data: { services } = {}, refetch, loading } = useServicesQuery();
   if (loading) {
@@ -68,6 +71,18 @@ function Services() {
       <main>
         <CustomContainer
           title={<Title StartIcon={FormatListBulleted}>{texts.title}</Title>}
+          TopButton={() => (
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<AddOutlined />}
+              onClick={() => {
+                router.push('/services/new');
+              }}
+            >
+              {texts.newService}
+            </Button>
+          )}
         >
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label={texts.table.general.title}>

@@ -74,3 +74,9 @@ mutation updateService($id: ID!, $service: HealthHubServiceInput!) {
     ...ServiceParts
   }
 }
+
+mutation createService($service: HealthHubServiceInput!) {
+  createService(service: $service) {
+    ...ServiceParts
+  }
+}

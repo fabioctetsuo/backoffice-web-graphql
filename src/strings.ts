@@ -49,6 +49,7 @@ export default {
   services: {
     list: {
       title: 'Serviços',
+      newService: 'Novo serviço',
       table: {
         general: {
           title: 'Tabela de serviços do health hub',
@@ -69,87 +70,114 @@ export default {
         },
       },
     },
-    edit: {
-      title: 'Editar serviço',
-      form: {
-        main: {
-          title: 'Informações principais',
-          name: 'Nome do serviço',
-          type: 'Tipo de serviço',
-          info: 'Informações',
-          price: 'Valor',
+    form: {
+      editTitle: 'Editar serviço',
+      newTitle: 'Criar serviço',
+      main: {
+        title: 'Informações principais',
+        name: {
+          text: 'Nome do serviço',
+          required: 'Nome do serviço é obrigatório.',
         },
-        questions: {
-          title: 'Formulário de perguntas',
-          newQuestion: 'Nova pergunta',
-          table: {
-            a11y: {
-              label: 'Tabela com campos de perguntas',
-              viewDetails: 'Ver campos do formulário para pergunta',
-              remove: 'Remover pergunta',
+        type: 'Tipo de serviço',
+        info: {
+          text: 'Informações',
+          required:
+            'Caso o produto não tenha preço definido, informe mais detalhes sobre o preço',
+        },
+        price: 'Valor',
+      },
+      questions: {
+        title: 'Formulário de perguntas',
+        newQuestion: 'Nova pergunta',
+        table: {
+          a11y: {
+            label: 'Tabela com campos de perguntas',
+            viewDetails: 'Ver campos do formulário para pergunta',
+            remove: 'Remover pergunta',
+          },
+          head: {
+            label: 'Legenda',
+          },
+          fields: {
+            title: 'Configuração do campo',
+            key: {
+              label: 'ID',
+              placeholder: 'Exemplo: meu_campo',
+              helper:
+                'Esse campo de configuração deve identificar resumidamente a pergunta.',
+              required: 'O campo de identificação é obrigatório',
+              pattern:
+                'Não são permitidos caracteres especiais e espaços, apenas letras e _',
             },
-            head: {
-              label: 'Legenda',
+            label: {
+              text: 'Label',
+              required: 'O campo label é obrigatório',
             },
-            fields: {
-              title: 'Configuração do campo',
-              key: {
-                label: 'Identificação',
-              },
+            fieldType: {
+              text: 'Tipo de campo',
+              required: 'O tipo do campo é obrigatório',
+            },
+            unit: {
+              text: 'Unidade de medida',
+              placeholder: 'Exemplo: mg/dl',
+            },
+            options: {
+              title: 'Opções',
               label: {
-                text: 'Legenda',
-                required: 'O campo de legenda é obrigatório',
+                text: 'Label da opção',
+                required: 'Campo label da opção é obrigatório',
               },
-              fieldType: {
-                text: 'Tipo de campo',
-                required: 'O tipo do campo é obrigatório',
+              value: {
+                text: 'Valor',
+                required: 'Campo valor é obrigatório',
               },
-              unit: {
-                text: 'Unidade de medida',
-                placeholder: 'Exemplo: mg/dl',
+              remove: 'Remover opção',
+              add: 'Adicionar opção',
+              a11y: {
+                trash: 'Lixeira',
+                remove: 'Remover opção',
               },
-              options: {
-                title: 'Opções',
+              optionData: {
+                add: 'Adicionar detalhes à opção',
                 label: {
-                  text: 'Legenda da opção',
-                  required: 'Campo legenda é obrigatório',
+                  text: 'Identificação do detalhe',
+                  required: 'Campo identificação do detalhe é obrigatório',
+                  placeholder: 'Exemplo: fabricante',
+                  helper:
+                    'Esse campo de configuração deve identificar resumidamente o detalhe da opção.',
+                  pattern:
+                    'Não são permitidos caracteres especiais e espaços, apenas letras e _',
                 },
                 value: {
-                  text: 'Valor',
+                  text: 'Valor do detalhe',
                   required: 'Campo valor é obrigatório',
-                },
-                remove: 'Remover opção',
-                add: 'Adicionar opção',
-                a11y: {
-                  trash: 'Lixeira',
-                  remove: 'Remover opção',
-                },
-                optionData: {
-                  add: 'Adicionar detalhes à opção',
-                  label: {
-                    text: 'Legenda do detalhe',
-                    required: 'Campo legenda é obrigatório',
-                  },
-                  value: {
-                    text: 'Valor do detalhe',
-                    required: 'Campo valor é obrigatório',
-                  },
                 },
               },
             },
-            validations: {
-              min: 'Mínimo',
-              max: 'Máximo',
-              required: 'Obrigatório',
-              numbersOnly: 'Numérico',
-              currentDate: 'Data corrente',
-            },
+          },
+          validations: {
+            title: 'Validações do campo',
+            min: 'Mínimo',
+            max: 'Máximo',
+            required: 'Obrigatório',
+            numbersOnly: 'Numérico',
+            currentDate: 'Data corrente',
           },
         },
-        save: 'Salvar serviço',
-        feedback: {
-          success: 'Serviço atualizado com sucesso.',
-          error: 'Houve um erro ao cadastrar o serviço, por favor tente novamente',
+      },
+      editSave: 'Salvar serviço',
+      newSave: 'Criar serviço',
+      loadingSave: 'Salvando...',
+      feedback: {
+        updateSuccess: 'Serviço atualizado com sucesso.',
+        createSuccess: 'Serviço criado com sucesso.',
+        error: 'Erro ao cadastrar o serviço/vacina, tente novamente.',
+        duplicated: {
+          service:
+            'Já existe um serviço/vacina cadastrado com o mesmo nome e tipo, por gentileza altere o nome do seu serviço/vacina.',
+          key:
+            'Já existe um campo de identificação com esse valor, por gentileza altere o campo.',
         },
       },
     },

@@ -22,13 +22,13 @@ import {
   AddOutlined,
 } from '@material-ui/icons';
 import { HealthHubServiceField } from 'generated-types';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useFieldArray, useFormContext, FieldErrors } from 'react-hook-form';
 import QuestionFieldsValidations from '../QuestionFieldsValidations';
 import QuestionFieldsGenerator from '../QuestionFieldsGenerator';
 import * as Styled from './styled';
 import strings from 'strings';
 
-const texts = strings.services.edit.form.questions;
+const texts = strings.services.form.questions;
 
 const useRowStyles = makeStyles({
   root: {
@@ -42,12 +42,17 @@ const useRowStyles = makeStyles({
 type RowProps = {
   row: HealthHubServiceField;
   position: number;
+  errors: FieldErrors;
   remove: (position: number) => void;
 };
 
-function QuestionRow({ row, position, remove }: RowProps) {
+function QuestionRow({ row, position, remove, errors }: RowProps) {
   const classes = useRowStyles();
   const [open, setOpen] = React.useState(Boolean(!row.label));
+
+  React.useEffect(() => {
+    if ((errors?.procedureFields || [])[position]) setOpen(true);
+  }, [errors]);
 
   return (
     <React.Fragment>
@@ -64,7 +69,7 @@ function QuestionRow({ row, position, remove }: RowProps) {
         <TableCell component="th" scope="row" id={`questions-row-${position}`}>
           {row.label}
         </TableCell>
-        <TableCell component="th" scope="row" size="small">
+        <TableCell component="th" scope="row" size="small" align="right">
           <IconButton
             aria-label={texts.table.a11y.remove}
             size="small"
@@ -82,10 +87,10 @@ function QuestionRow({ row, position, remove }: RowProps) {
           <Collapse in={open} timeout="auto">
             <Box margin={2}>
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={7}>
+                <Grid item xs={12} md={7}>
                   <QuestionFieldsGenerator row={row} position={position} />
                 </Grid>
-                <Grid item xs={12} sm={5}>
+                <Grid item xs={12} md={5}>
                   <QuestionFieldsValidations row={row} position={position} />
                 </Grid>
               </Grid>
@@ -97,7 +102,7 @@ function QuestionRow({ row, position, remove }: RowProps) {
   );
 }
 
-const CollapsibleQuestionsForm = () => {
+const CollapsibleQuestionsForm = ({ errors }: { errors: FieldErrors }) => {
   const { control } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     control,
@@ -144,6 +149,7 @@ const CollapsibleQuestionsForm = () => {
                   row={item as any}
                   position={index}
                   remove={remove}
+                  errors={errors}
                 />
               ))}
             </TableBody>

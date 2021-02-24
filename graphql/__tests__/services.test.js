@@ -97,6 +97,7 @@ describe('Graphql Integration - Services', () => {
 
     expect(responseRequest.data.service).toEqual({
       ...graphqlResponseService,
+      price: '150,59',
       procedureFields: [
         {
           ...graphqlResponseService.procedureFields[0],
