@@ -43,10 +43,11 @@ type RowProps = {
   row: HealthHubServiceField;
   position: number;
   errors: FieldErrors;
+  fieldsLength: number;
   remove: (position: number) => void;
 };
 
-function QuestionRow({ row, position, remove, errors }: RowProps) {
+function QuestionRow({ row, position, remove, errors, fieldsLength }: RowProps) {
   const classes = useRowStyles();
   const [open, setOpen] = React.useState(Boolean(!row.label));
 
@@ -73,6 +74,7 @@ function QuestionRow({ row, position, remove, errors }: RowProps) {
           <IconButton
             aria-label={texts.table.a11y.remove}
             size="small"
+            disabled={fieldsLength === 1}
             onClick={() => remove(position)}
           >
             <DeleteOutline />
@@ -150,6 +152,7 @@ const CollapsibleQuestionsForm = ({ errors }: { errors: FieldErrors }) => {
                   position={index}
                   remove={remove}
                   errors={errors}
+                  fieldsLength={fields.length}
                 />
               ))}
             </TableBody>

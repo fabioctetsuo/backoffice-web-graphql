@@ -1,6 +1,6 @@
 import NewService from '.';
 import { useRouter } from 'next/router';
-import { render, screen, userEvent } from 'utils/testing';
+import { render, screen, userEvent, waitFor } from 'utils/testing';
 import { HealthHubFieldType, HealthHubServiceFieldType } from 'generated-types';
 import mocks from './mocks/graphql';
 import { createNewQuestion, fillServiceQuestion, removeQuestion } from '../utils/tests';
@@ -208,5 +208,30 @@ describe('<NewService />', () => {
       await screen.findByText('Erro ao cadastrar o serviço/vacina, tente novamente.')
     ).toBeInTheDocument();
     expect(mockedPush).not.toHaveBeenCalled();
+  });
+
+  it('Must disable delete question when there is only one question', async () => {
+    render(<NewService />);
+
+    const deleteButtons = screen.getAllByRole('button', { name: 'Remover pergunta' });
+    expect(deleteButtons).toHaveLength(1);
+
+    deleteButtons.forEach(button => {
+      expect(button).toBeDisabled();
+    });
+
+    userEvent.click(screen.getByRole('button', { name: /nova pergunta/i }));
+
+    const updatedDeleteButtons = screen.getAllByRole('button', {
+      name: 'Remover pergunta',
+    });
+
+    await waitFor(() => {
+      expect(updatedDeleteButtons).toHaveLength(2);
+    });
+
+    updatedDeleteButtons.forEach(button => {
+      expect(button).not.toBeDisabled();
+    });
   });
 });
