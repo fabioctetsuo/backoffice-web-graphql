@@ -3,6 +3,7 @@ const typeDefs = require('./types');
 const resolvers = require('./resolvers');
 const UsersAPI = require('./datasources/users');
 const ServicesAPI = require('./datasources/services');
+const ProviderSchedulesAPI = require('./datasources/provider-schedules');
 const SellersAPI = require('./datasources/sellers');
 const ZipcodeAPI = require('./datasources/zipcode');
 
@@ -13,6 +14,7 @@ module.exports = (app, path) => {
     dataSources: () => ({
       users: new UsersAPI(),
       services: new ServicesAPI(),
+      providers: new ProviderSchedulesAPI(),
       sellers: new SellersAPI(),
       zipcode: new ZipcodeAPI(),
     }),

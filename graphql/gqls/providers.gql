@@ -1,0 +1,27 @@
+fragment ProvidersPart on Provider {
+  startHour
+  endHour
+  startIntervalHour
+  endIntervalHour
+  slots
+  interval
+  id
+}
+
+query provider($id: ID!) {
+  provider(id: $id) {
+    ...ProvidersPart
+  }
+}
+
+mutation createProvider($provider: ProviderCreateInput!) {
+  createProvider(provider: $provider) {
+    ...ProvidersPart
+  }
+}
+
+mutation updateProvider($id: ID!, $provider: ProviderUpdateInput!) {
+  updateProvider(id: $id, provider: $provider) {
+    ...ProvidersPart
+  }
+}

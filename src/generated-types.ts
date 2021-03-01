@@ -15,6 +15,123 @@ export type Scalars = {
   JSONObject: any;
 };
 
+export type ProviderInput = {
+  startHour: Scalars['String'];
+  endHour: Scalars['String'];
+  startIntervalHour?: Maybe<Scalars['String']>;
+  endIntervalHour?: Maybe<Scalars['String']>;
+  slots: Scalars['Int'];
+  interval: Scalars['Int'];
+  providerId: Scalars['ID'];
+};
+
+export type Provider = {
+  __typename?: 'Provider';
+  startHour: Scalars['String'];
+  endHour: Scalars['String'];
+  startIntervalHour?: Maybe<Scalars['String']>;
+  endIntervalHour?: Maybe<Scalars['String']>;
+  slots: Scalars['Int'];
+  interval: Scalars['Int'];
+  id: Scalars['ID'];
+};
+
+export type Query = {
+  __typename?: 'Query';
+  getAddressByZipcode?: Maybe<AddressByZipCode>;
+  getUserById?: Maybe<User>;
+  provider: Provider;
+  seller: Seller;
+  sellers: SellersAll;
+  service?: Maybe<HealthHubServiceById>;
+  services?: Maybe<HealthHubServiceAll>;
+};
+
+
+export type QueryGetAddressByZipcodeArgs = {
+  zipcode: Scalars['String'];
+};
+
+
+export type QueryGetUserByIdArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryProviderArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QuerySellerArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QuerySellersArgs = {
+  sort?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  documentNumber?: Maybe<Scalars['String']>;
+  size?: Maybe<Scalars['Int']>;
+  page?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryServiceArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryServicesArgs = {
+  type?: Maybe<HealthHubFieldType>;
+  sort?: Maybe<Scalars['String']>;
+  size?: Maybe<Scalars['Int']>;
+  page?: Maybe<Scalars['Int']>;
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  createProvider?: Maybe<Provider>;
+  createSeller?: Maybe<Seller>;
+  createService?: Maybe<HealthHubService>;
+  updateProvider?: Maybe<Provider>;
+  updateSeller?: Maybe<Seller>;
+  updateService?: Maybe<HealthHubService>;
+};
+
+
+export type MutationCreateProviderArgs = {
+  provider: ProviderInput;
+};
+
+
+export type MutationCreateSellerArgs = {
+  seller: SellerInput;
+};
+
+
+export type MutationCreateServiceArgs = {
+  service: HealthHubServiceInput;
+};
+
+
+export type MutationUpdateProviderArgs = {
+  provider: ProviderInput;
+  id: Scalars['ID'];
+};
+
+
+export type MutationUpdateSellerArgs = {
+  seller: SellerInput;
+  id: Scalars['ID'];
+};
+
+
+export type MutationUpdateServiceArgs = {
+  service: HealthHubServiceInput;
+  id: Scalars['ID'];
+};
+
 
 
 export type SellerServiceInput = {
@@ -85,83 +202,6 @@ export type SellersAll = {
   page?: Maybe<Scalars['Int']>;
   totalElements?: Maybe<Scalars['Int']>;
   totalPages?: Maybe<Scalars['Int']>;
-};
-
-export type Query = {
-  __typename?: 'Query';
-  getAddressByZipcode?: Maybe<AddressByZipCode>;
-  getUserById?: Maybe<User>;
-  seller: Seller;
-  sellers: SellersAll;
-  service?: Maybe<HealthHubServiceById>;
-  services?: Maybe<HealthHubServiceAll>;
-};
-
-
-export type QueryGetAddressByZipcodeArgs = {
-  zipcode: Scalars['String'];
-};
-
-
-export type QueryGetUserByIdArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type QuerySellerArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type QuerySellersArgs = {
-  sort?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  documentNumber?: Maybe<Scalars['String']>;
-  size?: Maybe<Scalars['Int']>;
-  page?: Maybe<Scalars['Int']>;
-};
-
-
-export type QueryServiceArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type QueryServicesArgs = {
-  type?: Maybe<HealthHubFieldType>;
-  sort?: Maybe<Scalars['String']>;
-  size?: Maybe<Scalars['Int']>;
-  page?: Maybe<Scalars['Int']>;
-};
-
-export type Mutation = {
-  __typename?: 'Mutation';
-  createSeller?: Maybe<Seller>;
-  createService?: Maybe<HealthHubService>;
-  updateSeller?: Maybe<Seller>;
-  updateService?: Maybe<HealthHubService>;
-};
-
-
-export type MutationCreateSellerArgs = {
-  seller: SellerInput;
-};
-
-
-export type MutationCreateServiceArgs = {
-  service: HealthHubServiceInput;
-};
-
-
-export type MutationUpdateSellerArgs = {
-  seller: SellerInput;
-  id: Scalars['ID'];
-};
-
-
-export type MutationUpdateServiceArgs = {
-  service: HealthHubServiceInput;
-  id: Scalars['ID'];
 };
 
 export enum HealthHubServiceFieldType {

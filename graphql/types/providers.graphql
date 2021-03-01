@@ -1,0 +1,37 @@
+input ProviderCreateInput {
+  startHour: String!
+  endHour: String!
+  startIntervalHour: String
+  endIntervalHour: String
+  slots: Int!
+  interval: Int!
+  providerId: ID!
+}
+
+input ProviderUpdateInput {
+  startHour: String!
+  endHour: String!
+  startIntervalHour: String
+  endIntervalHour: String
+  slots: Int!
+  interval: Int!
+}
+
+type Provider {
+  startHour: String!
+  endHour: String!
+  startIntervalHour: String
+  endIntervalHour: String
+  slots: Int!
+  interval: Int!
+  id: ID!
+}
+
+type Query {
+  provider(id: ID!): Provider!
+}
+
+type Mutation {
+  createProvider(provider: ProviderCreateInput!): Provider
+  updateProvider(provider: ProviderUpdateInput!, id: ID!): Provider
+}
