@@ -19,7 +19,7 @@ describe('<EditSeller />', () => {
   });
   it('Should fill the form with Seller data', async () => {
     render(<EditSeller />, {
-      mocks: [mocks.getSellerSuccess],
+      mocks: [mocks.getSellerSuccess, mocks.getServicesSuccess],
     });
     await waitFor(() => {
       expect(screen.getByLabelText(/Nome/i)).toHaveValue('Paulista 6');
@@ -43,7 +43,7 @@ describe('<EditSeller />', () => {
 
   it('Should disable the CNPJ (documentNumber) field', async () => {
     render(<EditSeller />, {
-      mocks: [mocks.getSellerSuccess],
+      mocks: [mocks.getSellerSuccess, mocks.getServicesSuccess],
     });
     await waitFor(() => {
       expect(screen.getByLabelText(/CNPJ/i)).toHaveValue('61.585.865/2168-39');
@@ -53,7 +53,7 @@ describe('<EditSeller />', () => {
 
   it('Should edit the seller name, submit with success and redirect to "/sellers"', async () => {
     render(<EditSeller />, {
-      mocks: [mocks.getSellerSuccess, mocks.updateSeller],
+      mocks: [mocks.getSellerSuccess, mocks.updateSeller, mocks.getServicesSuccess],
     });
 
     userEvent.clear(await screen.findByLabelText(/nome/i));
@@ -68,7 +68,7 @@ describe('<EditSeller />', () => {
 
   it('Should display a toast message if a generic error occurs when trying to update the seller', async () => {
     render(<EditSeller />, {
-      mocks: [mocks.getSellerSuccess, mocks.updateSellerError],
+      mocks: [mocks.getSellerSuccess, mocks.updateSellerError, mocks.getServicesSuccess],
     });
 
     userEvent.clear(await screen.findByLabelText(/nome/i));
@@ -85,7 +85,7 @@ describe('<EditSeller />', () => {
 
   it('Should not update the seller if have at least one empty required field', async () => {
     render(<EditSeller />, {
-      mocks: [mocks.getSellerSuccess],
+      mocks: [mocks.getSellerSuccess, mocks.getServicesSuccess],
     });
 
     userEvent.clear(await screen.findByLabelText(/nome/i));
@@ -99,7 +99,7 @@ describe('<EditSeller />', () => {
   describe('Confirm dialog', () => {
     it('Should display the comfirm dialog and stay on the form if click "Não"', async () => {
       render(<EditSeller />, {
-        mocks: [mocks.getSellerSuccess],
+        mocks: [mocks.getSellerSuccess, mocks.getServicesSuccess],
       });
 
       userEvent.type(await screen.findByLabelText(/nome/i), 'teste');
@@ -121,7 +121,7 @@ describe('<EditSeller />', () => {
 
     it('Should display the comfirm dialog and go to "/sellers" if click "Sim"', async () => {
       render(<EditSeller />, {
-        mocks: [mocks.getSellerSuccess],
+        mocks: [mocks.getSellerSuccess, mocks.getServicesSuccess],
       });
 
       userEvent.type(await screen.findByLabelText(/nome/i), 'teste');

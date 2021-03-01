@@ -6,14 +6,14 @@ import { getMenuItems } from './menuItens';
 const Container = styled.div`
   display: flex;
   flex-direction: row;
-  height: calc(100% - 90px);
+  min-height: calc(100% - 90px);
 `;
 
 const Content = styled.main`
   width: 100%;
   height: 100%;
-  overflow: auto;
   padding: ${({ theme }) => theme.spacing(2, 4)};
+  padding-bottom: 16px;
 `;
 
 type LayoutProps = {

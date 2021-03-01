@@ -108,7 +108,7 @@ const Services = () => {
               </TableHead>
               <TableBody>
                 {sellersResponse?.content.map(seller => (
-                  <StyledTableRow key={seller.name}>
+                  <StyledTableRow key={seller.id}>
                     <StyledTableCell scope="seller">
                       <strong>{seller.name}</strong>
                       <br />

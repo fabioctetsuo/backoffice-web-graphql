@@ -236,9 +236,15 @@ export default {
       },
     },
     sellerForm: {
+      servicesSectionTitle: 'Escolha os serviços que serão disponibilizados nesta loja',
       buttons: {
         save: 'Salvar',
         cancel: 'Cancelar',
+      },
+      toasts: {
+        getServicesError:
+          'Ocorreu um erro ao buscar os serviços. Por favor, tente novamente.',
+        minServicesQuantity: 'Selecione no mínimo um serviço',
       },
       fields: {
         tradingName: {
@@ -265,6 +271,14 @@ export default {
           label: 'Telefone celular',
           required: 'O campo "Celular" é obrigatório',
         },
+      },
+    },
+    servicesManagement: {
+      selectedService: {
+        title: 'Serviços vinculados a esta loja',
+      },
+      services: {
+        title: 'Serviços disponíveis',
       },
     },
   },

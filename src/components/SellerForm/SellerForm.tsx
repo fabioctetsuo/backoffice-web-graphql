@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useRouter } from 'next/router';
-import { Grid, Button } from '@material-ui/core';
+import { Grid, Button, Divider } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import { FormProvider, useForm } from 'react-hook-form';
 import AddressForm from 'components/AddressForm';
@@ -14,11 +14,23 @@ import {
 } from 'components/FormInput/TextFieldInput/helpers/mask';
 import Loading from 'components/Loading';
 import AlertDialog from './AlertDialog';
-import { Seller } from 'generated-types';
+import { Seller, SellerService, useServicesQuery } from 'generated-types';
 
 import strings from 'strings';
 import { isCNPJValid } from 'utils/validations/cnpj';
+import ServicesManagement from 'components/ServicesManagement';
+import useToast from 'hooks/useToast';
+import Title from 'components/Title';
+import styled from 'styled-components';
+
 const texts = strings.sellers.sellerForm;
+
+const LoadingWrapper = styled.div`
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const tradingNameOptions = [
   { label: 'Raia', value: 'Raia' },
@@ -38,6 +50,7 @@ const SellerForm = ({
   isSubmitting,
   disableCNPJ,
 }: SellerFormProps) => {
+  const renderToast = useToast();
   const router = useRouter();
   const methods = useForm({
     defaultValues,
@@ -45,26 +58,69 @@ const SellerForm = ({
     reValidateMode: 'onChange',
   });
 
+  const [selectedServices, setSelectedServices] = React.useState(
+    defaultValues?.services || []
+  );
+
+  const [formattedServiceList, setFormattedServiceList] = React.useState<
+    SellerService[]
+  >();
+
+  const [formIsDirty, setFormIsDirty] = React.useState(false);
+
+  const { loading: servicesLoading } = useServicesQuery({
+    variables: {
+      size: 1000, // Get all service on one page
+    },
+    onCompleted: ({ services }) => {
+      setFormattedServiceList(
+        (services?.content || []).map(service => ({
+          id: service.id,
+          info: service.info,
+          name: service.name,
+          type: service.type,
+          price: service.price,
+        }))
+      );
+    },
+    onError: () => {
+      renderToast(texts.toasts.getServicesError, 'error');
+    },
+  });
+
   const { isDirty } = methods.formState;
 
   const [showConfirmDialog, setShowConfirmDialog] = React.useState(false);
 
   const handleCancel = () => {
-    if (isDirty) {
+    if (formIsDirty) {
       setShowConfirmDialog(true);
     } else {
       router.push('/sellers');
     }
   };
 
-  const handleEditSeller = (data: Seller) => {
-    const payload = {
-      ...data,
-      services: defaultValues?.services || null,
-    };
-
-    onSubmit(payload);
+  const handleServiceListChange = (services: SellerService[]) => {
+    setFormIsDirty(true);
+    setSelectedServices(services);
   };
+
+  const handleEditSeller = (data: Seller) => {
+    if (!selectedServices.length) {
+      renderToast(texts.toasts.minServicesQuantity, 'error');
+    } else {
+      const payload = {
+        ...data,
+        services: selectedServices,
+      };
+
+      onSubmit(payload);
+    }
+  };
+
+  React.useEffect(() => {
+    setFormIsDirty(isDirty);
+  }, [isDirty]);
 
   return (
     <FormProvider {...methods}>
@@ -138,10 +194,29 @@ const SellerForm = ({
           </Grid>
         </Grid>
         <AddressForm />
-        <Grid item container justify="flex-end" spacing={2}>
+        <Divider style={{ margin: '32px 0' }} />
+        <Title style={{ marginBottom: 32 }}>{texts.servicesSectionTitle}</Title>
+        {servicesLoading && (
+          <LoadingWrapper>
+            <Loading color="primary" overlay={false} />
+          </LoadingWrapper>
+        )}
+        {!servicesLoading && formattedServiceList && (
+          <ServicesManagement
+            onChange={handleServiceListChange}
+            selectedServices={selectedServices}
+            sellerServices={formattedServiceList}
+          />
+        )}
+        <Grid item container justify="flex-end" spacing={2} style={{ marginTop: 32 }}>
+          <Grid item>
+            <Button disabled={isSubmitting} variant="contained" onClick={handleCancel}>
+              {texts.buttons.cancel}
+            </Button>
+          </Grid>
           <Grid item>
             <Button
-              disabled={isSubmitting}
+              disabled={isSubmitting || !formIsDirty}
               type="submit"
               variant="contained"
               color="primary"
@@ -154,11 +229,6 @@ const SellerForm = ({
               }
             >
               {texts.buttons.save}
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button disabled={isSubmitting} variant="contained" onClick={handleCancel}>
-              {texts.buttons.cancel}
             </Button>
           </Grid>
         </Grid>

@@ -1,4 +1,4 @@
-import { render, screen, userEvent, fireEvent, waitFor } from 'utils/testing';
+import { render, screen, userEvent, fireEvent, waitFor, within } from 'utils/testing';
 import NewSeller from './NewSeller';
 
 import mocks from './mocks/graphql';
@@ -43,16 +43,34 @@ const fillSellerForm = async () => {
   userEvent.type(screen.getByLabelText(/Número/i), '1257');
 };
 
+const selectAnService = (service = /vacina gripe/i) => {
+  const button = screen.getByRole('button', {
+    name: service,
+  });
+
+  fireEvent.click(
+    within(button).getByRole('button', {
+      name: /adicionar serviço/i,
+    })
+  );
+};
+
 describe('<NewSeller />', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });
   it('Should fill the form and submit with success', async () => {
     render(<NewSeller />, {
-      mocks: [mocks.getAddressSuccess, mocks.createSellerSuccess],
+      mocks: [
+        mocks.getAddressSuccess,
+        mocks.createSellerSuccess,
+        mocks.getServicesSuccess,
+      ],
     });
 
     await fillSellerForm();
+
+    selectAnService();
 
     userEvent.click(screen.getByRole('button', { name: /salvar/i }));
 
@@ -61,10 +79,16 @@ describe('<NewSeller />', () => {
 
   it('Should display a warning toast if CNPJ is already registered', async () => {
     render(<NewSeller />, {
-      mocks: [mocks.getAddressSuccess, mocks.createSellerWithCnpjAlreadRegistered],
+      mocks: [
+        mocks.getAddressSuccess,
+        mocks.createSellerWithCnpjAlreadRegistered,
+        mocks.getServicesSuccess,
+      ],
     });
 
     await fillSellerForm();
+
+    selectAnService();
 
     userEvent.click(screen.getByRole('button', { name: /salvar/i }));
 
@@ -75,10 +99,11 @@ describe('<NewSeller />', () => {
 
   it('Should display the generic error toast if throw a unmapped error on submit', async () => {
     render(<NewSeller />, {
-      mocks: [mocks.getAddressSuccess, mocks.createSellerError],
+      mocks: [mocks.getAddressSuccess, mocks.createSellerError, mocks.getServicesSuccess],
     });
 
     await fillSellerForm();
+    selectAnService();
 
     userEvent.click(screen.getByRole('button', { name: /salvar/i }));
 
@@ -89,10 +114,31 @@ describe('<NewSeller />', () => {
     ).toBeInTheDocument();
   });
 
+  it('Should validate CNPJ', async () => {
+    render(<NewSeller />, { mocks: [mocks.getServicesSuccess] });
+
+    // fill with a invalid CNPJ
+    fireEvent.change(screen.getByLabelText(/CNPJ/i), {
+      target: { value: '12123123123411' },
+    });
+
+    userEvent.click(screen.getByRole('button', { name: /salvar/i }));
+    expect(await screen.findByText(/CNPJ inválido/i)).toBeInTheDocument();
+
+    // change to a valid CNPJ
+    fireEvent.change(screen.getByLabelText(/CNPJ/i), {
+      target: { value: '51921594000104' },
+    });
+
+    await waitFor(() => {
+      expect(screen.queryByText(/CNPJ inválido/i)).not.toBeInTheDocument();
+    });
+  });
+
   describe('Confirm dialog', () => {
     it('Should display the comfirm dialog and stay on the form if click "Não"', async () => {
       render(<NewSeller />, {
-        mocks: [mocks.getAddressSuccess],
+        mocks: [mocks.getAddressSuccess, mocks.getServicesSuccess],
       });
 
       await fillSellerForm();
@@ -114,7 +160,7 @@ describe('<NewSeller />', () => {
 
     it('Should display the comfirm dialog and go to "/sellers" if click "Sim"', async () => {
       render(<NewSeller />, {
-        mocks: [mocks.getAddressSuccess],
+        mocks: [mocks.getAddressSuccess, mocks.getServicesSuccess],
       });
 
       await fillSellerForm();
@@ -134,29 +180,8 @@ describe('<NewSeller />', () => {
       expect(mockRouterPush).toHaveBeenCalledWith('/sellers');
     });
 
-    it('Should validate CNPJ', async () => {
-      render(<NewSeller />);
-
-      // fill with a invalid CNPJ
-      fireEvent.change(screen.getByLabelText(/CNPJ/i), {
-        target: { value: '12123123123411' },
-      });
-
-      userEvent.click(screen.getByRole('button', { name: /salvar/i }));
-      expect(await screen.findByText(/CNPJ inválido/i)).toBeInTheDocument();
-
-      // change to a valid CNPJ
-      fireEvent.change(screen.getByLabelText(/CNPJ/i), {
-        target: { value: '51921594000104' },
-      });
-
-      await waitFor(() => {
-        expect(screen.queryByText(/CNPJ inválido/i)).not.toBeInTheDocument();
-      });
-    });
-
     it('Should do not display the confirm dialog and go to "/sellers" if the form is not dirty', async () => {
-      render(<NewSeller />);
+      render(<NewSeller />, { mocks: [mocks.getServicesSuccess] });
 
       userEvent.click(screen.getByText(/cancelar/i));
 
