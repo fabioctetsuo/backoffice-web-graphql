@@ -157,6 +157,9 @@ const form = {
   type: 'PHARMA_SERVICE',
   info: 'Diretamente na farmácia',
   price: null,
+  description: 'Description test',
+  result: 'Result test',
+  preparation: 'Preparation test',
   procedureFields: [
     {
       key: 'diastolic_blood_pressure',

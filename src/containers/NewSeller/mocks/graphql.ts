@@ -16,6 +16,9 @@ const result = {
       type: 'RAPID_TEST',
       emitDeclaration: true,
       attachMedicalReport: false,
+      result: 'Result Test',
+      description: 'Description Test',
+      preparation: 'How to prepare Test',
       procedureFields: [
         {
           __typename: 'HealthHubServiceField',
@@ -162,6 +165,9 @@ const result = {
       type: 'VACCINE',
       emitDeclaration: false,
       attachMedicalReport: true,
+      result: 'Result Test',
+      description: 'Description Test',
+      preparation: 'How to prepare Test',
       procedureFields: [
         {
           __typename: 'HealthHubServiceField',
@@ -377,6 +383,9 @@ const result = {
       type: 'PHARMA_SERVICE',
       emitDeclaration: false,
       attachMedicalReport: false,
+      result: 'Result Test',
+      description: 'Description Test',
+      preparation: 'How to prepare Test',
       procedureFields: [
         {
           __typename: 'HealthHubServiceField',

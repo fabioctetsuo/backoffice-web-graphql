@@ -308,6 +308,9 @@ export type HealthHubService = {
   type: HealthHubFieldType;
   attachMedicalReport?: Maybe<Scalars['Boolean']>;
   emitDeclaration?: Maybe<Scalars['Boolean']>;
+  description?: Maybe<Scalars['String']>;
+  preparation?: Maybe<Scalars['String']>;
+  result?: Maybe<Scalars['String']>;
 };
 
 export type HealthHubServiceById = {
@@ -319,6 +322,9 @@ export type HealthHubServiceById = {
   procedureFields: Array<HealthHubServiceFieldById>;
   type: HealthHubFieldType;
   emitDeclaration?: Maybe<Scalars['Boolean']>;
+  description?: Maybe<Scalars['String']>;
+  preparation?: Maybe<Scalars['String']>;
+  result?: Maybe<Scalars['String']>;
 };
 
 export type HealthHubServiceInput = {
@@ -329,6 +335,9 @@ export type HealthHubServiceInput = {
   type: HealthHubFieldType;
   attachMedicalReport?: Maybe<Scalars['Boolean']>;
   emitDeclaration?: Maybe<Scalars['Boolean']>;
+  description?: Maybe<Scalars['String']>;
+  preparation?: Maybe<Scalars['String']>;
+  result?: Maybe<Scalars['String']>;
 };
 
 export type HealthHubServiceAll = {
@@ -460,7 +469,7 @@ export type UpdateSellerMutation = (
 
 export type ServicePartsFragment = (
   { __typename?: 'HealthHubService' }
-  & Pick<HealthHubService, 'emitDeclaration' | 'id' | 'info' | 'name' | 'price' | 'type'>
+  & Pick<HealthHubService, 'emitDeclaration' | 'id' | 'info' | 'name' | 'price' | 'type' | 'description' | 'preparation' | 'result'>
   & { procedureFields: Array<(
     { __typename?: 'HealthHubServiceField' }
     & Pick<HealthHubServiceField, 'key' | 'label' | 'type'>
@@ -486,7 +495,7 @@ export type ServiceQuery = (
   { __typename?: 'Query' }
   & { service?: Maybe<(
     { __typename?: 'HealthHubServiceById' }
-    & Pick<HealthHubServiceById, 'emitDeclaration' | 'id' | 'info' | 'name' | 'price' | 'type'>
+    & Pick<HealthHubServiceById, 'emitDeclaration' | 'id' | 'info' | 'name' | 'price' | 'type' | 'description' | 'preparation' | 'result'>
     & { procedureFields: Array<(
       { __typename?: 'HealthHubServiceFieldById' }
       & Pick<HealthHubServiceFieldById, 'key' | 'label' | 'type'>
@@ -612,6 +621,9 @@ export const ServicePartsFragmentDoc = gql`
   name
   price
   type
+  description
+  preparation
+  result
   procedureFields {
     key
     label
@@ -783,6 +795,9 @@ export const ServiceDocument = gql`
     name
     price
     type
+    description
+    preparation
+    result
     procedureFields {
       key
       label

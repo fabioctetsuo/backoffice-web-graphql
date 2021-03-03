@@ -81,6 +81,15 @@ function MainForm() {
             rules={{ setValueAs: getFormattedPrice }}
           />
         </Grid>
+        <Grid item xs={12} sm={5}>
+          <TextField field="result" label={texts.result} />
+        </Grid>
+        <Grid item xs={12} sm={3}>
+          <TextField field="preparation" label={texts.howToPrepare} />
+        </Grid>
+        <Grid item xs={12} sm={8}>
+          <TextField field="description" label={texts.description} multiline rows="2" />
+        </Grid>
       </Grid>
     </>
   );

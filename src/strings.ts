@@ -65,6 +65,9 @@ export default {
         additionalInfo: {
           title: 'Informações complementares',
           price: 'Valor:',
+          result: 'Resultado:',
+          howToPrepare: 'Como se preparar:',
+          description: 'Breve descritivo:',
           attachMedicalReport: 'Anexar relatório médico:',
           emitDeclaration: 'Emitir declaração:',
         },
@@ -86,6 +89,9 @@ export default {
             'Caso o produto não tenha preço definido, informe mais detalhes sobre o preço',
         },
         price: 'Valor',
+        description: 'Breve descritivo',
+        result: 'Resultado',
+        howToPrepare: 'Como se preparar',
       },
       questions: {
         title: 'Formulário de perguntas',

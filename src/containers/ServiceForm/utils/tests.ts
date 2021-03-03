@@ -13,6 +13,9 @@ type EditServiceQuestionProps = {
   price?: string;
   name?: string;
   info?: string;
+  result?: string;
+  preparation?: string;
+  description?: string;
   required?: boolean;
   numbersOnly?: boolean;
   currentDate?: boolean;
@@ -35,6 +38,9 @@ export const fillServiceQuestion = ({
   name,
   serviceType,
   info,
+  preparation,
+  result,
+  description,
 }: EditServiceQuestionProps) => {
   const mainForm = screen.getByLabelText(/informações principais/i);
   if (name) {
@@ -55,6 +61,21 @@ export const fillServiceQuestion = ({
     const infoInput = within(mainForm).getByLabelText(/Informações/i);
     userEvent.clear(infoInput);
     userEvent.type(infoInput, info);
+  }
+  if (description) {
+    const descriptionInput = within(mainForm).getByLabelText(/Breve descritivo/i);
+    userEvent.clear(descriptionInput);
+    userEvent.type(descriptionInput, description);
+  }
+  if (result) {
+    const resultInput = within(mainForm).getByLabelText(/Resultado/i);
+    userEvent.clear(resultInput);
+    userEvent.type(resultInput, result);
+  }
+  if (preparation) {
+    const preparationInput = within(mainForm).getByLabelText(/Como se preparar/i);
+    userEvent.clear(preparationInput);
+    userEvent.type(preparationInput, preparation);
   }
 
   // edit indication questions row

@@ -42,6 +42,9 @@ describe('<NewService />', () => {
       min: '1',
       max: '300',
       numbersOnly: true,
+      description: 'Description test',
+      result: 'Result test',
+      preparation: 'Preparation test',
     });
 
     expect(saveButton).not.toBeDisabled();
@@ -63,6 +66,9 @@ describe('<NewService />', () => {
 
     // validate required fields
     fillServiceQuestion({
+      description: 'Description test',
+      result: 'Result test',
+      preparation: 'Preparation test',
       container: questionContainer,
       label: '',
       type: HealthHubServiceFieldType.Select,
@@ -163,6 +169,9 @@ describe('<NewService />', () => {
       min: '1',
       max: '300',
       numbersOnly: true,
+      description: 'Description test',
+      result: 'Result test',
+      preparation: 'Preparation test',
     });
 
     expect(saveButton).not.toBeDisabled();
@@ -199,6 +208,9 @@ describe('<NewService />', () => {
       min: '1',
       max: '300',
       numbersOnly: true,
+      description: 'Description test',
+      result: 'Result test',
+      preparation: 'Preparation test',
     });
 
     expect(saveButton).not.toBeDisabled();

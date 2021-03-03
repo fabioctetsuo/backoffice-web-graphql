@@ -7,6 +7,9 @@ const graphqlGetServiceResponse = {
   name: 'Hepatite A e B',
   price: null,
   type: 'VACCINE',
+  result: null,
+  description: null,
+  preparation: null,
   procedureFields: [
     {
       key: 'indication',
@@ -89,6 +92,9 @@ const serviceWithSelectField = {
   name: 'Hepatite A e B',
   price: null,
   type: 'VACCINE',
+  description: 'Description test',
+  result: 'Result test',
+  preparation: 'Preparation test',
   procedureFields: [
     {
       key: 'vaccine',
@@ -157,6 +163,9 @@ const editedForm = {
   name: 'Crazy Service',
   price: 10,
   type: 'VACCINE',
+  description: 'Description test',
+  result: 'Result test',
+  preparation: 'Preparation test',
   procedureFields: [
     {
       key: 'indication',
@@ -224,6 +233,9 @@ const editedFormWithSelect = {
   name: 'Hepatite A e B',
   price: null,
   type: 'VACCINE',
+  description: 'Description test',
+  result: 'Result test',
+  preparation: 'Preparation test',
   procedureFields: [
     {
       key: 'vaccine',

@@ -95,6 +95,9 @@ type HealthHubService {
   type: HealthHubFieldType!
   attachMedicalReport: Boolean
   emitDeclaration: Boolean
+  description: String
+  preparation: String
+  result: String
 }
 
 type HealthHubServiceById {
@@ -105,6 +108,9 @@ type HealthHubServiceById {
   procedureFields: [HealthHubServiceFieldById!]!
   type: HealthHubFieldType!
   emitDeclaration: Boolean
+  description: String
+  preparation: String
+  result: String
 }
 
 input HealthHubServiceInput {
@@ -115,6 +121,9 @@ input HealthHubServiceInput {
   type: HealthHubFieldType!
   attachMedicalReport: Boolean
   emitDeclaration: Boolean
+  description: String
+  preparation: String
+  result: String
 }
 
 type HealthHubServiceAll {

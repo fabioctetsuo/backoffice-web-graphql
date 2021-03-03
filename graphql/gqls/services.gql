@@ -5,6 +5,9 @@ fragment ServiceParts on HealthHubService {
   name
   price
   type
+  description
+  preparation
+  result
   procedureFields {
     key
     label
@@ -35,6 +38,9 @@ query service($id: ID!) {
     name
     price
     type
+    description
+    preparation
+    result
     procedureFields {
       key
       label

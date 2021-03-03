@@ -126,6 +126,9 @@ describe('Services list', () => {
     expect(vaccineFieldsTable.infos).toEqual([
       { Valor: 'R$\xa0150,59' },
       { 'Emitir declaração': 'Não' },
+      { 'Como se preparar': 'How to prepare Test 2' },
+      { Resultado: 'Result Test 2' },
+      { 'Breve descritivo': 'Description Test 2' },
     ]);
     expect(vaccineFieldsTable.questions).toEqual(vaccineQuestions);
     await closeRow(vaccineRow);
@@ -137,6 +140,9 @@ describe('Services list', () => {
     expect(lipidProfileTable.infos).toEqual([
       { Valor: 'R$\xa045,00' },
       { 'Emitir declaração': 'Sim' },
+      { 'Como se preparar': 'How to prepare Test' },
+      { Resultado: 'Result Test' },
+      { 'Breve descritivo': 'Description Test' },
     ]);
     expect(lipidProfileTable.questions).toEqual(lipidProfileQuestions);
     await closeRow(lipidProfileRow);
@@ -148,6 +154,9 @@ describe('Services list', () => {
     expect(covidTable.infos).toEqual([
       { Valor: 'Diretamente na farmácia' },
       { 'Emitir declaração': 'Não' },
+      { 'Como se preparar': 'How to prepare Test 3' },
+      { Resultado: 'Result Test 3' },
+      { 'Breve descritivo': 'Description Test 3' },
     ]);
     expect(covidTable.questions).toEqual(covidQuestions);
     await closeRow(covidRow);

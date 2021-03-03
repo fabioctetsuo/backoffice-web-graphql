@@ -52,6 +52,9 @@ function NewService() {
       info: '',
       name: '',
       price: '',
+      description: '',
+      result: '',
+      preparation: '',
       procedureFields: [
         {
           key: '',

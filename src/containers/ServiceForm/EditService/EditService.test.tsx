@@ -49,6 +49,9 @@ describe('<EditService />', () => {
         queryLabel: 'Indicação',
         name: 'Crazy Service',
         price: '20',
+        result: 'Result test',
+        preparation: 'Preparation test',
+        description: 'Description test',
       });
       createNewQuestion({
         key: 'diastolic_blood_pressure',
@@ -82,7 +85,12 @@ describe('<EditService />', () => {
 
     try {
       await waitForElementToBeRemoved(screen.queryByTestId('loading-overlay'));
-      fillServiceQuestion({ name: 'Serviço teste editado' });
+      fillServiceQuestion({
+        name: 'Serviço teste editado',
+        result: 'Result test',
+        preparation: 'Preparation test',
+        description: 'Description test',
+      });
       const saveButton = screen.getByRole('button', { name: /salvar serviço/i });
       userEvent.click(saveButton);
       expect(
@@ -111,6 +119,9 @@ describe('<EditService />', () => {
         min: '1',
         max: '300',
         numbersOnly: true,
+        result: 'Result test',
+        preparation: 'Preparation test',
+        description: 'Description test',
       });
       removeQuestion('Se sim, qual a área?');
       const saveButton = screen.getByRole('button', { name: /salvar serviço/i });
@@ -131,7 +142,13 @@ describe('<EditService />', () => {
 
     try {
       await waitForElementToBeRemoved(screen.queryByTestId('loading-overlay'));
-      fillServiceQuestion({ queryLabel: 'Indicação', name: 'Crazy Service' });
+      fillServiceQuestion({
+        queryLabel: 'Indicação',
+        name: 'Crazy Service',
+        result: 'Result test',
+        preparation: 'Preparation test',
+        description: 'Description test',
+      });
       createNewQuestion({
         key: 'diastolic_blood_pressure',
         label: 'Pressão arterial - diastólica',

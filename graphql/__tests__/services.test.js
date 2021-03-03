@@ -20,6 +20,9 @@ const originalService = {
   price: 150.59,
   info: 'Aplicável em pessoas fora de grupo de risco',
   emitDeclaration: false,
+  result: 'Result test',
+  description: 'Description test',
+  preparation: 'Preparation test',
   procedureFields: [
     {
       key: 'physical_activities',
@@ -52,6 +55,9 @@ const graphqlResponseService = {
   price: 150.59,
   info: 'Aplicável em pessoas fora de grupo de risco',
   emitDeclaration: false,
+  result: 'Result test',
+  description: 'Description test',
+  preparation: 'Preparation test',
   procedureFields: [
     {
       key: 'physical_activities',
