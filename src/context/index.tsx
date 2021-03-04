@@ -6,8 +6,13 @@ import { ThemeProvider, StylesProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider as ThemeProviderStyledComponent } from 'styled-components';
 
-import { InMemoryCache, ApolloClient, HttpLink, ApolloLink } from '@apollo/client';
-import { ApolloProvider } from '@apollo/react-hooks';
+import {
+  InMemoryCache,
+  ApolloClient,
+  HttpLink,
+  ApolloLink,
+  ApolloProvider,
+} from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { withBasePath } from 'utils/withBasePath';
 

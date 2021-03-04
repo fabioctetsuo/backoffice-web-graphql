@@ -15,11 +15,11 @@ describe('Loading', () => {
     expect(container).toMatchInlineSnapshot(`
       <div>
         <div
-          class="Loading__OverlayContainer-sc-10vzu09-0 dhkAXq"
+          class="Loading__OverlayContainer-sc-10vzu09-0 fHiCbX"
           data-testid="loading-overlay"
         >
           <div
-            class="Loading__LoadingWrapper-sc-10vzu09-1 iOQpCD"
+            class="Loading__LoadingWrapper-sc-10vzu09-1 bzmrvi"
           >
             <div
               class="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"

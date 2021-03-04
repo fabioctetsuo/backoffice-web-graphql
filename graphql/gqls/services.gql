@@ -12,6 +12,7 @@ fragment ServiceParts on HealthHubService {
     key
     label
     type
+    position
     validations {
       min
       max
@@ -45,6 +46,7 @@ query service($id: ID!) {
       key
       label
       type
+      position
       validations {
         min
         max

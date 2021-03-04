@@ -126,9 +126,14 @@ export const createNewQuestion = async (props = {}) => {
   });
 };
 
-export const removeQuestion = (question: string) => {
-  const table = screen.getByLabelText(question).previousSibling as HTMLElement;
-  userEvent.click(within(table).getByLabelText(/remover pergunta/i));
+export const removeQuestion = (question: string, container?: HTMLElement) => {
+  if (container) {
+    const table = container.previousSibling as HTMLElement;
+    userEvent.click(within(table).getByLabelText(/remover pergunta/i));
+  } else {
+    const table = screen.getByLabelText(question).previousSibling as HTMLElement;
+    userEvent.click(within(table).getByLabelText(/remover pergunta/i));
+  }
 };
 
 export const editOptionFieldByLabelText = ({

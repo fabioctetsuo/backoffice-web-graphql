@@ -31,6 +31,7 @@ const result = {
             numbersOnly: null,
             currentDate: null,
           },
+          position: 0,
           value: null,
           values: null,
           data: null,
@@ -48,6 +49,7 @@ const result = {
             numbersOnly: null,
             currentDate: null,
           },
+          position: 1,
           value: null,
           values: null,
           data: {
@@ -70,6 +72,7 @@ const result = {
           },
           value: null,
           values: null,
+          position: 2,
           data: {
             __typename: 'HealthHubServiceFieldData',
             unit: 'mg/dl',
@@ -90,6 +93,7 @@ const result = {
           },
           value: null,
           values: null,
+          position: 3,
           data: {
             __typename: 'HealthHubServiceFieldData',
             unit: 'mg/dl',
@@ -110,6 +114,7 @@ const result = {
           },
           value: null,
           values: null,
+          position: 4,
           data: {
             __typename: 'HealthHubServiceFieldData',
             unit: 'mg/dl',
@@ -130,6 +135,7 @@ const result = {
           },
           value: null,
           values: null,
+          position: 5,
           data: null,
         },
         {
@@ -147,6 +153,7 @@ const result = {
           },
           value: null,
           values: null,
+          position: 6,
           data: {
             __typename: 'HealthHubServiceFieldData',
             unit: 'mg/dl',
@@ -180,6 +187,7 @@ const result = {
             numbersOnly: null,
             currentDate: null,
           },
+          position: 0,
           value: null,
           values: null,
           data: null,
@@ -191,6 +199,7 @@ const result = {
           type: 'SELECT',
           validations: null,
           value: null,
+          position: 1,
           values: [
             {
               __typename: 'HealthHubServiceValue',
@@ -221,6 +230,7 @@ const result = {
           type: 'LABEL',
           validations: null,
           value: null,
+          position: 2,
           values: null,
           data: null,
         },
@@ -238,6 +248,7 @@ const result = {
             currentDate: null,
           },
           value: null,
+          position: 3,
           values: [
             {
               __typename: 'HealthHubServiceValue',
@@ -269,6 +280,7 @@ const result = {
           },
           value: null,
           values: null,
+          position: 4,
           data: {
             __typename: 'HealthHubServiceFieldData',
             unit: 'g/dL',
@@ -288,6 +300,7 @@ const result = {
             currentDate: null,
           },
           value: null,
+          position: 5,
           values: null,
           data: null,
         },
@@ -298,6 +311,7 @@ const result = {
           type: 'SELECT',
           validations: null,
           value: null,
+          position: 6,
           values: [
             {
               __typename: 'HealthHubServiceValue',
@@ -340,6 +354,7 @@ const result = {
             currentDate: true,
           },
           value: null,
+          position: 7,
           values: null,
           data: null,
         },
@@ -350,6 +365,7 @@ const result = {
           type: 'DATETIME',
           validations: null,
           value: null,
+          position: 8,
           values: null,
           data: null,
         },
@@ -367,6 +383,7 @@ const result = {
             currentDate: null,
           },
           value: null,
+          position: 9,
           values: null,
           data: null,
         },
@@ -390,6 +407,7 @@ const result = {
           key: 'covid19_contact',
           label: 'Teve contato com paciente confirmado ou suspeito de Covid-19?',
           type: 'BOOLEAN',
+          position: 0,
           validations: {
             __typename: 'HealthHubFieldValidation',
             min: null,
@@ -420,6 +438,7 @@ const result = {
           key: 'symptoms_date',
           label: 'Data de início dos sintomas',
           type: 'DATE',
+          position: 1,
           validations: {
             __typename: 'HealthHubFieldValidation',
             min: null,
@@ -438,6 +457,7 @@ const result = {
           label: 'IgG',
           type: 'BOOLEAN',
           validations: null,
+          position: 2,
           value: null,
           values: [
             {
@@ -461,6 +481,7 @@ const result = {
           label: 'Febre?',
           type: 'BOOLEAN',
           validations: null,
+          position: 3,
           value: null,
           values: [
             {
@@ -484,6 +505,7 @@ const result = {
           label: 'Imunossupressão?',
           type: 'BOOLEAN',
           validations: null,
+          position: 4,
           value: null,
           values: [
             {
@@ -508,6 +530,7 @@ const result = {
           type: 'BOOLEAN',
           validations: null,
           value: null,
+          position: 5,
           values: [
             {
               __typename: 'HealthHubServiceValue',
@@ -531,6 +554,7 @@ const result = {
           type: 'BOOLEAN',
           validations: null,
           value: null,
+          position: 6,
           values: [
             {
               __typename: 'HealthHubServiceValue',
@@ -552,6 +576,7 @@ const result = {
           key: 'sample_type',
           label: 'Tipo de amostra',
           type: 'TEXT',
+          position: 7,
           validations: {
             __typename: 'HealthHubFieldValidation',
             min: 1,
@@ -571,6 +596,7 @@ const result = {
           type: 'BOOLEAN',
           validations: null,
           value: null,
+          position: 8,
           values: [
             {
               __typename: 'HealthHubServiceValue',
@@ -592,6 +618,7 @@ const result = {
           key: 'shelf_life',
           label: 'Validade',
           type: 'DATE',
+          position: 9,
           validations: {
             __typename: 'HealthHubFieldValidation',
             min: null,
@@ -609,6 +636,7 @@ const result = {
           key: 'lot',
           label: 'Lote',
           type: 'TEXT',
+          position: 10,
           validations: {
             __typename: 'HealthHubFieldValidation',
             min: 5,
@@ -626,6 +654,7 @@ const result = {
           key: 'result',
           label: 'Resultado',
           type: 'TEXT',
+          position: 11,
           validations: {
             __typename: 'HealthHubFieldValidation',
             min: 1,
@@ -643,6 +672,7 @@ const result = {
           key: 'ms_number',
           label: 'Número MS',
           type: 'TEXT',
+          position: 12,
           validations: {
             __typename: 'HealthHubFieldValidation',
             min: 1,
@@ -660,6 +690,7 @@ const result = {
           key: 'guidelines',
           label: 'Orientações',
           type: 'TEXTAREA',
+          position: 13,
           validations: {
             __typename: 'HealthHubFieldValidation',
             min: 1,
@@ -677,6 +708,7 @@ const result = {
           key: 'test_used',
           label: 'Teste utilizado',
           type: 'TEXT',
+          position: 14,
           validations: {
             __typename: 'HealthHubFieldValidation',
             min: 1,
@@ -696,6 +728,7 @@ const result = {
             'Apresentou algum sintoma abaixo nos últimos 8 dias? (Em caso de sintomas apresentados em menos de 8 dias o resultado IgM (fase aguda) não será preciso/satisfatório)',
           type: 'BOOLEAN',
           validations: null,
+          position: 15,
           value: null,
           values: [
             {
@@ -719,6 +752,7 @@ const result = {
           label: 'Assintomático?',
           type: 'BOOLEAN',
           validations: null,
+          position: 16,
           value: null,
           values: [
             {
@@ -741,6 +775,7 @@ const result = {
           key: 'observation',
           label: 'Observação',
           type: 'TEXTAREA',
+          position: 17,
           validations: {
             __typename: 'HealthHubFieldValidation',
             min: 1,
@@ -760,6 +795,7 @@ const result = {
           type: 'BOOLEAN',
           validations: null,
           value: null,
+          position: 18,
           values: [
             {
               __typename: 'HealthHubServiceValue',
@@ -781,6 +817,7 @@ const result = {
           key: 'maker',
           label: 'Fabricante',
           type: 'TEXT',
+          position: 19,
           validations: {
             __typename: 'HealthHubFieldValidation',
             min: 1,
@@ -798,6 +835,7 @@ const result = {
           key: 'dyspnea',
           label: 'Dispnéia?',
           type: 'BOOLEAN',
+          position: 20,
           validations: null,
           value: null,
           values: [
@@ -822,6 +860,7 @@ const result = {
           label:
             'Portador de doenças cromossômicas ou estado de fragilidade imunológica?',
           type: 'BOOLEAN',
+          position: 21,
           validations: null,
           value: null,
           values: [
@@ -845,6 +884,7 @@ const result = {
           key: 'exam_applicant',
           label: 'Solicitante do exame',
           type: 'TEXT',
+          position: 22,
           validations: {
             __typename: 'HealthHubFieldValidation',
             min: 1,
@@ -862,6 +902,7 @@ const result = {
           key: 'user_authorization',
           label: 'Autorização do usuário',
           type: 'BOOLEAN',
+          position: 23,
           validations: null,
           value: null,
           values: [
@@ -885,6 +926,7 @@ const result = {
           key: 'chronic_heart_disease',
           label: 'Doença cardíacas crônicas?',
           type: 'BOOLEAN',
+          position: 24,
           validations: null,
           value: null,
           values: [
@@ -908,6 +950,7 @@ const result = {
           key: 'advanced_chronic_kidney_disease',
           label: 'Doenças renais crônicas em estado avançado',
           type: 'BOOLEAN',
+          position: 25,
           validations: null,
           value: null,
           values: [
@@ -931,6 +974,7 @@ const result = {
           key: 'headache',
           label: 'Dor de cabeça?',
           type: 'BOOLEAN',
+          position: 26,
           validations: null,
           value: null,
           values: [
@@ -954,6 +998,7 @@ const result = {
           key: 'decompensated_respiratory_diseases',
           label: 'Doenças respiratórias descompensadas?',
           type: 'BOOLEAN',
+          position: 27,
           validations: null,
           value: null,
           values: [
@@ -977,6 +1022,7 @@ const result = {
           key: 'diabetes',
           label: 'Diabetes?',
           type: 'BOOLEAN',
+          position: 28,
           validations: null,
           value: null,
           values: [
@@ -1000,6 +1046,7 @@ const result = {
           key: 'medical_referral',
           label: 'Encaminhamento médico',
           type: 'BOOLEAN',
+          position: 29,
           validations: null,
           value: null,
           values: [

@@ -66,6 +66,7 @@ type HealthHubServiceFieldById {
   values: [HealthHubServiceValueById!]
   validations: HealthHubFieldValidation
   data: HealthHubServiceFieldData
+  position: Int
 }
 
 type HealthHubServiceField {
@@ -75,6 +76,7 @@ type HealthHubServiceField {
   values: [HealthHubServiceValue!]
   validations: HealthHubFieldValidation
   data: HealthHubServiceFieldData
+  position: Int
 }
 
 input HealthHubServiceFieldInput {
@@ -84,6 +86,7 @@ input HealthHubServiceFieldInput {
   values: [HealthHubServiceValueInput!]
   validations: HealthHubFieldValidationInput
   data: HealthHubServiceFieldDataInput
+  position: Int
 }
 
 type HealthHubService {

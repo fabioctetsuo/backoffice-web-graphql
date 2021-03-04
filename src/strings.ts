@@ -98,12 +98,8 @@ export default {
         newQuestion: 'Nova pergunta',
         table: {
           a11y: {
-            label: 'Tabela com campos de perguntas',
-            viewDetails: 'Ver campos do formulário para pergunta',
             remove: 'Remover pergunta',
-          },
-          head: {
-            label: 'Legenda',
+            dragAndDrop: 'Arraste o item para reordenar',
           },
           fields: {
             title: 'Configuração do campo',

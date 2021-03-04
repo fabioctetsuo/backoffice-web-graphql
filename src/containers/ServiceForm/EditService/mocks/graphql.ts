@@ -23,6 +23,7 @@ const graphqlGetServiceResponse = {
         currentDate: false,
         __typename: 'HealthHubFieldValidation',
       },
+      position: 1,
       values: null,
       data: null,
       __typename: 'HealthHubServiceFieldById',
@@ -31,6 +32,7 @@ const graphqlGetServiceResponse = {
       key: 'vaccine',
       label: 'Vacina',
       type: 'SELECT',
+      position: 2,
       validations: {
         min: null,
         max: null,
@@ -54,6 +56,7 @@ const graphqlGetServiceResponse = {
       key: 'shelf_life',
       label: 'Validade',
       type: 'DATE',
+      position: 3,
       validations: {
         min: null,
         max: null,
@@ -70,6 +73,7 @@ const graphqlGetServiceResponse = {
       key: 'healthcare_professional_area',
       label: 'Se sim, qual a área?',
       type: 'TEXT',
+      position: 4,
       validations: {
         min: 1,
         max: 200,
@@ -100,6 +104,7 @@ const serviceWithSelectField = {
       key: 'vaccine',
       label: 'Vacina Marota',
       type: 'SELECT',
+      position: 1,
       validations: {
         min: null,
         max: null,
@@ -130,6 +135,7 @@ const serviceWithOptionFields = {
       key: 'hypertension',
       label: 'Hipertensão?',
       type: 'BOOLEAN',
+      position: 1,
       validations: {
         min: null,
         max: null,
@@ -171,6 +177,7 @@ const editedForm = {
       key: 'indication',
       label: 'Indicação médica',
       type: 'TEXTAREA',
+      position: 1,
       validations: {
         min: 5,
         max: 500,
@@ -185,6 +192,7 @@ const editedForm = {
       key: 'vaccine',
       label: 'Vacina',
       type: 'SELECT',
+      position: 2,
       validations: {
         required: true,
         numbersOnly: false,
@@ -203,6 +211,7 @@ const editedForm = {
       key: 'shelf_life',
       label: 'Validade',
       type: 'DATE',
+      position: 3,
       validations: {
         required: true,
         numbersOnly: false,
@@ -215,6 +224,7 @@ const editedForm = {
       key: 'diastolic_blood_pressure',
       label: 'Pressão arterial - diastólica',
       type: 'INTEGER',
+      position: 4,
       validations: {
         min: 1,
         max: 300,
@@ -241,6 +251,7 @@ const editedFormWithSelect = {
       key: 'vaccine',
       label: 'Vacina Marota',
       type: 'SELECT',
+      position: 1,
       validations: {
         required: true,
         numbersOnly: false,
@@ -272,6 +283,7 @@ const editedFormWithOption = {
       key: 'hypertension',
       label: 'Hipertensão?',
       type: 'BOOLEAN',
+      position: 1,
       validations: {
         required: true,
         numbersOnly: false,
@@ -295,6 +307,80 @@ export default {
     result: {
       data: {
         service: graphqlGetServiceResponse,
+      },
+    },
+  },
+  getServiceReorderQuestionSuccessMock: {
+    request: {
+      query: ServiceDocument,
+      variables: { id: '1' },
+    },
+    result: {
+      data: {
+        service: {
+          emitDeclaration: true,
+          id: '5fc9607adea2302e164d721f',
+          info: 'Diretamente na farmácia',
+          name: 'Hepatite A e B',
+          price: null,
+          type: 'VACCINE',
+          description: 'Description test',
+          result: 'Result test',
+          preparation: 'Preparation test',
+          procedureFields: [
+            {
+              key: 'shelf_life',
+              label: 'Validade',
+              type: 'DATE',
+              position: 1,
+              validations: {
+                min: null,
+                max: null,
+                required: true,
+                numbersOnly: false,
+                currentDate: true,
+                __typename: 'HealthHubFieldValidation',
+              },
+              values: null,
+              data: null,
+              __typename: 'HealthHubServiceFieldById',
+            },
+            {
+              key: 'healthcare_professional_area',
+              label: 'Se sim, qual a área?',
+              type: 'TEXT',
+              position: 2,
+              validations: {
+                min: 1,
+                max: 200,
+                required: true,
+                numbersOnly: false,
+                currentDate: true,
+                __typename: 'HealthHubFieldValidation',
+              },
+              values: null,
+              data: null,
+              __typename: 'HealthHubServiceById',
+            },
+            {
+              key: 'observation',
+              label: 'Observação',
+              type: 'TEXT',
+              position: 3,
+              validations: {
+                min: 1,
+                max: 200,
+                required: true,
+                numbersOnly: false,
+                currentDate: true,
+                __typename: 'HealthHubFieldValidation',
+              },
+              values: null,
+              data: null,
+              __typename: 'HealthHubServiceById',
+            },
+          ],
+        },
       },
     },
   },

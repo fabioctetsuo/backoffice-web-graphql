@@ -3,33 +3,37 @@ module.exports = {
     async service(_, { id }, { dataSources }) {
       const response = await dataSources.services.getResource(id);
       if (response) {
-        const formattedProcedureFields = response.procedureFields.map(field => {
-          if (field.values) {
-            const formattedValues = field.values.map(value => {
-              if (value.data) {
+        const formattedProcedureFields = response.procedureFields
+          .map(field => {
+            if (field.values) {
+              const formattedValues = field.values.map(value => {
+                if (value.data) {
+                  return {
+                    ...value,
+                    data: Object.entries(value.data).map(([label, value]) => ({
+                      label,
+                      value,
+                    })),
+                  };
+                }
                 return {
                   ...value,
-                  data: Object.entries(value.data).map(([label, value]) => ({
-                    label,
-                    value,
-                  })),
+                  data: [],
                 };
-              }
+              });
               return {
-                ...value,
-                data: [],
+                ...field,
+                values: formattedValues,
               };
-            });
+            }
             return {
               ...field,
-              values: formattedValues,
+              values: [],
             };
-          }
-          return {
-            ...field,
-            values: [],
-          };
-        });
+          })
+          .sort((a, b) => {
+            return a.position - b.position;
+          });
         return {
           ...response,
           price: response.price ? `${response.price}`.replace('.', ',') : null,

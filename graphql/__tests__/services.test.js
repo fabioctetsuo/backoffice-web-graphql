@@ -30,6 +30,7 @@ const originalService = {
       required: true,
       type: 'SELECT',
       value: null,
+      position: 0,
       values: [
         {
           key: 'low',
@@ -65,6 +66,7 @@ const graphqlResponseService = {
       data: null,
       validations: null,
       type: 'SELECT',
+      position: 0,
       values: [
         {
           key: 'low',
@@ -90,7 +92,15 @@ describe('Graphql Integration - Services', () => {
   it('Get service', async () => {
     nock('http://localhost:3001')
       .get('/health-hub-services/42')
-      .reply(200, originalService);
+      .reply(200, {
+        ...originalService,
+        procedureFields: [
+          {
+            ...originalService.procedureFields[0],
+            position: 0,
+          },
+        ],
+      });
 
     const { query } = createTestServer(() => ({ services: servicesAPI }));
 
@@ -107,6 +117,7 @@ describe('Graphql Integration - Services', () => {
       procedureFields: [
         {
           ...graphqlResponseService.procedureFields[0],
+          position: 0,
           values: [
             { key: 'low', label: 'Sedentário', data: [] },
             { key: 'active', label: 'Ativo', data: [] },

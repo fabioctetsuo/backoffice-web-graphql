@@ -1,4 +1,5 @@
 import {
+  fireEvent,
   render,
   screen,
   userEvent,
@@ -23,7 +24,7 @@ jest.mock('next/router');
 const mockedPush = jest.fn();
 
 beforeEach(() => {
-  jest.setTimeout(10000);
+  jest.setTimeout(15000);
   (useRouter as jest.Mock).mockReturnValue({
     query: { id: '1' },
     push: mockedPush,
@@ -258,6 +259,38 @@ describe('<EditService />', () => {
           'Não são permitidos caracteres especiais e espaços, apenas letras e _'
         )
       ).toBeInTheDocument();
+    } catch (err) {
+      throw new Error(err);
+    }
+  });
+
+  it('Must reorder question services using drag and drop', async () => {
+    render(<EditService />, {
+      mocks: [mocks.getServiceReorderQuestionSuccessMock],
+    });
+
+    try {
+      await waitForElementToBeRemoved(screen.queryByTestId('loading-overlay'));
+      const saveButton = screen.getByRole('button', { name: /salvar serviço/i });
+      expect(saveButton).toBeDisabled();
+      const questions = screen.getAllByRole('row');
+      const questionsName = questions.map(row => row.textContent);
+      expect(questionsName).toEqual(['Validade', 'Se sim, qual a área?', 'Observação']);
+      const shelfLifeQuestion = questions[0];
+      const dropRow = questions[2];
+
+      fireEvent.dragStart(shelfLifeQuestion);
+      fireEvent.dragEnter(dropRow);
+      fireEvent.dragOver(dropRow);
+      fireEvent.drop(dropRow);
+
+      const reorderedQuestions = screen.getAllByRole('row');
+      const reorderedQuestionsName = reorderedQuestions.map(row => row.textContent);
+      expect(reorderedQuestionsName).toEqual([
+        'Se sim, qual a área?',
+        'Observação',
+        'Validade',
+      ]);
     } catch (err) {
       throw new Error(err);
     }

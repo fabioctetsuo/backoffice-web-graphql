@@ -1,6 +1,6 @@
 import NewService from '.';
 import { useRouter } from 'next/router';
-import { render, screen, userEvent, waitFor } from 'utils/testing';
+import { fireEvent, render, screen, userEvent, waitFor } from 'utils/testing';
 import { HealthHubFieldType, HealthHubServiceFieldType } from 'generated-types';
 import mocks from './mocks/graphql';
 import { createNewQuestion, fillServiceQuestion, removeQuestion } from '../utils/tests';
@@ -245,5 +245,76 @@ describe('<NewService />', () => {
     updatedDeleteButtons.forEach(button => {
       expect(button).not.toBeDisabled();
     });
+  });
+
+  it('Must reorder service questions with drag and drop', async () => {
+    render(<NewService />, {
+      mocks: [mocks.createServiceSuccessMock],
+    });
+
+    const serviceQuestions = screen.getAllByTestId('questions-row-testid');
+    const questionContainer = serviceQuestions[serviceQuestions.length - 1];
+
+    fillServiceQuestion({
+      name: 'Serviço teste',
+      serviceType: HealthHubFieldType.PharmaService,
+      info: 'Diretamente na farmácia',
+      container: questionContainer,
+      key: 'diastolic_blood_pressure',
+      label: 'Pressão arterial - diastólica',
+      type: HealthHubServiceFieldType.Integer,
+      unit: 'mmHg',
+      min: '1',
+      max: '300',
+      numbersOnly: true,
+    });
+
+    userEvent.click(screen.getByRole('button', { name: /nova pergunta/i }));
+
+    const updatedServiceQuestions = screen.getAllByTestId('questions-row-testid');
+    await waitFor(() => {
+      expect(updatedServiceQuestions).toHaveLength(2);
+    });
+
+    const newQuestionContainer =
+      updatedServiceQuestions[updatedServiceQuestions.length - 1];
+
+    fillServiceQuestion({
+      container: newQuestionContainer,
+      key: 'observation',
+      label: 'Observação',
+      type: HealthHubServiceFieldType.Text,
+    });
+
+    userEvent.click(screen.getByRole('button', { name: /nova pergunta/i }));
+
+    await waitFor(() => {
+      expect(screen.getAllByTestId('questions-row-testid')).toHaveLength(3);
+    });
+
+    removeQuestion('', screen.getAllByTestId('questions-row-testid')[2]);
+
+    await waitFor(() => {
+      expect(screen.getAllByTestId('questions-row-testid')).toHaveLength(2);
+    });
+
+    const questions = screen.getAllByRole('row');
+    const questionsName = questions.map(row => row.textContent);
+    expect(questionsName).toEqual(['Pressão arterial - diastólica', 'Observação']);
+
+    const indicationQuestion = questions[0];
+    const dropRow = questions[1];
+
+    fireEvent.dragStart(indicationQuestion);
+    fireEvent.dragEnter(dropRow);
+    fireEvent.dragOver(dropRow);
+    fireEvent.drop(dropRow);
+
+    const reorderedQuestions = screen.getAllByRole('row');
+    const reorderedQuestionsName = reorderedQuestions.map(row => row.textContent);
+    expect(reorderedQuestionsName).toEqual([
+      'Observação',
+      'Pressão arterial - diastólica',
+    ]);
   });
 });

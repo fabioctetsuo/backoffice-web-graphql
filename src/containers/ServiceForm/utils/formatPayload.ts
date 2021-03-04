@@ -43,14 +43,17 @@ const getFormattedData = (data?: HealthHubServiceFieldData | null) => {
 };
 
 const getFormattedProcedureFields = (procedureFields: HealthHubServiceFieldById[]) => {
-  return procedureFields.map(({ values, validations, data, ...procedureField }) => {
-    return {
-      ...procedureField,
-      values: getFormattedValues(values),
-      validations: getFormattedValidations(validations as HealthHubFieldValidationForm),
-      data: getFormattedData(data),
-    };
-  });
+  return procedureFields.map(
+    ({ values, validations, data, ...procedureField }, index) => {
+      return {
+        ...procedureField,
+        position: index + 1,
+        values: getFormattedValues(values),
+        validations: getFormattedValidations(validations as HealthHubFieldValidationForm),
+        data: getFormattedData(data),
+      };
+    }
+  );
 };
 
 export const getFormattedPrice = (price?: string | null) => {
