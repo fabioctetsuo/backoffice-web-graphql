@@ -1,4 +1,10 @@
-import { SellerDocument, ServicesDocument, UpdateSellerDocument } from 'generated-types';
+import {
+  ProviderDocument,
+  SellerDocument,
+  ServicesDocument,
+  UpdateProviderDocument,
+  UpdateSellerDocument,
+} from 'generated-types';
 
 const result = {
   __typename: 'HealthHubServiceAll',
@@ -1157,6 +1163,28 @@ export default {
       },
     },
   },
+  getProviderSuccess: {
+    request: {
+      query: ProviderDocument,
+      variables: {
+        id: '5fc96401dcbf6550dba10695',
+      },
+    },
+    result: {
+      data: {
+        provider: {
+          startHour: '09:00-03:00',
+          endHour: '22:00-03:00',
+          startIntervalHour: null,
+          endIntervalHour: null,
+          slots: 3,
+          interval: 30,
+          id: '5fc96401dcbf6550dba10695',
+          __typename: 'Provider',
+        },
+      },
+    },
+  },
   updateSeller: {
     request: {
       query: UpdateSellerDocument,
@@ -1304,6 +1332,147 @@ export default {
       data: {
         services: result,
       },
+    },
+  },
+  updateProviderSuccess: {
+    request: {
+      query: UpdateProviderDocument,
+      variables: {
+        id: '5fc96401dcbf6550dba10695',
+        provider: {
+          interval: 30,
+          slots: 3,
+          startHour: '09:00-03:00',
+          endHour: '22:00-03:00',
+          startIntervalHour: null,
+          endIntervalHour: null,
+        },
+      },
+    },
+    result: {
+      data: {
+        updateProvider: {
+          startHour: '09:00-03:00',
+          endHour: '22:00-03:00',
+          startIntervalHour: null,
+          endIntervalHour: null,
+          slots: 3,
+          interval: 30,
+          id: '5fc96401dcbf6550dba10695',
+          __typename: 'Provider',
+        },
+      },
+    },
+  },
+  getProviderErrorNotFound: {
+    request: {
+      query: ProviderDocument,
+      variables: {
+        id: '5fc96401dcbf6550dba10695',
+      },
+    },
+    result: {
+      errors: [
+        {
+          message: '404: Not found',
+          locations: [{ line: 2, column: 3 }],
+          path: ['updateProvider'],
+          extensions: {
+            code: 'NOT_FOUND',
+            response: {
+              url: 'providers-api-url',
+              status: 404,
+              statusText: 'Not found',
+              body: {
+                errors: [
+                  {
+                    type: 'not found',
+                    parameter_name: null,
+                    message: 'Erro desconhecido',
+                  },
+                ],
+                url: '/providers',
+                method: 'post',
+              },
+            },
+          },
+        },
+      ],
+      data: { updateProvider: null },
+    },
+  },
+  getProviderError: {
+    request: {
+      query: ProviderDocument,
+      variables: {
+        id: '5fc96401dcbf6550dba10695',
+      },
+    },
+    result: {
+      errors: [
+        {
+          message: '500: Internal server error',
+          locations: [{ line: 2, column: 3 }],
+          path: ['updateProvider'],
+          extensions: {
+            code: 'INTERNAL SERVER ERROR',
+            response: {
+              url: 'providers-api-url',
+              status: 500,
+              statusText: 'Internal server error',
+              body: {
+                errors: [
+                  {
+                    type: 'Internal server error',
+                    parameter_name: null,
+                    message: 'Erro desconhecido',
+                  },
+                ],
+                url: '/providers',
+                method: 'post',
+              },
+            },
+          },
+        },
+      ],
+      data: { updateProvider: null },
+    },
+  },
+  getSellerError: {
+    request: {
+      query: SellerDocument,
+      variables: {
+        id: defaultUpdateVariables.id,
+      },
+    },
+    result: {
+      errors: [
+        {
+          message: '500: Internal server error',
+          locations: [{ line: 2, column: 3 }],
+          path: ['seller'],
+          extensions: {
+            code: 'INTERNAL_SERVER_ERROR',
+            response: {
+              url: 'sellers-api-url',
+              status: 500,
+              statusText: 'Internal server error',
+              body: {
+                errors: [
+                  {
+                    type: 'error',
+                    parameter_name: null,
+                    message: 'Erro desconhecido',
+                  },
+                ],
+                url: '/sellers/5fc96401dcbf6550dba10695',
+                method: 'get',
+              },
+            },
+          },
+        },
+      ],
+      data: { updateSeller: null },
     },
   },
 };

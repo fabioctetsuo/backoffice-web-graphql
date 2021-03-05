@@ -2,6 +2,10 @@ import React, { ReactChild } from 'react';
 import fetch from 'cross-fetch';
 import theme from 'theme';
 
+import ptLocale from 'date-fns/locale/pt';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+
 import { ThemeProvider, StylesProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider as ThemeProviderStyledComponent } from 'styled-components';
@@ -55,7 +59,9 @@ function AppProviders({ children, token }: AppProviderdProps) {
         <ThemeProvider theme={theme}>
           <ThemeProviderStyledComponent theme={theme}>
             <CssBaseline />
-            {children}
+            <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ptLocale}>
+              {children}
+            </MuiPickersUtilsProvider>
           </ThemeProviderStyledComponent>
         </ThemeProvider>
       </StylesProvider>

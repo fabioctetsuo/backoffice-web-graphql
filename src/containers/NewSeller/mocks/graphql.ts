@@ -1,4 +1,5 @@
 import {
+  CreateProviderDocument,
   CreateSellerDocument,
   GetAddressByZipcodeDocument,
   ServicesDocument,
@@ -1264,6 +1265,81 @@ export default {
       data: {
         services: result,
       },
+    },
+  },
+  createProviderSuccess: {
+    request: {
+      query: CreateProviderDocument,
+      variables: {
+        provider: {
+          providerId: '5fc96401dcbf6550dba10695',
+          interval: 30,
+          slots: 1,
+          startHour: '08:00-03:00',
+          endHour: '22:00-03:00',
+          startIntervalHour: null,
+          endIntervalHour: null,
+        },
+      },
+    },
+    result: {
+      data: {
+        createProvider: {
+          startHour: '08:00-03:00',
+          endHour: '22:00-03:00',
+          startIntervalHour: null,
+          endIntervalHour: null,
+          slots: 1,
+          interval: 30,
+          id: '5fc96401dcbf6550dba10695',
+          __typename: 'Provider',
+        },
+      },
+    },
+  },
+  createProviderError: {
+    request: {
+      query: CreateProviderDocument,
+      variables: {
+        provider: {
+          providerId: '5fc96401dcbf6550dba10695',
+          interval: 30,
+          slots: 1,
+          startHour: '08:00-03:00',
+          endHour: '22:00-03:00',
+          startIntervalHour: null,
+          endIntervalHour: null,
+        },
+      },
+    },
+    result: {
+      errors: [
+        {
+          message: '500: Internal server error',
+          locations: [{ line: 2, column: 3 }],
+          path: ['createSeller'],
+          extensions: {
+            code: 'INTERNAL_SERVER_ERROR',
+            response: {
+              url: 'providers-api-url',
+              status: 500,
+              statusText: 'Internal server error',
+              body: {
+                errors: [
+                  {
+                    type: 'conflict',
+                    parameter_name: null,
+                    message: 'Erro desconhecido',
+                  },
+                ],
+                url: '/providers',
+                method: 'post',
+              },
+            },
+          },
+        },
+      ],
+      data: { createProvider: null },
     },
   },
 };

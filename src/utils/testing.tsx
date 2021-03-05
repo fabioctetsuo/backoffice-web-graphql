@@ -12,6 +12,10 @@ import { ThemeProvider as ThemeProviderStyledComponent } from 'styled-components
 import { DocumentNode } from '@apollo/client';
 import { AuthContextProps, AuthProvider } from 'context/auth-context';
 
+import ptLocale from 'date-fns/locale/pt';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+
 type WrapperProps = {
   children: ReactElement;
 };
@@ -51,7 +55,9 @@ const customRender = (
             <SnackbarProvider maxSnack={3}>
               <CssBaseline />
               <AuthProvider value={{ ...defaultAuthProps, ...mockAuth }}>
-                {children}
+                <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ptLocale}>
+                  {children}
+                </MuiPickersUtilsProvider>
               </AuthProvider>
             </SnackbarProvider>
           </ThemeProviderStyledComponent>
@@ -71,7 +77,11 @@ const customServerRender = (ui: ReactElement, { mocks = [] as GraphqlMock[] } = 
           <ThemeProviderStyledComponent theme={theme}>
             <SnackbarProvider maxSnack={3}>
               <CssBaseline />
-              <AuthProvider value={defaultAuthProps}>{ui}</AuthProvider>
+              <AuthProvider value={defaultAuthProps}>
+                <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ptLocale}>
+                  {ui}
+                </MuiPickersUtilsProvider>
+              </AuthProvider>
             </SnackbarProvider>
           </ThemeProviderStyledComponent>
         </ThemeProvider>

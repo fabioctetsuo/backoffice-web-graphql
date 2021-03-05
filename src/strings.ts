@@ -39,6 +39,10 @@ export default {
       },
     },
   },
+  timeInput: {
+    cancelLabel: 'Cancelar',
+    invalidDateMessage: 'Hora inválida',
+  },
   sidebar: {
     menuIcon: {
       open: 'Abrir menu de navegação',
@@ -211,6 +215,8 @@ export default {
         loadSellerError:
           'Não foi possível encontrar a loja selecionada. Tente novamente.',
         cnpjAlreadyRegistered: 'Já existe uma loja cadastrada com este CNPJ.',
+        providerNotFound:
+          'Houve algum problema no cadastro do horário de funcionamento. Por favor, informe novamente.',
       },
       alertDialog: {
         title: 'Deseja cancelar a edição?',
@@ -239,6 +245,10 @@ export default {
     },
     sellerForm: {
       servicesSectionTitle: 'Escolha os serviços que serão disponibilizados nesta loja',
+      workingHoursTitle: 'Horário de funcionamento',
+      blockingHoursTitle: 'Intervalo de bloqueio',
+      addressTitle: 'Endereço da loja',
+      infoTitle: 'Informações cadastrais',
       buttons: {
         save: 'Salvar',
         cancel: 'Cancelar',
@@ -247,6 +257,14 @@ export default {
         getServicesError:
           'Ocorreu um erro ao buscar os serviços. Por favor, tente novamente.',
         minServicesQuantity: 'Selecione no mínimo um serviço',
+        endHourLessThanOrEqualStartHour:
+          'Horário de fechamento da loja não pode ser menor que o horário de abertura da loja.',
+        endIntervalHourLessThanOrEqualStartIntervalHour:
+          'Final do bloqueio não pode ser maior que o início do bloqueio.',
+        startIntervalHourLessThanStartHour:
+          'Início do bloqueio não pode ser menor que horário de abertura da loja.',
+        endIntervalHourGreaterThanEndHour:
+          'Final do bloqueio não pode ser maior que o horário de fechamento da loja.',
       },
       fields: {
         tradingName: {
@@ -272,6 +290,28 @@ export default {
         mobilePhone: {
           label: 'Telefone celular',
           required: 'O campo "Celular" é obrigatório',
+        },
+        provider: {
+          workingHours: {
+            start: {
+              label: 'Início',
+              required: 'O campo "Início" é obrigatório',
+            },
+            end: {
+              label: 'Fim',
+              required: 'O campo "Fim" é obrigatório',
+            },
+          },
+          blockingHours: {
+            start: {
+              label: 'Início',
+              required: 'O campo "Início" é obrigatório',
+            },
+            end: {
+              label: 'Fim',
+              required: 'O campo "Fim" é obrigatório',
+            },
+          },
         },
       },
     },

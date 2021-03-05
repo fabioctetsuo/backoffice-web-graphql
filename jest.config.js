@@ -10,4 +10,5 @@ module.exports = {
     '!src/**/**.test.(tsx|ts)',
   ],
   projects: ['./.jest/jest.client.js', './.jest/jest.server.js'],
+  globalSetup: './.jest/global-setup.js',
 };

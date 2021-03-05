@@ -25,12 +25,12 @@ module.exports = function (server, router) {
         .findIndex(({ id: providerId }) => providerId === id)
         .value();
 
-      const providerFound = {
+      const updatedProvider = {
         ...providerFound,
         ...provider,
       };
-      providerSchedulesData.splice(originalProviderIndex, 1, providerFound).write();
-      res.jsonp(providerFound);
+      providerSchedulesData.splice(originalProviderIndex, 1, updatedProvider).write();
+      res.jsonp(updatedProvider);
     } else {
       res.sendStatus(404);
     }

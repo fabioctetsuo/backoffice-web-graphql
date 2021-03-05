@@ -41,6 +41,15 @@ const fillSellerForm = async () => {
   });
 
   userEvent.type(screen.getByLabelText(/Número/i), '1257');
+
+  userEvent.type(
+    within(screen.getByTestId('time-input-provider.startHour')).getByRole('textbox'),
+    '08:00'
+  );
+  userEvent.type(
+    within(screen.getByTestId('time-input-provider.endHour')).getByRole('textbox'),
+    '22:00'
+  );
 };
 
 const selectAnService = (service = /vacina gripe/i) => {
@@ -56,6 +65,9 @@ const selectAnService = (service = /vacina gripe/i) => {
 };
 
 describe('<NewSeller />', () => {
+  beforeEach(() => {
+    jest.setTimeout(10000);
+  });
   afterEach(() => {
     jest.resetAllMocks();
   });
@@ -65,6 +77,7 @@ describe('<NewSeller />', () => {
         mocks.getAddressSuccess,
         mocks.createSellerSuccess,
         mocks.getServicesSuccess,
+        mocks.createProviderSuccess,
       ],
     });
 
@@ -75,6 +88,7 @@ describe('<NewSeller />', () => {
     userEvent.click(screen.getByRole('button', { name: /salvar/i }));
 
     expect(await screen.findByText('Loja cadastrada com sucesso.')).toBeInTheDocument();
+    expect(mockRouterPush).toHaveBeenCalledWith('/sellers');
   });
 
   it('Should display a warning toast if CNPJ is already registered', async () => {
@@ -186,6 +200,170 @@ describe('<NewSeller />', () => {
       userEvent.click(screen.getByText(/cancelar/i));
 
       expect(mockRouterPush).toHaveBeenCalledWith('/sellers');
+    });
+  });
+  describe('Provider validation', () => {
+    it('Must require fill in the endIntervalHour field only if the startIntervalHour is filled in.', async () => {
+      render(<NewSeller />, {
+        mocks: [
+          mocks.getAddressSuccess,
+          mocks.createSellerSuccess,
+          mocks.getServicesSuccess,
+          mocks.createProviderSuccess,
+        ],
+      });
+
+      await fillSellerForm();
+
+      userEvent.type(
+        within(screen.getByTestId('time-input-provider.startIntervalHour')).getByRole(
+          'textbox'
+        ),
+        '08:00'
+      );
+
+      selectAnService();
+
+      userEvent.click(screen.getByRole('button', { name: /salvar/i }));
+
+      expect(
+        await within(
+          screen.getByTestId('time-input-provider.endIntervalHour')
+        ).findByText('O campo "Fim" é obrigatório')
+      ).toBeInTheDocument();
+
+      expect(mockRouterPush).not.toHaveBeenCalled();
+
+      userEvent.clear(
+        within(screen.getByTestId('time-input-provider.startIntervalHour')).getByRole(
+          'textbox'
+        )
+      );
+
+      expect(
+        within(screen.getByTestId('time-input-provider.endIntervalHour')).queryByText(
+          'O campo "Fim" é obrigatório'
+        )
+      ).not.toBeInTheDocument();
+
+      userEvent.click(screen.getByRole('button', { name: /salvar/i }));
+
+      expect(await screen.findByText('Loja cadastrada com sucesso.')).toBeInTheDocument();
+
+      expect(mockRouterPush).toHaveBeenCalled();
+    });
+
+    it('Must display a toast with error if endHour greater than or equal startHour.', async () => {
+      render(<NewSeller />, {
+        mocks: [
+          mocks.getAddressSuccess,
+          mocks.createSellerSuccess,
+          mocks.getServicesSuccess,
+          mocks.createProviderSuccess,
+        ],
+      });
+
+      await fillSellerForm();
+
+      userEvent.type(
+        within(screen.getByTestId('time-input-provider.startHour')).getByRole('textbox'),
+        '08:00'
+      );
+      userEvent.clear(
+        within(screen.getByTestId('time-input-provider.endHour')).getByRole('textbox')
+      );
+      userEvent.type(
+        within(screen.getByTestId('time-input-provider.endHour')).getByRole('textbox'),
+        '07:00'
+      );
+
+      selectAnService();
+
+      userEvent.click(screen.getByRole('button', { name: /salvar/i }));
+
+      expect(
+        await screen.findByText(
+          'Horário de fechamento da loja não pode ser menor que o horário de abertura da loja.'
+        )
+      ).toBeInTheDocument();
+
+      expect(mockRouterPush).not.toHaveBeenCalled();
+    });
+
+    it('Must display a toast with error if blocking interval is not is not within the working hours.', async () => {
+      render(<NewSeller />, {
+        mocks: [
+          mocks.getAddressSuccess,
+          mocks.createSellerSuccess,
+          mocks.getServicesSuccess,
+          mocks.createProviderSuccess,
+        ],
+      });
+
+      await fillSellerForm();
+
+      const blockingStartInput = within(
+        screen.getByTestId('time-input-provider.startIntervalHour')
+      ).getByRole('textbox');
+
+      const blockingEndInput = within(
+        screen.getByTestId('time-input-provider.endIntervalHour')
+      ).getByRole('textbox');
+
+      // working hour is 08:00 at 22:00 and blocking hours is 07:00 at 11:00
+      userEvent.type(blockingStartInput, '07:00');
+      userEvent.type(blockingEndInput, '11:00');
+
+      selectAnService();
+
+      userEvent.click(screen.getByRole('button', { name: /salvar/i }));
+
+      expect(
+        await screen.findByText(
+          'Início do bloqueio não pode ser menor que horário de abertura da loja.'
+        )
+      ).toBeInTheDocument();
+
+      expect(mockRouterPush).not.toHaveBeenCalled();
+
+      userEvent.clear(blockingStartInput);
+      userEvent.clear(blockingEndInput);
+
+      // working hour is 08:00 at 22:00 and blocking hours is 12:00 at 23:00
+      userEvent.type(blockingStartInput, '12:00');
+      userEvent.type(blockingEndInput, '23:00');
+
+      userEvent.click(screen.getByRole('button', { name: /salvar/i }));
+
+      expect(
+        await screen.findByText(
+          'Final do bloqueio não pode ser maior que o horário de fechamento da loja.'
+        )
+      ).toBeInTheDocument();
+
+      expect(mockRouterPush).not.toHaveBeenCalled();
+    });
+
+    it('Must redirect to edit seller page if the seller is created and there is an error in creating the provider.', async () => {
+      render(<NewSeller />, {
+        mocks: [
+          mocks.getAddressSuccess,
+          mocks.createSellerSuccess,
+          mocks.getServicesSuccess,
+          mocks.createProviderError,
+        ],
+      });
+
+      await fillSellerForm();
+
+      selectAnService();
+
+      userEvent.click(screen.getByRole('button', { name: /salvar/i }));
+
+      // redirect to edit seller page
+      await waitFor(() => {
+        expect(mockRouterPush).toHaveBeenCalledWith('/sellers/5fc96401dcbf6550dba10695');
+      });
     });
   });
 });

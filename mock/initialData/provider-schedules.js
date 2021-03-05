@@ -8,4 +8,13 @@ module.exports = [
     interval: 30,
     id: '5fc963c2dcbf6550dba10694',
   },
+  {
+    startHour: '09:00-03:00',
+    endHour: '22:00-03:00',
+    startIntervalHour: null,
+    endIntervalHour: null,
+    slots: 3,
+    interval: 30,
+    id: '5fc96401dcbf6550dba10695',
+  },
 ];
