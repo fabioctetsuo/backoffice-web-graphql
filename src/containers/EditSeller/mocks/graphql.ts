@@ -1475,4 +1475,26 @@ export default {
       data: { updateSeller: null },
     },
   },
+  getProvider24hSuccess: {
+    request: {
+      query: ProviderDocument,
+      variables: {
+        id: '5fc96401dcbf6550dba10695',
+      },
+    },
+    result: {
+      data: {
+        provider: {
+          startHour: '00:00-03:00',
+          endHour: '23:59-03:00',
+          startIntervalHour: null,
+          endIntervalHour: null,
+          slots: 3,
+          interval: 30,
+          id: '5fc96401dcbf6550dba10695',
+          __typename: 'Provider',
+        },
+      },
+    },
+  },
 };

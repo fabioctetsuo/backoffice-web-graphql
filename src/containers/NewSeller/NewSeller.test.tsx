@@ -149,6 +149,35 @@ describe('<NewSeller />', () => {
     });
   });
 
+  it('Should fill startHour with 00:00 and endHour with 23:59 and disable this fields', async () => {
+    render(<NewSeller />, { mocks: [mocks.getServicesSuccess] });
+
+    const checkbox24hrs = screen.getByLabelText(/Aberta 24horas/i);
+
+    // click in this check to fill with 00:00 and 23:59 and disable fields
+    userEvent.click(checkbox24hrs);
+
+    expect(checkbox24hrs).toBeTruthy();
+    const startHourInput = within(
+      screen.getByTestId('time-input-provider.startHour')
+    ).getByRole('textbox');
+    const endHourInput = within(
+      screen.getByTestId('time-input-provider.endHour')
+    ).getByRole('textbox');
+
+    expect(startHourInput).toHaveValue('00:00');
+    expect(startHourInput).toBeDisabled();
+
+    expect(endHourInput).toHaveValue('23:59');
+    expect(endHourInput).toBeDisabled();
+
+    // click again to enable the fields
+    userEvent.click(checkbox24hrs);
+
+    expect(startHourInput).toBeEnabled();
+    expect(endHourInput).toBeEnabled();
+  });
+
   describe('Confirm dialog', () => {
     it('Should display the comfirm dialog and stay on the form if click "Não"', async () => {
       render(<NewSeller />, {

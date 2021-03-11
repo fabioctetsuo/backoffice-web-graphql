@@ -249,6 +249,7 @@ export default {
       blockingHoursTitle: 'Intervalo de bloqueio',
       addressTitle: 'Endereço da loja',
       infoTitle: 'Informações cadastrais',
+      open24hrLabel: 'Aberta 24horas',
       buttons: {
         save: 'Salvar',
         cancel: 'Cancelar',

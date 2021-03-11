@@ -43,12 +43,18 @@ describe('<EditSeller />', () => {
     expect(screen.getByLabelText(/Estado/i)).toHaveValue('SP');
     expect(screen.getByLabelText(/País/i)).toHaveValue('Brasil');
 
-    expect(
-      within(screen.getByTestId('time-input-provider.startHour')).getByRole('textbox')
-    ).toHaveValue('09:00');
-    expect(
-      within(screen.getByTestId('time-input-provider.endHour')).getByRole('textbox')
-    ).toHaveValue('22:00');
+    const startHourInput = within(
+      screen.getByTestId('time-input-provider.startHour')
+    ).getByRole('textbox');
+    const endHourInput = within(
+      screen.getByTestId('time-input-provider.endHour')
+    ).getByRole('textbox');
+
+    expect(screen.getByLabelText(/Aberta 24horas/i)).toBeTruthy();
+    expect(startHourInput).toHaveValue('09:00');
+    expect(startHourInput).toBeEnabled();
+    expect(endHourInput).toHaveValue('22:00');
+    expect(endHourInput).toBeEnabled();
 
     expect(
       within(screen.getByTestId('time-input-provider.startIntervalHour')).getByRole(
@@ -60,6 +66,71 @@ describe('<EditSeller />', () => {
         'textbox'
       )
     ).not.toHaveValue();
+  });
+
+  it('Should check 24h box and disable startHour and endHour fields', async () => {
+    render(<EditSeller />, {
+      mocks: [
+        mocks.getSellerSuccess,
+        mocks.getServicesSuccess,
+        mocks.getProvider24hSuccess,
+      ],
+    });
+    await waitFor(() => {
+      expect(screen.getByLabelText(/Nome/i)).toHaveValue('Paulista 6');
+    });
+
+    expect(screen.getByLabelText(/Aberta 24horas/i)).toBeTruthy();
+    const startHourInput = within(
+      screen.getByTestId('time-input-provider.startHour')
+    ).getByRole('textbox');
+    const endHourInput = within(
+      screen.getByTestId('time-input-provider.endHour')
+    ).getByRole('textbox');
+
+    expect(startHourInput).toHaveValue('00:00');
+    expect(startHourInput).toBeDisabled();
+
+    expect(endHourInput).toHaveValue('23:59');
+    expect(endHourInput).toBeDisabled();
+  });
+
+  it('Should clear and enable startHour and endHour fields if uncheck 24h checkbox', async () => {
+    render(<EditSeller />, {
+      mocks: [
+        mocks.getSellerSuccess,
+        mocks.getServicesSuccess,
+        mocks.getProvider24hSuccess,
+      ],
+    });
+    await waitFor(() => {
+      expect(screen.getByLabelText(/Nome/i)).toHaveValue('Paulista 6');
+    });
+
+    const input24h = screen.getByLabelText(/Aberta 24horas/i);
+
+    expect(input24h).toBeTruthy();
+    const startHourInput = within(
+      screen.getByTestId('time-input-provider.startHour')
+    ).getByRole('textbox');
+    const endHourInput = within(
+      screen.getByTestId('time-input-provider.endHour')
+    ).getByRole('textbox');
+
+    expect(startHourInput).toHaveValue('00:00');
+    expect(startHourInput).toBeDisabled();
+
+    expect(endHourInput).toHaveValue('23:59');
+    expect(endHourInput).toBeDisabled();
+
+    // uncheck
+    userEvent.click(input24h);
+
+    expect(startHourInput).not.toHaveValue();
+    expect(startHourInput).toBeEnabled();
+
+    expect(endHourInput).not.toHaveValue();
+    expect(endHourInput).toBeEnabled();
   });
 
   it('Should display a error toast message and redirect to "/sellers" if a error occurs when trying get Seller', async () => {

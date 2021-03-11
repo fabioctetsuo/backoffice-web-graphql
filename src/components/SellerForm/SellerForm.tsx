@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useRouter } from 'next/router';
-import { Grid, Button, Divider } from '@material-ui/core';
+import { Grid, Button, Divider, Checkbox, FormControlLabel } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import AddressForm from 'components/AddressForm';
@@ -24,7 +24,7 @@ import Title from 'components/Title';
 import styled from 'styled-components';
 import TimePicker from 'components/FormInput/TimePicker';
 
-import { getDateFromHour, getHourFromDate } from './utils';
+import { getDateFromHour, getHourFromDate, isOpen24hrs } from './utils';
 
 const texts = strings.sellers.sellerForm;
 
@@ -81,7 +81,7 @@ const SellerForm = ({
     reValidateMode: 'onChange',
   });
 
-  const { register, control, clearErrors } = methods;
+  const { register, control, clearErrors, setValue } = methods;
 
   const BLOCKING_START = 'provider.startIntervalHour';
   const BLOCKING_END = 'provider.endIntervalHour';
@@ -100,6 +100,10 @@ const SellerForm = ({
   >();
 
   const [formIsDirty, setFormIsDirty] = React.useState(false);
+
+  const [is24hrs, setIs24hrs] = React.useState<boolean>(
+    isOpen24hrs(defaultValues?.provider.startHour, defaultValues?.provider.endHour)
+  );
 
   const { loading: servicesLoading } = useServicesQuery({
     variables: {
@@ -288,10 +292,15 @@ const SellerForm = ({
             })}
           />
           <Grid item xs={12} md={6}>
-            <Title style={{ marginBottom: 32 }}>{texts.workingHoursTitle}</Title>
+            <Grid container direction="row" alignItems="baseline" justify="space-between">
+              <Grid item>
+                <Title style={{ marginBottom: 32 }}>{texts.workingHoursTitle}</Title>
+              </Grid>
+            </Grid>
             <Grid item container spacing={2}>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} md={4}>
                 <TimePicker
+                  disabled={is24hrs}
                   field="provider.startHour"
                   ampm={false}
                   label={texts.fields.provider.workingHours.start.label}
@@ -300,8 +309,9 @@ const SellerForm = ({
                   }}
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} md={4}>
                 <TimePicker
+                  disabled={is24hrs}
                   field="provider.endHour"
                   ampm={false}
                   label={texts.fields.provider.workingHours.end.label}
@@ -310,12 +320,40 @@ const SellerForm = ({
                   }}
                 />
               </Grid>
+              <Grid item xs={12} md={4} alignItems="center">
+                <FormControlLabel
+                  style={{ height: 88 }}
+                  control={
+                    <Checkbox
+                      color="primary"
+                      checked={is24hrs}
+                      onChange={() => {
+                        if (is24hrs) {
+                          setIs24hrs(false);
+                          setFormIsDirty(true);
+                          setValue('provider.startHour', null);
+                          setValue('provider.endHour', null);
+                        } else {
+                          setValue('provider.startHour', new Date().setHours(0, 0, 0, 0));
+                          setValue(
+                            'provider.endHour',
+                            new Date().setHours(23, 59, 59, 0)
+                          );
+                          setIs24hrs(true);
+                          setFormIsDirty(true);
+                        }
+                      }}
+                    />
+                  }
+                  label={texts.open24hrLabel}
+                />
+              </Grid>
             </Grid>
           </Grid>
           <Grid item xs={12} md={6}>
             <Title style={{ marginBottom: 32 }}>{texts.blockingHoursTitle}</Title>
             <Grid item container spacing={2}>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} md={4}>
                 <TimePicker
                   field="provider.startIntervalHour"
                   ampm={false}
@@ -327,7 +365,7 @@ const SellerForm = ({
                   }}
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} md={4}>
                 <TimePicker
                   field="provider.endIntervalHour"
                   ampm={false}

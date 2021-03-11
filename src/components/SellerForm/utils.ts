@@ -12,3 +12,8 @@ export const getHourFromDate = (date: Date | string) => {
     timeZone: SAO_PAULO_TIME_ZONE,
   })}`;
 };
+
+export const isOpen24hrs = (start?: string, end?: string) => {
+  if (!start || !end) return false;
+  return start.substring(0, 5) === '00:00' && end.substring(0, 5) === '23:59';
+};
