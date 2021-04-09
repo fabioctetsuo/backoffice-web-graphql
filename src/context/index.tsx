@@ -10,6 +10,8 @@ import { ThemeProvider, StylesProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider as ThemeProviderStyledComponent } from 'styled-components';
 
+import { useAuth } from 'context/auth-context';
+
 import {
   InMemoryCache,
   ApolloClient,
@@ -36,10 +38,10 @@ const cleanTypeName = new ApolloLink((operation, forward) => {
   });
 });
 
-function AppProviders({ children, token }: AppProviderdProps) {
-  const httpLink = new HttpLink({ uri: withBasePath('/graphql'), fetch });
+const httpLink = new HttpLink({ uri: withBasePath('/graphql'), fetch });
 
-  const authLink = setContext((_, { headers }) => {
+const getAuthLink = (token: string) => {
+  return setContext((_, { headers }) => {
     return {
       headers: {
         ...headers,
@@ -47,11 +49,18 @@ function AppProviders({ children, token }: AppProviderdProps) {
       },
     };
   });
+};
 
-  const client = new ApolloClient({
-    link: HttpLink.from([cleanTypeName, authLink.concat(httpLink)]),
+export const getApolloClient = (token: string) =>
+  new ApolloClient({
+    link: HttpLink.from([cleanTypeName, getAuthLink(token).concat(httpLink)]),
     cache: new InMemoryCache(),
   });
+
+function AppProviders({ children, token: cookieToken }: AppProviderdProps) {
+  const { user } = useAuth();
+  const token = user?.token ? user?.token : cookieToken;
+  const client = getApolloClient(token);
 
   return (
     <ApolloProvider client={client}>

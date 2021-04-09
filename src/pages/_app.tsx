@@ -10,7 +10,7 @@ import theme from 'theme';
 
 import { SnackbarProvider } from 'notistack';
 import AppProviders from 'context';
-import { AuthProvider, useAuth } from 'context/auth-context';
+import { AuthProvider } from 'context/auth-context';
 
 const useStyles = makeStyles({
   error: { background: `${theme.palette.error.main} !important` },
@@ -28,10 +28,6 @@ const MyApp = ({ Component, pageProps, token: cookieToken }: AppProps & RouterPr
     const jssStyles = document.querySelector('#jss-server-side');
     jssStyles?.parentNode?.removeChild(jssStyles);
   }, []);
-
-  const { user } = useAuth();
-
-  const token = user?.token ? user?.token : cookieToken;
 
   return (
     <>
@@ -53,7 +49,7 @@ const MyApp = ({ Component, pageProps, token: cookieToken }: AppProps & RouterPr
         }}
       >
         <AuthProvider>
-          <AppProviders token={token}>
+          <AppProviders token={cookieToken}>
             <Component {...pageProps} />
           </AppProviders>
         </AuthProvider>

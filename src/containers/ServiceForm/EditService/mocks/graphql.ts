@@ -1,6 +1,4 @@
-import { ServiceDocument, UpdateServiceDocument } from 'generated-types';
-
-const graphqlGetServiceResponse = {
+export const graphqlGetServiceResponse = {
   emitDeclaration: true,
   id: '5fc9607adea2302e164d721f',
   info: 'Diretamente na farmácia',
@@ -89,7 +87,7 @@ const graphqlGetServiceResponse = {
   ],
 };
 
-const serviceWithSelectField = {
+export const serviceWithSelectField = {
   emitDeclaration: true,
   id: '5fc9607adea2302e164d721f',
   info: 'Diretamente na farmácia',
@@ -127,7 +125,7 @@ const serviceWithSelectField = {
   ],
 };
 
-const serviceWithOptionFields = {
+export const serviceWithOptionFields = {
   ...graphqlGetServiceResponse,
   name: 'Serviço teste',
   procedureFields: [
@@ -164,81 +162,97 @@ const serviceWithOptionFields = {
   ],
 };
 
-const editedForm = {
+export const error500 = {
+  message: '500: Internal server error',
+  locations: [{ line: 2, column: 3 }],
+  path: ['editService'],
+  extensions: {
+    code: 'INTERNAL_SERVER_ERROR',
+    response: {
+      url: 'service-api-url',
+      status: 500,
+      statusText: 'Internal server error',
+      body: {
+        errors: [
+          {
+            type: 'conflict',
+            parameter_name: null,
+            message: 'Erro desconhecido',
+          },
+        ],
+        url: '/services/1',
+        method: 'post',
+      },
+    },
+  },
+};
+
+export const reorderQuestions = {
+  emitDeclaration: true,
+  id: '5fc9607adea2302e164d721f',
   info: 'Diretamente na farmácia',
-  name: 'Crazy Service',
-  price: 10,
+  name: 'Hepatite A e B',
+  price: null,
   type: 'VACCINE',
   description: 'Description test',
   result: 'Result test',
   preparation: 'Preparation test',
   procedureFields: [
     {
-      key: 'indication',
-      label: 'Indicação médica',
-      type: 'TEXTAREA',
-      position: 1,
-      validations: {
-        min: 5,
-        max: 500,
-        required: true,
-        numbersOnly: false,
-        currentDate: false,
-      },
-      values: null,
-      data: null,
-    },
-    {
-      key: 'vaccine',
-      label: 'Vacina',
-      type: 'SELECT',
-      position: 2,
-      validations: {
-        required: true,
-        numbersOnly: false,
-        currentDate: false,
-      },
-      values: [
-        {
-          key: 'twinrix',
-          label: 'Twinrix',
-          data: { fabricante: 'GSK' },
-        },
-      ],
-      data: null,
-    },
-    {
       key: 'shelf_life',
       label: 'Validade',
       type: 'DATE',
-      position: 3,
+      position: 1,
       validations: {
+        min: null,
+        max: null,
         required: true,
         numbersOnly: false,
         currentDate: true,
+        __typename: 'HealthHubFieldValidation',
       },
       values: null,
       data: null,
+      __typename: 'HealthHubServiceFieldById',
     },
     {
-      key: 'diastolic_blood_pressure',
-      label: 'Pressão arterial - diastólica',
-      type: 'INTEGER',
-      position: 4,
+      key: 'healthcare_professional_area',
+      label: 'Se sim, qual a área?',
+      type: 'TEXT',
+      position: 2,
       validations: {
         min: 1,
-        max: 300,
+        max: 200,
         required: true,
-        numbersOnly: true,
-        currentDate: false,
+        numbersOnly: false,
+        currentDate: true,
+        __typename: 'HealthHubFieldValidation',
       },
       values: null,
-      data: { unit: 'mmHg' },
+      data: null,
+      __typename: 'HealthHubServiceById',
+    },
+    {
+      key: 'observation',
+      label: 'Observação',
+      type: 'TEXT',
+      position: 3,
+      validations: {
+        min: 1,
+        max: 200,
+        required: true,
+        numbersOnly: false,
+        currentDate: true,
+        __typename: 'HealthHubFieldValidation',
+      },
+      values: null,
+      data: null,
+      __typename: 'HealthHubServiceById',
     },
   ],
 };
 
-const editedFormWithSelect = {
+export const editedFormWithSelect = {
   info: 'Diretamente na farmácia',
   name: 'Hepatite A e B',
   price: null,
@@ -274,10 +288,14 @@ const editedFormWithSelect = {
   ],
 };
 
-const editedFormWithOption = {
-  ...editedForm,
+export const editedFormWithOption = {
+  info: 'Diretamente na farmácia',
   price: null,
   name: 'Serviço teste editado',
+  type: 'VACCINE',
+  description: 'Description test',
+  result: 'Result test',
+  preparation: 'Preparation test',
   procedureFields: [
     {
       key: 'hypertension',
@@ -298,248 +316,19 @@ const editedFormWithOption = {
   ],
 };
 
-export default {
-  getServiceSuccessMock: {
-    request: {
-      query: ServiceDocument,
-      variables: { id: '1' },
-    },
-    result: {
-      data: {
-        service: graphqlGetServiceResponse,
+export const duplicateResponse = {
+  message: '409: Conflict',
+  locations: [{ line: 2, column: 3 }],
+  path: ['createService'],
+  extensions: {
+    code: 'INTERNAL_SERVER_ERROR',
+    response: {
+      url: 'https://develop.devtest.zone/hh-services/health-hub-services',
+      status: 409,
+      statusText: 'Conflict',
+      body: {
+        errorDescription: 'Serviço com nome {0} e tipo {1} já existe',
       },
-    },
-  },
-  getServiceReorderQuestionSuccessMock: {
-    request: {
-      query: ServiceDocument,
-      variables: { id: '1' },
-    },
-    result: {
-      data: {
-        service: {
-          emitDeclaration: true,
-          id: '5fc9607adea2302e164d721f',
-          info: 'Diretamente na farmácia',
-          name: 'Hepatite A e B',
-          price: null,
-          type: 'VACCINE',
-          description: 'Description test',
-          result: 'Result test',
-          preparation: 'Preparation test',
-          procedureFields: [
-            {
-              key: 'shelf_life',
-              label: 'Validade',
-              type: 'DATE',
-              position: 1,
-              validations: {
-                min: null,
-                max: null,
-                required: true,
-                numbersOnly: false,
-                currentDate: true,
-                __typename: 'HealthHubFieldValidation',
-              },
-              values: null,
-              data: null,
-              __typename: 'HealthHubServiceFieldById',
-            },
-            {
-              key: 'healthcare_professional_area',
-              label: 'Se sim, qual a área?',
-              type: 'TEXT',
-              position: 2,
-              validations: {
-                min: 1,
-                max: 200,
-                required: true,
-                numbersOnly: false,
-                currentDate: true,
-                __typename: 'HealthHubFieldValidation',
-              },
-              values: null,
-              data: null,
-              __typename: 'HealthHubServiceById',
-            },
-            {
-              key: 'observation',
-              label: 'Observação',
-              type: 'TEXT',
-              position: 3,
-              validations: {
-                min: 1,
-                max: 200,
-                required: true,
-                numbersOnly: false,
-                currentDate: true,
-                __typename: 'HealthHubFieldValidation',
-              },
-              values: null,
-              data: null,
-              __typename: 'HealthHubServiceById',
-            },
-          ],
-        },
-      },
-    },
-  },
-  getServiceSuccessWithPriceMock: {
-    request: {
-      query: ServiceDocument,
-      variables: { id: '1' },
-    },
-    result: {
-      data: {
-        service: {
-          ...graphqlGetServiceResponse,
-          price: 10,
-        },
-      },
-    },
-  },
-  getServiceSuccessProcedureWithOptionMock: {
-    request: {
-      query: ServiceDocument,
-      variables: { id: '1' },
-    },
-    result: {
-      data: {
-        service: serviceWithOptionFields,
-      },
-    },
-  },
-  getServiceSuccessProcedureWithSelectMock: {
-    request: {
-      query: ServiceDocument,
-      variables: { id: '1' },
-    },
-    result: {
-      data: {
-        service: serviceWithSelectField,
-      },
-    },
-  },
-  updateServiceSuccessMock: {
-    request: {
-      query: UpdateServiceDocument,
-      variables: {
-        id: '1',
-        service: { ...editedForm, price: 20 },
-      },
-    },
-    result: {
-      data: {
-        service: { ...editedForm, price: 20 },
-      },
-    },
-  },
-  updateServiceSuccessSelectMock: {
-    request: {
-      query: UpdateServiceDocument,
-      variables: {
-        id: '1',
-        service: editedFormWithSelect,
-      },
-    },
-    result: {
-      data: {
-        service: editedFormWithSelect,
-      },
-    },
-  },
-  updateServiceWithOptionsSuccessMock: {
-    request: {
-      query: UpdateServiceDocument,
-      variables: {
-        id: '1',
-        service: editedFormWithOption,
-      },
-    },
-    result: {
-      data: {
-        service: editedFormWithOption,
-      },
-    },
-  },
-  updateServiceSuccessNoPriceMock: {
-    request: {
-      query: UpdateServiceDocument,
-      variables: {
-        id: '1',
-        service: { ...editedForm, price: null },
-      },
-    },
-    result: {
-      data: {
-        service: { ...editedForm, price: null },
-      },
-    },
-  },
-  updateServiceErrorMock: {
-    request: {
-      query: UpdateServiceDocument,
-      variables: {
-        id: '1',
-        service: editedForm,
-      },
-    },
-    result: {
-      errors: [
-        {
-          message: '500: Internal server error',
-          locations: [{ line: 2, column: 3 }],
-          path: ['editService'],
-          extensions: {
-            code: 'INTERNAL_SERVER_ERROR',
-            response: {
-              url: 'service-api-url',
-              status: 500,
-              statusText: 'Internal server error',
-              body: {
-                errors: [
-                  {
-                    type: 'conflict',
-                    parameter_name: null,
-                    message: 'Erro desconhecido',
-                  },
-                ],
-                url: '/services/1',
-                method: 'post',
-              },
-            },
-          },
-        },
-      ],
-    },
-  },
-  duplicateServiceErrorMock: {
-    request: {
-      query: UpdateServiceDocument,
-      variables: {
-        id: '1',
-        service: editedForm,
-      },
-    },
-    result: {
-      errors: [
-        {
-          message: '409: Conflict',
-          locations: [{ line: 2, column: 3 }],
-          path: ['createService'],
-          extensions: {
-            code: 'INTERNAL_SERVER_ERROR',
-            response: {
-              url: 'https://develop.devtest.zone/hh-services/health-hub-services',
-              status: 409,
-              statusText: 'Conflict',
-              body: {
-                errorDescription: 'Serviço com nome {0} e tipo {1} já existe',
-              },
-            },
-          },
-        },
-      ],
     },
   },
 };

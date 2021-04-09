@@ -1,9 +1,41 @@
-type User {
-  id: ID!
+type Role {
   name: String!
-  active: String
+  description: String!
+}
+
+type User {
+  disabled: Boolean!
+  profile: String!
+  email: String!
+  roles: [Role]!
+  partnerId: String!
+  name: String!
+  id: ID!
+}
+
+input UserInput {
+  disabled: Boolean
+  email: String
+  name: String
+  partnerId: String
+  password: String
+  profile: String
+  roles: [String]
+}
+
+type UsersAll {
+  content: [User!]!
+  page: Int
+  totalElements: Int
+  totalPages: Int
 }
 
 type Query {
   getUserById(id: ID!): User
+  getAllUsers(sort: String, name: String, email: String, size: Int, page: Int): UsersAll!
+}
+
+type Mutation {
+  createUser(user: UserInput!): User
+  updateUser(user: UserInput!, id: ID!): User
 }

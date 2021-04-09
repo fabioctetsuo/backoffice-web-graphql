@@ -12,10 +12,6 @@ describe('Home', () => {
       mocks: [mocks.userSuccessMock],
     });
 
-    // is loading...
-    expect(screen.getByRole('progressbar')).toBeInTheDocument();
-
-    // now should has data...
-    expect(await screen.findByText(/John Doe/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Arthur Dent/i)).toBeInTheDocument();
   });
 });

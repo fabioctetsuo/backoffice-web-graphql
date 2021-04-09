@@ -1,6 +1,6 @@
 import {
   fireEvent,
-  render,
+  renderMsw as render,
   screen,
   userEvent,
   waitForElementToBeRemoved,
@@ -9,7 +9,16 @@ import {
 import { useRouter } from 'next/router';
 import EditService from '.';
 import { HealthHubServiceFieldType } from 'generated-types';
-import mocks from './mocks/graphql';
+import {
+  editedFormWithOption,
+  serviceWithOptionFields,
+  graphqlGetServiceResponse,
+  error500,
+  serviceWithSelectField,
+  editedFormWithSelect,
+  reorderQuestions,
+  duplicateResponse,
+} from './mocks/graphql';
 import {
   createNewQuestion,
   fillServiceQuestion,
@@ -18,6 +27,7 @@ import {
   findOptionFieldByLabelText,
   getLastOptionFieldRow,
 } from '../utils/tests';
+import { graphql, server } from 'mocks/server';
 
 jest.mock('next/router');
 
@@ -37,9 +47,7 @@ afterEach(() => {
 
 describe('<EditService />', () => {
   it('Must edit service with success', async () => {
-    render(<EditService />, {
-      mocks: [mocks.getServiceSuccessMock, mocks.updateServiceSuccessMock],
-    });
+    render(<EditService />);
 
     try {
       await waitForElementToBeRemoved(screen.queryByTestId('loading-overlay'));
@@ -77,12 +85,15 @@ describe('<EditService />', () => {
   });
 
   it('Must edit service with boolean options with success', async () => {
-    render(<EditService />, {
-      mocks: [
-        mocks.getServiceSuccessProcedureWithOptionMock,
-        mocks.updateServiceWithOptionsSuccessMock,
-      ],
-    });
+    render(<EditService />);
+    server.use(
+      graphql.query('service', (req, res, ctx) => {
+        return res(ctx.data({ service: serviceWithOptionFields }));
+      }),
+      graphql.query('updateService', (req, res, ctx) => {
+        return res(ctx.data({ updateService: editedFormWithOption }));
+      })
+    );
 
     try {
       await waitForElementToBeRemoved(screen.queryByTestId('loading-overlay'));
@@ -105,9 +116,15 @@ describe('<EditService />', () => {
   });
 
   it('Should render error toast when update service fail', async () => {
-    render(<EditService />, {
-      mocks: [mocks.getServiceSuccessWithPriceMock, mocks.updateServiceErrorMock],
-    });
+    render(<EditService />);
+    server.use(
+      graphql.query('service', (req, res, ctx) => {
+        return res(ctx.data({ service: { ...graphqlGetServiceResponse, price: 10 } }));
+      }),
+      graphql.mutation('updateService', (req, res, ctx) => {
+        return res(ctx.errors([error500]));
+      })
+    );
 
     try {
       await waitForElementToBeRemoved(screen.queryByTestId('loading-overlay'));
@@ -137,9 +154,15 @@ describe('<EditService />', () => {
   });
 
   it('Should render duplicated error toast when update service and service type already exists', async () => {
-    render(<EditService />, {
-      mocks: [mocks.getServiceSuccessWithPriceMock, mocks.duplicateServiceErrorMock],
-    });
+    render(<EditService />);
+    server.use(
+      graphql.query('service', (req, res, ctx) => {
+        return res(ctx.data({ service: { ...graphqlGetServiceResponse, price: 10 } }));
+      }),
+      graphql.mutation('updateService', (req, res, ctx) => {
+        return res(ctx.errors([duplicateResponse]));
+      })
+    );
 
     try {
       await waitForElementToBeRemoved(screen.queryByTestId('loading-overlay'));
@@ -174,12 +197,15 @@ describe('<EditService />', () => {
   });
 
   it('Should be able to create options for select fields', async () => {
-    render(<EditService />, {
-      mocks: [
-        mocks.getServiceSuccessProcedureWithSelectMock,
-        mocks.updateServiceSuccessSelectMock,
-      ],
-    });
+    render(<EditService />);
+    server.use(
+      graphql.query('service', (req, res, ctx) => {
+        return res(ctx.data({ service: serviceWithSelectField }));
+      }),
+      graphql.mutation('updateService', (req, res, ctx) => {
+        return res(ctx.data({ updateService: editedFormWithSelect }));
+      })
+    );
 
     try {
       await waitForElementToBeRemoved(screen.queryByTestId('loading-overlay'));
@@ -206,9 +232,12 @@ describe('<EditService />', () => {
   });
 
   it('Should show duplicated error in input field when there is duplicated keys', async () => {
-    render(<EditService />, {
-      mocks: [mocks.getServiceSuccessProcedureWithOptionMock],
-    });
+    render(<EditService />);
+    server.use(
+      graphql.query('service', (req, res, ctx) => {
+        return res(ctx.data({ service: serviceWithOptionFields }));
+      })
+    );
 
     try {
       await waitForElementToBeRemoved(screen.queryByTestId('loading-overlay'));
@@ -241,9 +270,7 @@ describe('<EditService />', () => {
   });
 
   it('Must show invalid pattern error in key field', async () => {
-    render(<EditService />, {
-      mocks: [mocks.getServiceSuccessMock, mocks.updateServiceSuccessMock],
-    });
+    render(<EditService />);
 
     try {
       await waitForElementToBeRemoved(screen.queryByTestId('loading-overlay'));
@@ -265,9 +292,12 @@ describe('<EditService />', () => {
   });
 
   it('Must reorder question services using drag and drop', async () => {
-    render(<EditService />, {
-      mocks: [mocks.getServiceReorderQuestionSuccessMock],
-    });
+    render(<EditService />);
+    server.use(
+      graphql.query('service', (req, res, ctx) => {
+        return res(ctx.data({ service: reorderQuestions }));
+      })
+    );
 
     try {
       await waitForElementToBeRemoved(screen.queryByTestId('loading-overlay'));

@@ -1,7 +1,41 @@
+fragment UserParts on User {
+  id
+  name
+  email
+  profile
+  partnerId
+  disabled
+  roles {
+    name
+    description
+  }
+}
+
 query getUserById($id: ID!) {
   getUserById(id: $id) {
-    id
-    name
-    active
+    ...UserParts
+  }
+}
+
+query getAllUsers($page: Int, $size: Int, $sort: String, $name: String, $email: String) {
+  getAllUsers(page: $page, size: $size, sort: $sort, name: $name, email: $email) {
+    content {
+      ...UserParts
+    }
+    page
+    totalPages
+    totalElements
+  }
+}
+
+mutation createUser($user: UserInput!) {
+  createUser(user: $user) {
+    ...UserParts
+  }
+}
+
+mutation updateUser($id: ID!, $user: UserInput!) {
+  updateUser(id: $id, user: $user) {
+    ...UserParts
   }
 }
