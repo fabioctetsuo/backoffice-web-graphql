@@ -18,6 +18,7 @@ import {
   editedFormWithSelect,
   reorderQuestions,
   duplicateResponse,
+  mockedResponse,
 } from './mocks/graphql';
 import {
   createNewQuestion,
@@ -28,6 +29,7 @@ import {
   getLastOptionFieldRow,
 } from '../utils/tests';
 import { graphql, server } from 'mocks/server';
+import mockedResolver from 'mocks/mocked-resolver';
 
 jest.mock('next/router');
 
@@ -43,45 +45,46 @@ beforeEach(() => {
 
 afterEach(() => {
   jest.clearAllMocks();
+  mockedResolver.clearAllMocks();
 });
 
 describe('<EditService />', () => {
   it('Must edit service with success', async () => {
     render(<EditService />);
 
-    try {
-      await waitForElementToBeRemoved(screen.queryByTestId('loading-overlay'));
-      const saveButton = screen.getByRole('button', { name: /salvar serviço/i });
-      expect(screen.getByRole('button', { name: /salvar serviço/i })).toBeInTheDocument();
-      expect(saveButton).toBeDisabled();
-      fillServiceQuestion({
-        queryLabel: 'Indicação',
-        name: 'Crazy Service',
-        price: '20',
-        result: 'Result test',
-        preparation: 'Preparation test',
-        description: 'Description test',
-      });
-      createNewQuestion({
-        key: 'diastolic_blood_pressure',
-        label: 'Pressão arterial - diastólica',
-        type: HealthHubServiceFieldType.Integer,
-        unit: 'mmHg',
-        min: '1',
-        max: '300',
-        numbersOnly: true,
-      });
-      removeQuestion('Se sim, qual a área?');
-      expect(saveButton).not.toBeDisabled();
-      userEvent.click(saveButton);
-      expect(
-        await screen.findByText('Serviço atualizado com sucesso.')
-      ).toBeInTheDocument();
-      expect(mockedPush).toHaveBeenCalledTimes(1);
-      expect(mockedPush).toHaveBeenCalledWith('/services');
-    } catch (err) {
-      throw new Error(err);
-    }
+    await waitForElementToBeRemoved(screen.queryByTestId('loading-overlay'));
+    expect(mockedResolver.requests).toContainEqual({ id: '1' });
+    expect(mockedResolver.requests).toHaveLength(1);
+    const saveButton = screen.getByRole('button', { name: /salvar serviço/i });
+    expect(screen.getByRole('button', { name: /salvar serviço/i })).toBeInTheDocument();
+    expect(saveButton).toBeDisabled();
+    fillServiceQuestion({
+      queryLabel: 'Indicação',
+      name: 'Crazy Service',
+      price: '20',
+      result: 'Result test',
+      preparation: 'Preparation test',
+      description: 'Description test',
+    });
+    createNewQuestion({
+      key: 'diastolic_blood_pressure',
+      label: 'Pressão arterial - diastólica',
+      type: HealthHubServiceFieldType.Integer,
+      unit: 'mmHg',
+      min: '1',
+      max: '300',
+      numbersOnly: true,
+    });
+    removeQuestion('Se sim, qual a área?');
+    expect(saveButton).not.toBeDisabled();
+    userEvent.click(saveButton);
+    expect(
+      await screen.findByText('Serviço atualizado com sucesso.')
+    ).toBeInTheDocument();
+    expect(mockedPush).toHaveBeenCalledTimes(1);
+    expect(mockedPush).toHaveBeenCalledWith('/services');
+    expect(mockedResolver.requests).toHaveLength(2);
+    expect(mockedResolver.requests).toContainEqual(mockedResponse);
   });
 
   it('Must edit service with boolean options with success', async () => {

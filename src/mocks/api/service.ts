@@ -1,9 +1,11 @@
 import { graphql } from 'msw';
+import { withMockedResolver } from 'mocks/mocked-resolver';
 
-export const handlers = [
-  graphql.query('service', (req, res, ctx) => {
-    return res(
-      ctx.data({
+export default [
+  graphql.query(
+    'service',
+    withMockedResolver({
+      data: {
         service: {
           emitDeclaration: true,
           id: '5fc9607adea2302e164d721f',
@@ -92,12 +94,13 @@ export const handlers = [
             },
           ],
         },
-      })
-    );
-  }),
-  graphql.mutation('updateService', (req, res, ctx) => {
-    return res(
-      ctx.data({
+      },
+    })
+  ),
+  graphql.mutation(
+    'updateService',
+    withMockedResolver({
+      data: {
         updateService: {
           info: 'Diretamente na farmácia',
           name: 'Crazy Service',
@@ -171,7 +174,7 @@ export const handlers = [
             },
           ],
         },
-      })
-    );
-  }),
+      },
+    })
+  ),
 ];

@@ -1,3 +1,66 @@
+export const mockedResponse = {
+  id: '1',
+  service: {
+    name: 'Crazy Service',
+    type: 'VACCINE',
+    info: 'Diretamente na farmácia',
+    price: 20,
+    result: 'Result test',
+    preparation: 'Preparation test',
+    description: 'Description test',
+    procedureFields: [
+      {
+        data: null,
+        key: 'indication',
+        label: 'Indicação médica',
+        position: 1,
+        type: 'TEXTAREA',
+        validations: {
+          currentDate: false,
+          max: 500,
+          min: 5,
+          numbersOnly: false,
+          required: true,
+        },
+        values: null,
+      },
+      {
+        data: null,
+        key: 'vaccine',
+        label: 'Vacina',
+        position: 2,
+        type: 'SELECT',
+        validations: { currentDate: false, numbersOnly: false, required: true },
+        values: [{ data: { fabricante: 'GSK' }, key: 'twinrix', label: 'Twinrix' }],
+      },
+      {
+        data: null,
+        key: 'shelf_life',
+        label: 'Validade',
+        position: 3,
+        type: 'DATE',
+        validations: { currentDate: true, numbersOnly: false, required: true },
+        values: null,
+      },
+      {
+        data: { unit: 'mmHg' },
+        key: 'diastolic_blood_pressure',
+        label: 'Pressão arterial - diastólica',
+        position: 4,
+        type: 'INTEGER',
+        validations: {
+          currentDate: false,
+          max: 300,
+          min: 1,
+          numbersOnly: true,
+          required: true,
+        },
+        values: null,
+      },
+    ],
+  },
+};
+
 export const graphqlGetServiceResponse = {
   emitDeclaration: true,
   id: '5fc9607adea2302e164d721f',
