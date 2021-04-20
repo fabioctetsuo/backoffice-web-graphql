@@ -1,5 +1,11 @@
+const guideline = {
+  howTo: `##### 1 - Coletar amostra\nColete os 10μL de sangue até a linha preta da pipeta capilar. Dispensar a amostra coletada no tubo de tampão extrator.\n##### 2 - Aplicar a amostra\nAplique 10μL de sangue na cavidade ‘S’ do dispositivo teste.\n##### 3 - Aplicar o Tampão\nDispense 3 gotas no tampão na cavidade inferior e maior do dispositivo teste.\n##### 4 - Leitura do Resultado\nLeia o resultado do teste em 15 minutos.`,
+  attentionPoints: `Utilize SEMPRE a pipeta do kit para a coleta de amostra. Não utilize pipeta de outro kit.\n\n\nColete sempre o volume de amostras indicado pela marcação preta da pipeta e na bula do teste. Nunca pingue o sangue direto do dedo do paciente no teste.\n\n\nNão utilize tampão outros kits, utlize somente o tampão que acompanha os testes do seu kit.\n\n\nNunca fracione os tampões. Não encostar a ponta do tampão na membrana do dispositivo.\n\n\nAplicar o sangue etampão em suas respectivas cavidades sem extravasar.\n\n\nAtentar ao local de aplicação do sangue e do tampão. NUNCA inverter os locais.\n\n\nCertifique-se que não há presença de bolhas de ar na coleta da amostra.\n\n\nAplique primeiro o sangue e depois o tampão, e fique atento ao tempo - o sangue não pode coagular.\n\n\nLeia o teste no tempo indicado. Jamais leia o teste após o tempo indicado.`,
+};
+
 module.exports = [
   {
+    guideline,
     procedureFields: [
       {
         key: 'indication',
@@ -232,6 +238,7 @@ module.exports = [
   },
   {
     preparation: 'Não é necessário preparo.',
+    guideline,
     procedureFields: [
       {
         key: 'indication',
@@ -444,6 +451,7 @@ module.exports = [
   },
   {
     preparation: 'Em caso de febre recomenda-se adiar a vacinação até a melhora.',
+    guideline,
     procedureFields: [
       {
         key: 'indication',
@@ -642,6 +650,7 @@ module.exports = [
   },
   {
     preparation: 'Em caso de febre, deve-se adiar a vacinação até que ocorra a melhora.',
+    guideline,
     procedureFields: [
       {
         key: 'indication',
@@ -840,6 +849,7 @@ module.exports = [
   },
   {
     preparation: 'Em caso de febre, deve-se adiar a vacinação até que ocorra a melhora.',
+    guideline,
     procedureFields: [
       {
         key: 'indication',
@@ -1038,6 +1048,7 @@ module.exports = [
   },
   {
     preparation: 'Em caso de febre, deve-se adiar a vacinação até que ocorra a melhora.',
+    guideline,
     procedureFields: [
       {
         key: 'indication',
@@ -1236,6 +1247,7 @@ module.exports = [
   },
   {
     preparation: 'Em caso de febre, deve-se adiar a vacinação até que ocorra a melhora.',
+    guideline,
     procedureFields: [
       {
         key: 'indication',
@@ -1434,6 +1446,7 @@ module.exports = [
   },
   {
     preparation: 'Em caso de febre, deve-se adiar a vacinação até que ocorra a melhora.',
+    guideline,
     procedureFields: [
       {
         key: 'indication',
@@ -1641,6 +1654,7 @@ module.exports = [
     price: 15,
     preparation:
       'Aconselhável aguardar 2 horas após refeições, após ingerir grande quantidades de líquido e após ingerir bebida alcoólica.',
+    guideline,
     procedureFields: [
       {
         key: 'weight',
@@ -1770,6 +1784,7 @@ module.exports = [
   },
   {
     preparation: 'Não é necessário preparo.',
+    guideline,
     procedureFields: [
       {
         key: 'asymptomatic',
@@ -2180,6 +2195,7 @@ module.exports = [
   },
   {
     price: 15,
+    guideline,
     procedureFields: [
       {
         key: 'diabetes',
@@ -2377,6 +2393,7 @@ module.exports = [
   },
   {
     price: 8.5,
+    guideline,
     procedureFields: [
       {
         key: 'hypertension',
@@ -2729,6 +2746,7 @@ module.exports = [
     price: 5,
     preparation:
       '1- Recomenda-se repouso de 15 minutos, caso o paciente venha caminhando até a filial. 2- Após Alcool, café, exercício ou fumo, aguarde 30 minutos para medir 3- Deve-se esvaziar a bexiga',
+    guideline,
     procedureFields: [
       {
         key: 'hypertension',
@@ -3029,6 +3047,7 @@ module.exports = [
   {
     price: 15,
     preparation: 'Não é necessário preparo.',
+    guideline,
     procedureFields: [
       {
         key: 'diabetes',
@@ -3139,6 +3158,7 @@ module.exports = [
   {
     price: 5,
     preparation: 'Não é necessário preparo.',
+    guideline,
     procedureFields: [
       {
         key: 'saturation',
@@ -3219,6 +3239,7 @@ module.exports = [
     type: 'PHARMA_SERVICE',
   },
   {
+    guideline,
     procedureFields: [
       {
         key: 'body_temperature',
@@ -3298,6 +3319,7 @@ module.exports = [
     type: 'PHARMA_SERVICE',
   },
   {
+    guideline,
     procedureFields: [
       {
         key: 'prescriber_name',
@@ -3503,6 +3525,7 @@ module.exports = [
   {
     price: 120,
     preparation: 'Não é necessário preparo.',
+    guideline,
     procedureFields: [
       {
         key: 'IgM',
@@ -3569,6 +3592,7 @@ module.exports = [
   {
     price: 120,
     preparation: 'Não é necessário preparo.',
+    guideline,
     procedureFields: [
       {
         key: 'IgM',
@@ -3635,6 +3659,7 @@ module.exports = [
   {
     price: 60,
     preparation: 'Não é necessário preparo.',
+    guideline,
     procedureFields: [
       {
         key: 'IgM',
@@ -3701,6 +3726,7 @@ module.exports = [
   {
     price: 120,
     preparation: 'Em caso de febre recomenda-se adiar a vacinação até a melhora.',
+    guideline,
     procedureFields: [
       {
         key: 'IgM',
@@ -3767,6 +3793,7 @@ module.exports = [
   {
     price: 65,
     preparation: 'Não é necessário preparo.',
+    guideline,
     procedureFields: [
       {
         key: 'Result',
@@ -3817,6 +3844,7 @@ module.exports = [
   {
     price: 20,
     preparation: 'Não é necessário preparo.',
+    guideline,
     procedureFields: [
       {
         key: 'hb_hemoglobin',
@@ -3864,6 +3892,7 @@ module.exports = [
   {
     price: 30,
     preparation: 'Não é necessário preparo.',
+    guideline,
     procedureFields: [
       {
         key: 'uric_acid',
@@ -3910,6 +3939,7 @@ module.exports = [
   },
   {
     price: 35,
+    guideline,
     procedureFields: [
       {
         key: 'lactate',
@@ -3956,6 +3986,7 @@ module.exports = [
   },
   {
     price: 55,
+    guideline,
     procedureFields: [
       {
         key: 'luteinizing_hormone',
@@ -4002,6 +4033,7 @@ module.exports = [
   },
   {
     price: 45,
+    guideline,
     procedureFields: [
       {
         key: 'beta_hcg',
@@ -4048,6 +4080,7 @@ module.exports = [
   },
   {
     price: 99,
+    guideline,
     procedureFields: [
       {
         key: 'influenza_AB',
@@ -4111,6 +4144,7 @@ module.exports = [
   },
   {
     price: 45,
+    guideline,
     procedureFields: [
       {
         key: 'Result',
@@ -4159,6 +4193,7 @@ module.exports = [
   },
   {
     price: 35,
+    guideline,
     procedureFields: [
       {
         key: 'glycated_hemoglobin',
@@ -4205,6 +4240,7 @@ module.exports = [
   },
   {
     preparation: 'Não é necessário preparo.',
+    guideline,
     procedureFields: [
       {
         key: 'asymptomatic',
@@ -4589,6 +4625,7 @@ module.exports = [
   {
     price: 30,
     preparation: 'Preparation test updated',
+    guideline,
     procedureFields: [
       {
         key: 'indication',
@@ -4787,6 +4824,7 @@ module.exports = [
   },
   {
     price: 60,
+    guideline,
     procedureFields: [
       {
         key: 'tsh',
@@ -4847,6 +4885,7 @@ module.exports = [
     type: 'RAPID_TEST',
   },
   {
+    guideline,
     procedureFields: [
       {
         key: 'orientation',
@@ -4900,6 +4939,7 @@ module.exports = [
   {
     price: 45,
     preparation: 'Não é necessário preparo.',
+    guideline,
     procedureFields: [
       {
         key: 'total cholesterol',
@@ -4997,6 +5037,7 @@ module.exports = [
     type: 'RAPID_TEST',
   },
   {
+    guideline,
     procedureFields: [
       {
         key: 'vaccine',
@@ -5047,6 +5088,7 @@ module.exports = [
   },
   {
     price: 150,
+    guideline,
     procedureFields: [
       {
         key: 'vaccine',
@@ -5081,6 +5123,7 @@ module.exports = [
   {
     price: 200,
     preparation: 'Como se preparar teste Editado',
+    guideline,
     procedureFields: [
       {
         key: 'meu_campo',
@@ -5103,6 +5146,7 @@ module.exports = [
     type: 'PHARMA_SERVICE',
   },
   {
+    guideline,
     procedureFields: [
       {
         key: 'vaccine',
