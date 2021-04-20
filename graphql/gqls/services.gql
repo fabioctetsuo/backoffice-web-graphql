@@ -8,6 +8,10 @@ fragment ServiceParts on HealthHubService {
   description
   preparation
   result
+  guideline {
+    howTo
+    attentionPoints
+  }
   procedureFields {
     key
     label
@@ -42,6 +46,10 @@ query service($id: ID!) {
     description
     preparation
     result
+    guideline {
+      howTo
+      attentionPoints
+    }
     procedureFields {
       key
       label

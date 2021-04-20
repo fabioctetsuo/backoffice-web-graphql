@@ -17,6 +17,16 @@ enum HealthHubFieldType {
   RAPID_TEST
 }
 
+type Guideline {
+  howTo: String!
+  attentionPoints: String
+}
+
+input GuidelineInput {
+  howTo: String!
+  attentionPoints: String
+}
+
 type HealthHubServiceValueById {
   key: String!
   label: String!
@@ -94,6 +104,7 @@ type HealthHubService {
   info: String
   name: String!
   price: Float
+  guideline: Guideline!
   procedureFields: [HealthHubServiceField!]!
   type: HealthHubFieldType!
   attachMedicalReport: Boolean
@@ -108,6 +119,7 @@ type HealthHubServiceById {
   info: String
   name: String!
   price: String
+  guideline: Guideline!
   procedureFields: [HealthHubServiceFieldById!]!
   type: HealthHubFieldType!
   emitDeclaration: Boolean
@@ -120,6 +132,7 @@ input HealthHubServiceInput {
   info: String
   name: String!
   price: Float
+  guideline: GuidelineInput!
   procedureFields: [HealthHubServiceFieldInput]!
   type: HealthHubFieldType!
   attachMedicalReport: Boolean
