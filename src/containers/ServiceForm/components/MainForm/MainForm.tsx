@@ -90,6 +90,22 @@ function MainForm() {
         <Grid item xs={12} sm={8}>
           <TextField field="description" label={texts.description} multiline rows="2" />
         </Grid>
+        <TextField
+          field="guideline.howTo"
+          label="Como realizar o procedimento"
+          multiline
+          rows="5"
+          style={{ display: 'none' }}
+          disabled
+        />
+        <TextField
+          field="guideline.attentionPoints"
+          label="Pontos de atenção"
+          multiline
+          rows="5"
+          style={{ display: 'none' }}
+          disabled
+        />
       </Grid>
     </>
   );
