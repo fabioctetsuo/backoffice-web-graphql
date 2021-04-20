@@ -5,6 +5,11 @@ import {
   ServicesDocument,
 } from 'generated-types';
 
+const guideline = {
+  howTo: '#### Olá pessoas',
+  attentionPoints: 'Tudo bem?',
+};
+
 const result = {
   __typename: 'HealthHubServiceAll',
   content: [
@@ -20,6 +25,7 @@ const result = {
       result: 'Result Test',
       description: 'Description Test',
       preparation: 'How to prepare Test',
+      guideline,
       procedureFields: [
         {
           __typename: 'HealthHubServiceField',
@@ -176,6 +182,7 @@ const result = {
       result: 'Result Test',
       description: 'Description Test',
       preparation: 'How to prepare Test',
+      guideline,
       procedureFields: [
         {
           __typename: 'HealthHubServiceField',
@@ -404,6 +411,7 @@ const result = {
       result: 'Result Test',
       description: 'Description Test',
       preparation: 'How to prepare Test',
+      guideline,
       procedureFields: [
         {
           __typename: 'HealthHubServiceField',

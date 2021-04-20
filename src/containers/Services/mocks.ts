@@ -2,6 +2,11 @@
 // @ts-ignore
 import gqls from '../../../graphql/gqls/services.gql';
 
+const guideline = {
+  howTo: '#### Olá pessoas',
+  attentionPoints: 'Tudo bem?',
+};
+
 const result = {
   __typename: 'HealthHubServiceAll',
   content: [
@@ -17,6 +22,7 @@ const result = {
       result: 'Result Test',
       description: 'Description Test',
       preparation: 'How to prepare Test',
+      guideline,
       procedureFields: [
         {
           __typename: 'HealthHubServiceField',
@@ -173,6 +179,7 @@ const result = {
       result: 'Result Test 2',
       description: 'Description Test 2',
       preparation: 'How to prepare Test 2',
+      guideline,
       procedureFields: [
         {
           __typename: 'HealthHubServiceField',
@@ -401,6 +408,7 @@ const result = {
       result: 'Result Test 3',
       description: 'Description Test 3',
       preparation: 'How to prepare Test 3',
+      guideline,
       procedureFields: [
         {
           __typename: 'HealthHubServiceField',

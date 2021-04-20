@@ -1,3 +1,8 @@
+const guideline = {
+  howTo: '#### Olá pessoas',
+  attentionPoints: 'Tudo bem?',
+};
+
 export const mockedResponse = {
   id: '1',
   service: {
@@ -8,6 +13,7 @@ export const mockedResponse = {
     result: 'Result test',
     preparation: 'Preparation test',
     description: 'Description test',
+    guideline,
     procedureFields: [
       {
         data: null,
@@ -71,6 +77,7 @@ export const graphqlGetServiceResponse = {
   result: null,
   description: null,
   preparation: null,
+  guideline,
   procedureFields: [
     {
       key: 'indication',
@@ -160,6 +167,7 @@ export const serviceWithSelectField = {
   description: 'Description test',
   result: 'Result test',
   preparation: 'Preparation test',
+  guideline,
   procedureFields: [
     {
       key: 'vaccine',
@@ -260,6 +268,7 @@ export const reorderQuestions = {
   description: 'Description test',
   result: 'Result test',
   preparation: 'Preparation test',
+  guideline,
   procedureFields: [
     {
       key: 'shelf_life',
@@ -323,6 +332,7 @@ export const editedFormWithSelect = {
   description: 'Description test',
   result: 'Result test',
   preparation: 'Preparation test',
+  guideline,
   procedureFields: [
     {
       key: 'vaccine',
@@ -359,6 +369,7 @@ export const editedFormWithOption = {
   description: 'Description test',
   result: 'Result test',
   preparation: 'Preparation test',
+  guideline,
   procedureFields: [
     {
       key: 'hypertension',

@@ -13,6 +13,11 @@ servicesAPI.post = jest.fn();
 servicesAPI.delete = jest.fn();
 servicesAPI.patch = jest.fn();
 
+const guideline = {
+  howTo: '#### Olá pessoas',
+  attentionPoints: 'Tudo bem?',
+};
+
 const originalService = {
   id: '42',
   type: 'VACCINE',
@@ -23,6 +28,7 @@ const originalService = {
   result: 'Result test',
   description: 'Description test',
   preparation: 'Preparation test',
+  guideline,
   procedureFields: [
     {
       key: 'physical_activities',
@@ -59,6 +65,7 @@ const graphqlResponseService = {
   result: 'Result test',
   description: 'Description test',
   preparation: 'Preparation test',
+  guideline,
   procedureFields: [
     {
       key: 'physical_activities',

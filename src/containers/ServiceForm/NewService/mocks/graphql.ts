@@ -8,6 +8,10 @@ const form = {
   description: 'Description test',
   result: 'Result test',
   preparation: 'Preparation test',
+  guideline: {
+    howTo: '',
+    attentionPoints: '',
+  },
   procedureFields: [
     {
       key: 'diastolic_blood_pressure',

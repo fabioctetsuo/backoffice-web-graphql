@@ -1,6 +1,11 @@
 import { graphql } from 'msw';
 import { withMockedResolver } from 'mocks/mocked-resolver';
 
+const guideline = {
+  howTo: '#### Olá pessoas',
+  attentionPoints: 'Tudo bem?',
+};
+
 export default [
   graphql.query(
     'service',
@@ -16,6 +21,7 @@ export default [
           result: null,
           description: null,
           preparation: null,
+          guideline,
           procedureFields: [
             {
               key: 'indication',
@@ -109,6 +115,7 @@ export default [
           description: 'Description test',
           result: 'Result test',
           preparation: 'Preparation test',
+          guideline,
           procedureFields: [
             {
               key: 'indication',
