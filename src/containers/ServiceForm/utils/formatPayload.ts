@@ -5,6 +5,7 @@ import {
   HealthHubServiceById,
   HealthHubServiceInput,
 } from 'generated-types';
+import isObjectEmpty from 'utils/isObjectEmpty';
 
 type HealthHubFieldValidationForm = {
   min: number;
@@ -66,8 +67,13 @@ export const getFormattedPrice = (price?: string | null) => {
 export const getFormattedPayload = (
   payload: HealthHubServiceById
 ): HealthHubServiceInput => {
+  const { guideline, ...defaultService } = payload;
+  const guidelineNotFulfilled = isObjectEmpty(guideline as Record<string, any>);
+  const optionalProps = guidelineNotFulfilled ? {} : { guideline };
+
   return {
-    ...payload,
+    ...defaultService,
+    ...optionalProps,
     price: (payload.price as unknown) as number | null,
     procedureFields: getFormattedProcedureFields(payload.procedureFields),
   };

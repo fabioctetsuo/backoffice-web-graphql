@@ -104,7 +104,7 @@ type HealthHubService {
   info: String
   name: String!
   price: Float
-  guideline: Guideline!
+  guideline: Guideline
   procedureFields: [HealthHubServiceField!]!
   type: HealthHubFieldType!
   attachMedicalReport: Boolean
@@ -119,7 +119,7 @@ type HealthHubServiceById {
   info: String
   name: String!
   price: String
-  guideline: Guideline!
+  guideline: Guideline
   procedureFields: [HealthHubServiceFieldById!]!
   type: HealthHubFieldType!
   emitDeclaration: Boolean
@@ -132,7 +132,7 @@ input HealthHubServiceInput {
   info: String
   name: String!
   price: Float
-  guideline: GuidelineInput!
+  guideline: GuidelineInput
   procedureFields: [HealthHubServiceFieldInput]!
   type: HealthHubFieldType!
   attachMedicalReport: Boolean

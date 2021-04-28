@@ -5,7 +5,6 @@ const guideline = {
 
 module.exports = [
   {
-    guideline,
     procedureFields: [
       {
         key: 'indication',
@@ -238,7 +237,6 @@ module.exports = [
   },
   {
     preparation: 'Não é necessário preparo.',
-    guideline,
     procedureFields: [
       {
         key: 'indication',
@@ -451,7 +449,6 @@ module.exports = [
   },
   {
     preparation: 'Em caso de febre recomenda-se adiar a vacinação até a melhora.',
-    guideline,
     procedureFields: [
       {
         key: 'indication',
@@ -650,7 +647,6 @@ module.exports = [
   },
   {
     preparation: 'Em caso de febre, deve-se adiar a vacinação até que ocorra a melhora.',
-    guideline,
     procedureFields: [
       {
         key: 'indication',
@@ -849,7 +845,6 @@ module.exports = [
   },
   {
     preparation: 'Em caso de febre, deve-se adiar a vacinação até que ocorra a melhora.',
-    guideline,
     procedureFields: [
       {
         key: 'indication',
@@ -1048,7 +1043,6 @@ module.exports = [
   },
   {
     preparation: 'Em caso de febre, deve-se adiar a vacinação até que ocorra a melhora.',
-    guideline,
     procedureFields: [
       {
         key: 'indication',
@@ -1247,7 +1241,6 @@ module.exports = [
   },
   {
     preparation: 'Em caso de febre, deve-se adiar a vacinação até que ocorra a melhora.',
-    guideline,
     procedureFields: [
       {
         key: 'indication',
@@ -1446,7 +1439,6 @@ module.exports = [
   },
   {
     preparation: 'Em caso de febre, deve-se adiar a vacinação até que ocorra a melhora.',
-    guideline,
     procedureFields: [
       {
         key: 'indication',
@@ -4625,7 +4617,6 @@ module.exports = [
   {
     price: 30,
     preparation: 'Preparation test updated',
-    guideline,
     procedureFields: [
       {
         key: 'indication',
